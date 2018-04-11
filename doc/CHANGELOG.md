@@ -6,8 +6,9 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 
 | Description | Type | Author | Date | Details | Ref |
 |:------------|:----:|:------:|:----:|:-------:|:---:|
-| Code review GLPosting.php and Payments.php (#18) | Changed | Phil Daintree | 2018-03-12 |  [View](http://github.com/webERP-team/webERP/commit/602a584) | |
-| Show stock adjustments and internal stock requests | Fixed | Tim Schofield | 2018-03-6 |  [View](http://github.com/webERP-team/webERP/commit/d070554) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8111) |
+| Code review GLPosting.php and Payments.php (#18) | Changed | Phil Daintree | 2018-03-12 | [View](http://github.com/webERP-team/webERP/commit/602a584) | |
+| Show stock adjustments and internal stock requests | Fixed | Tim Schofield | 2018-03-6 | [View](http://github.com/webERP-team/webERP/commit/d070554) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8111) |
+| Add Tim's improved SortSelect() js function replacement. Change also requires `<thead>`, `<tbody>`, and (if needed) `<tfoot>` tags applied to tables that have sorting. Also, change removes the 'alt' attribute from date inputs (handling replaced by commit 7974) within these modified files. | Added | Tim Schofield | 2018-02-23 | [View](http://github.com/webERP-team/webERP/commit/cda9637) | [Forum](http://www.weberp.org/forum/showthread.php?tid=7918) |
 
 ## [v4.14.1] - 2017-06-26
 
