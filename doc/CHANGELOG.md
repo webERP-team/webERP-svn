@@ -23,10 +23,11 @@ For changelogs earlier than v4.14.1, please refer to CHANGELOG_ARCHIVE.md.
 
 | Description | Type | Author | Date | Details | Ref |
 |:------------|:----:|:------:|:----:|:-------:|:---:|
-| 4.14.1 rollup | Release | Exson | 2017-06-26 | [View](http://github.com/webERP-team/webERP/commit/5423276) | |
-| Fix the bug of cannot upgrade to 4.14 version | Fixed | Exson | 2017-06-26 | [View](http://github.com/webERP-team/webERP/commit/8735f8d) | |
-
-
+| Merge css/WEBootstrap/css/custom.css into css/WEBootstrap/default.css to preserve bootstrap as original. |   | RChacon | 2022-06-25 |   |   |
+| Add style sections for device rendering width ranges for no responsive themes. |   | RChacon | 2022-06-24 |   |   |
+| Fix class for TransactionsDiv, InquiriesDiv and MaintenanceDiv. Fix bootstrap copy. |   | RChacon | 2022-06-23 |   |   |
+| Fixed the Over Receive Portion bug in WorkOrderReceive.php. |   | Exson | 2022-06-22 |   |   |
+| Add meta viewport for initial-scale=1 for working css in small devices. |   | RChacon | 2017-06-21 |   |   |
 
 
 
