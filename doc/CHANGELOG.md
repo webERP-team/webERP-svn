@@ -1,6 +1,14 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog], and this project adheres to [Semantic Versioning].
+
+## Guidelines
+- Keep descriptions as short and concise as possible.  
+- If including html tags in your description, please surround them with back ticks.  
+- The commit Type, will typically be one of the following: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`  
+- Enter dates in format yyyy-mm-dd.  
+- Add links to the associated GtHub commit in Details column.  
+- Add links to supporting info in Ref column, such as Forum posts or GitHub issues.  
 
 ## [Unreleased]
 
