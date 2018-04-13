@@ -1,6 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.  
-The format is based on [Keep a Changelog], and this project adheres to [Semantic Versioning].
+The format is based on [Keep a Changelog], and this project adheres to [Semantic Versioning].  
+For changelogs earlier than v4.14.1, please refer to CHANGELOG_ARCHIVE.md.
 
 ## Guidelines
 - Keep descriptions as short and concise as possible.  
