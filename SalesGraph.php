@@ -89,6 +89,21 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 	echo '</select></td></tr>';
 
+	echo '<tr>
+			<td>
+				<h3>', _('OR'), '</h3>
+			</td>
+		</tr>';
+
+	if (!isset($_POST['Period'])) {
+		$_POST['Period'] = '';
+	}
+
+	echo '<tr>
+			<td>', _('Select Period'), ':</td>
+			<td>', ReportPeriodList($_POST['Period'], array('l', 't')), '</td>
+		</tr>';
+
 	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas ORDER BY areadescription");
 
 	if (!isset($_POST['SalesArea'])){
@@ -215,6 +230,11 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	} else {
 		$GraphTitle = _('Unit Sales');
 		$SelectClause = 'qty';
+	}
+
+	if ($_POST['Period'] != '') {
+		$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
+		$_POST['ToPeriod'] = ReportPeriod($_POST['Period'], 'To');
 	}
 
 	$SQL = "SELECT YEAR(`lastdate_in_period`) AS year, MONTHNAME(`lastdate_in_period`) AS month

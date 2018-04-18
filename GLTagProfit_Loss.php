@@ -14,6 +14,11 @@ if (isset($_POST['FromPeriod']) AND ($_POST['FromPeriod'] > $_POST['ToPeriod']))
 	$_POST['SelectADifferentPeriod']='Select A Different Period';
 }
 
+if ($_POST['Period'] != '') {
+	$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
+	$_POST['ToPeriod'] = ReportPeriod($_POST['Period'], 'To');
+}
+
 if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
 
 	include('includes/header.php');
@@ -91,6 +96,22 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		}
 	}
 	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>
+				<h3>', _('OR'), '</h3>
+			</td>
+		</tr>';
+
+	if (!isset($_POST['Period'])) {
+		$_POST['Period'] = '';
+	}
+
+	echo '<tr>
+			<td>', _('Select Period'), ':</td>
+			<td>', ReportPeriodList($_POST['Period'], array('l', 't')), '</td>
+		</tr>';
+
 	//Select the tag
 	echo '<tr>
 			<td>' . _('Select tag') . '</td>

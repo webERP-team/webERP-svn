@@ -153,7 +153,7 @@ if(!extension_loaded('mbstring')){
 
 	// Prevent the installation file from running again:
 	if(file_exists('../config.php') or file_exists('../Config.php')){
-		prnMsg(_('It seems that the system has been already installed. If you want to install again, please remove the config.php file first'),'error');
+		echo _('It seems that the system has been already installed. If you want to install again, please remove the config.php file first');
 		exit;
 	}
 	if(isset($_POST['Install'])){//confirm the final install data, the last validation step before we submit the data
@@ -167,13 +167,13 @@ if(!extension_loaded('mbstring')){
 
 			if(!preg_match(',^[^/\\\?%:\|<>\"]+$,',$_POST['CompanyName'])){
 				$InputError = 1;
-				prnMsg(_('The Company names cannot contain illegal characters such as /\?%:|<>"'),'error');
+				echo _('The Company names cannot contain illegal characters such as /\?%:|<>"');
 
 			}
 			$CompanyName= $_POST['CompanyName'];
 		}else{
 				$InputError = 1;
-				prnMsg(_('The Company Name name should not be empty'),'error');
+				echo _('The Company Name name should not be empty');
 		}
 		//provision for differing database post inputs - need to review and make these consistent
 		if ( (isset($_POST['DatabaseName'])  && !empty($_POST['DatabaseName'])) && (!isset($_POST['Database']) || empty($_POST['Database']))) $_POST['Database'] = $_POST['DatabaseName'];
@@ -184,20 +184,20 @@ if(!extension_loaded('mbstring')){
 
 			if(!preg_match(',[a-zA-Z0-9_\&\-\ ]*,',$_POST['Database'])){
 				$InputError = 1;
-				prnMsg(_('The database name should not contains illegal characters such as "/\?%:|<>" etc'),'error');
+				echo _('The database name should not contains illegal characters such as "/\?%:|<>" etc');
 
 			}
 			$DatabaseName = strtolower($_POST['Database']);
 		}else{
-				$InputError = 1;
-				prnMsg(_('The database name should not be empty'),'error');
+			$InputError = 1;
+			echo _('The database name should not be empty');
 		}
 		if(!empty($_POST['TimeZone'])){
 			if(preg_match(',(Etc|Pacific|India|Europe|Australia|Atlantic|Asia|America|Africa)/[A-Z]{1}[a-zA-Z\-_/]+,',$_POST['TimeZone'])){
 				$TimeZone = $_POST['TimeZone'];
 			}else{
 				$InputError = 1;
-				prnMsg(_('The timezone must be legal'),'error');
+				echo _('The timezone must be legal');
 			}
 		}
 		$OnlyDemo = 0;
@@ -218,13 +218,13 @@ if(!extension_loaded('mbstring')){
 
 		}else{
 			$InputError = 1;
-			prnMsg(_('You must enter a valid email address for the Administrator.'),'error');
+			echo _('You must enter a valid email address for the Administrator.');
 		}
 		if(!empty($_POST['webERPPassword']) and !empty($_POST['PasswordConfirm']) and $_POST['webERPPassword'] == $_POST['PasswordConfirm']){
 			$AdminPassword = $_POST['webERPPassword'];
 		}else{
 			$InputError = 1;
-			prnMsg(_('Please correct the password. The password is either blank, or the password check does not match.'),'error');
+			echo _('Please correct the password. The password is either blank, or the password check does not match.');
 
 		}
 		if(!empty($_POST['HostName'])){
@@ -236,19 +236,19 @@ if(!extension_loaded('mbstring')){
 			if($HostValid){
 				$HostName = $_POST['HostName'];
 			}else{
-				prnMsg(_('The Host Name is not a valid name.'),'error');
+				echo _('The Host Name is not a valid name.');
 				exit;
 			}
 
 		}else{
 			$InputError = 1;
-			prnMsg(_('The Host Name must not be empty.'),'error');
+			echo _('The Host Name must not be empty.');
 		}
 		if(!empty($_POST['UserName']) and strlen($_POST['UserName'])<=16){//mysql database user
 			$UserName = $_POST['UserName'];
 		}else{
 			$InputError = 1;
-			prnMsg(_('The user name cannot be empty and length must not be over 16 characters.'),'error');
+			echo _('The user name cannot be empty and length must not be over 16 characters.');
 		}
 		if(isset($_POST['Password'])){//mysql database password
 			$Password = $_POST['Password'];
@@ -258,23 +258,22 @@ if(!extension_loaded('mbstring')){
 		}else{
 			$DBConnectType = 'mysqli';
 		}
-
 		if(!empty($_POST['UserLanguage'])){
 			if(preg_match(',^[a-z]{2}_[A-Z]{2}.utf8$,',$_POST['UserLanguage'])){
 				$UserLanguage = $_POST['UserLanguage'];
 			}else{
 				$InputError = 1;
-				prnMsg(_('The user language defintion is not in the correct format'),'error');
+				echo _('The user language defintion is not in the correct format');
 			}
 		}
 		If(!empty($_FILES['LogoFile'])){//We check the file upload situation
 			if($_FILES['LogoFile']['error'] == UPLOAD_ERR_INI_SIZE || $_FILES['LogoFile']['error'] == UPLOAD_ERR_FORM_SIZE){//the file is over the php.ini limit or over the from limit
 				$InputError = 1;
 				if(upload_max_filesize < 0.01){
-					prnMsg(_('The company logo file failed to upload due to it\'s size. The file was over the upload_max_filesize set in your php.ini configuration.'),'error');
+					echo _('The company logo file failed to upload due to it\'s size. The file was over the upload_max_filesize set in your php.ini configuration.');
 
 				}else{
-					prnMsg(_('The logo file failed to upload as it was over 10KB size limit.'),'error');
+					echo _('The logo file failed to upload as it was over 10KB size limit.');
 				}
 
 			}elseif($_FILES['LogoFile']['error'] == UPLOAD_ERR_OK){//The file has been successfully uploaded
@@ -289,11 +288,11 @@ if(!extension_loaded('mbstring')){
 				$CountrySQL = $_POST['CountrySQL'];
 			}else{
 				$InputError = 1;
-				prnMsg(_('The country SQL file name must only contain letters,"-","_"'),'error');
+				echo _('The country SQL file name must only contain letters,"-","_"');
 			}
 		}else{
 				$InputError = 1;
-				prnMsg(_('There is no country SQL file selected. Please select a file.'),'error');
+				echo _('There is no country SQL file selected. Please select a file.');
 
 		}
 		if($InputError == 1){//return to the company configuration stage
@@ -398,11 +397,11 @@ if(!extension_loaded('mbstring')){
 			//write the config.php file since we have test the writability of the root path and companies,
 			//there is little possibility that it will fail here. So just an warn if it is failed.
 			if(!$zp = fopen($Path_To_Root . '/config.php','w')){
-					prnMsg(_("Cannot open the configuration file").$Config_File,'error');
+				echo _("Cannot open the configuration file").$Config_File;
 			} else {
 				if (!fwrite($zp, $msg)){
 					fclose($zp);
-					prnMsg(_("Cannot write to the configuration file").$Config_File,'error');
+					echo _("Cannot write to the configuration file").$Config_File;
 				}
 				//close file
 				fclose($zp);
@@ -412,13 +411,13 @@ if(!extension_loaded('mbstring')){
 			//At the mean time, we should check the user need demo database or not
 			if($DBConnectType == 'mysqli'){
 				$Db = mysqli_connect($HostName,$UserName,$Password);
-			if(!$Db){
-				prnMsg(_('Failed to connect the database, the error is ').mysqli_connect_error(),'error');
-			}
+				if(!$Db){
+					echo _('Failed to connect the database, the error is ').mysqli_connect_error();
+				}
 			}elseif($DBConnectType == 'mysql'){
 				$Db = mysql_connect($HostName,$UserName,$Password);
                 if(!$Db){
-                    prnMsg(_('Failed to connect the database, the error is ').mysql_connect_error(),'error');
+                    echo _('Failed to connect the database, the error is ').mysql_connect_error();
                 }
 			}
 			$NewSQLFile = $Path_To_Root.'/sql/mysql/country_sql/'.$CountrySQL;
@@ -429,9 +428,9 @@ if(!extension_loaded('mbstring')){
 				$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
 				if(!$result){
 					if($DBConnectType == 'mysqli'){
-						prnMsg(_('Failed to create database '.$DatabaseName.' and the error is '.' '.mysqli_error($Db)),'error');
+						echo _('Failed to create database '.$DatabaseName.' and the error is '.' '.mysqli_error($Db));
 					}else{
-						prnMsg(_('Failed to create database '.$DatabaseName.' and the error is '.' '.mysql_error($Db)),'error');
+						echo _('Failed to create database '.$DatabaseName.' and the error is '.' '.mysql_error($Db));
 
 					}
 				}
@@ -439,9 +438,9 @@ if(!extension_loaded('mbstring')){
 				$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
 				if(!$result){
 					if($DBConnectType == 'mysqli'){
-						prnMsg(_('Failed to create database weberpdemo and the error is '.' '.mysqli_error($Db)),'error');
+						echo _('Failed to create database weberpdemo and the error is '.' '.mysqli_error($Db));
 					}else{
-						prnMsg(_('Failed to create database weberpdemo and the error is '.' '.mysql_error($Db)),'error');
+						echo _('Failed to create database weberpdemo and the error is '.' '.mysql_error($Db));
 
 					}
 
@@ -458,9 +457,9 @@ if(!extension_loaded('mbstring')){
 				$result = ($DBConnectType == 'mysqli')? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
 				if(!$result){
 					if($DBConnectType == 'mysqli'){
-						prnMsg(_('Failed to create database '.$DatabaseName.'  and the error is '.' '.mysqli_error($Db)),'error');
+						echo _('Failed to create database '.$DatabaseName.'  and the error is '.' '.mysqli_error($Db));
 					}else{
-						prnMsg(_('Failed to create database '.$DatabaseName.'  and the error is '.' '.mysql_error($Db)),'error');
+						echo _('Failed to create database '.$DatabaseName.'  and the error is '.' '.mysql_error($Db));
 
 					}
 				}
@@ -472,9 +471,9 @@ if(!extension_loaded('mbstring')){
 				$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
 				if(!$result){
 					if($DBConnectType == 'mysqli'){
-						prnMsg(_('Failed to create database weberpdemo and the error is '.' '.mysqli_error($Db)),'error');
+						echo _('Failed to create database weberpdemo and the error is '.' '.mysqli_error($Db));
 					}else{
-						prnMsg(_('Failed to create database weberpdemo and the error is '.' '.mysql_error($Db)),'error');
+						echo _('Failed to create database weberpdemo and the error is '.' '.mysql_error($Db));
 
 					}
 
@@ -512,14 +511,14 @@ if(!extension_loaded('mbstring')){
 			if($HostValid){
 				$HostName = $_POST['HostName'];
 			}else{
-				prnMsg(_('The Host Name is illegal'),'error');
+				echo _('The Host Name is illegal');
 				exit;
 			}
 
 
 		}else{
 			$InputError = 1;
-			prnMsg(_('The Host Name should not be empty'),'error');
+			echo _('The Host Name should not be empty');
 		}
 		if(!empty($_POST['Database'])){
 			//validate the Database name setting
@@ -531,13 +530,13 @@ if(!extension_loaded('mbstring')){
 			}
 			if(preg_match(',[/\\\?%:\|<>\."]+,',$_POST['Database'])){
 				$InputError = 1;
-				prnMsg(_('The database name should be lower case and not contains illegal characters such as "/\?%:|<>"'),'error');
+				echo _('The database name should be lower case and not contains illegal characters such as "/\?%:|<>"');
 
 			}
 			$DatabaseName = $_POST['Database'];
 		}else{
-				$InputError = 1;
-				prnMsg(_('The database name should not be empty'),'error');
+			$InputError = 1;
+			echo _('The database name should not be empty');
 		}
 
 		if(!empty($_POST['Password'])){
@@ -559,7 +558,7 @@ if(!extension_loaded('mbstring')){
 			}
 			exit;
 		}else{
-			prnMsg(_('Please correct the displayed error first'),'error');
+			echo _('Please correct the displayed error first');
 			if(!empty($_POST['MysqlExt'])){
 				DbConfig($_POST['UserLanguage'],$_POST['MysqlExt']);
 			}else{
@@ -599,7 +598,7 @@ if(!extension_loaded('mbstring')){
 				    $InputWarn = 1;
 				    $WarnMsg .= '<p>' . _($_POST['SafeModeWarning']) . '</p>';
 			    }else{//Something must be wrong since this messages have been defined.
-				    prnMsg(_('Illegal characters or data has been identified, please see your admistrator for help'),'error');
+				    echo _('Illegal characters or data has been identified, please see your admistrator for help');
 				    exit;
 
 			    }
@@ -655,13 +654,13 @@ if(!extension_loaded('mbstring')){
 		    }
 
 		    if($InputError != 0){
-			    prnMsg($ErrMsg,'error');
+			    echo $ErrMsg;
 			    Recheck();
 			    exit;
 		    }
 		    if($InputWarn != 0){
 
-			    prnMsg($WarnMsg,'warn');
+			    echo $WarnMsg;
 			    Recheck();
 		    }
 		    //If all of them are OK, then users can input the data of database etc
@@ -943,7 +942,7 @@ function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input m
         <?php
         }else{
         ?>
-            <input type="hidden" name="MysqliExt" value="1" />
+            <input type="hidden" name="MysqliExt" value="0" />
         <?php
         }
         ?>
@@ -984,7 +983,7 @@ function DbCheck($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,$Mysq
 		}
 		if(!$Con){
 			echo '<h1>' . _('webERP Installation Wizard') . '</h1>';
-			prnMsg(_('Failed to connect to the database. Please correct the following error:') . '<br/>' . mysqli_connect_error() . '<br/> '.('This error is usually caused by entry of an incorrect database password or user name.'),'error');
+			echo _('Failed to connect to the database. Please correct the following error:') . '<br/>' . mysqli_connect_error() . '<br/> '.('This error is usually caused by entry of an incorrect database password or user name.');
 			if($MysqlExt){
 				DbConfig($UserLanguage,$MysqlExt);
 			}else{
@@ -1122,8 +1121,15 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
 //@para $NewDB is the new database name
 //The purpose of this function is populate database with data from the sql file by mysqli
 function PopulateSQLData($NewSQL=false,$Demo=false,$db,$DBType,$NewDB = false){
-			if($NewSQL){
+	if($DBType == 'mysqli'){
+		mysqli_select_db($db,$NewDB);
+	}else{
+		mysql_select_db($NewDB,$db);
+	}
 
+	if(file_exists($NewSQL)){
+		PopulateSQLDataBySQL($NewSQL,$db,$DBType,$NewDB, false);
+/*
 				if($DBType == 'mysqli'){//if the mysql db type is mysqli
 						mysqli_select_db($db,$NewDB);
 						//currently there is no 'USE' statements in sql file, no bother to remove them
@@ -1135,7 +1141,7 @@ function PopulateSQLData($NewSQL=false,$Demo=false,$db,$DBType,$NewDB = false){
 
 						$result = mysqli_multi_query($db,$sql);
 						if(!$result){
-							prnMsg(_('Failed to populate the database'.' '.$NewDB.' and the error is').' '.mysqli_error($db),'error');
+							echo 'Failed to populate the database'.' '.$NewDB.' and the error is'.' '.mysqli_error($db);
 						}
 						//now clear the result otherwise the next operation will failed with commands out of sync
 						//Since the mysqli_multi_query() return boolean value, we must retrieve the query result set
@@ -1148,29 +1154,23 @@ function PopulateSQLData($NewSQL=false,$Demo=false,$db,$DBType,$NewDB = false){
 							}
 						} while (mysqli_more_results($db)?mysqli_next_result($db):false);
 						//} while (mysqli_next_result($db));
-
-
 				}else{
 						PopulateSQLDataBySQL($NewSQL,$db,$DBType,$NewDB);
 				}
+*/
 
+	}
 
-			}
-			if($Demo){
-
-				if($DBType == 'mysqli'){
-					mysqli_select_db($db,$NewDB);
-				}else{
-					mysql_select_db($NewDB,$db);
-				}
-					PopulateSQLDataBySQL($Demo,$db,$DBType,false,$NewDB);
+	if($Demo){
+		PopulateSQLDataBySQL($Demo,$db,$DBType,false,$NewDB);
+/*
 						//we can let users wait instead of changing the my.cnf file
 						//It is a non affordable challenge for them since wamp set the max_allowed_packet 1M
 						//and weberpdemo.sql is 1.4M so at least it cannot install in wamp
 						//so we not use the multi query here
 
 
-					/*	$SQLFile = fopen($Demo);
+						$SQLFile = fopen($Demo);
 
 						$sql = file_get_contents($Demo);
 						if(!$sql){
@@ -1180,27 +1180,24 @@ function PopulateSQLData($NewSQL=false,$Demo=false,$db,$DBType,$NewDB = false){
 						$result = mysqli_multi_query($db,$sql);
 
 						if(!$result){
-							prnMsg(_('Failed to populate the database'.' '.$NewDB.' and the error is').' '.mysqli_error($db),'error');
+							echo _('Failed to populate the database'.' '.$NewDB.' and the error is').' '.mysqli_error($db);
 						}
 						//clear the bufferred result
 						do {
 							if($result = mysqli_store_result($db)){
 								mysqli_free_result($result);
 							}
-						} while (mysqli_more_results($db)?mysqli_next_result($db):false); */
+						} while (mysqli_more_results($db)?mysqli_next_result($db):false);
 
 
-			/*	}else{
+				}else{
 						mysqli_select_db($db,$NewDB);
 						PopulateSQLDataBySQL($Demo,$db,$DBType,false,$NewDB);
-			}*/
 			}
-
-
-
-
-
+*/
+	}
 }
+
 //@para $File is the sql file name
 //@para $db is the DB connect reference
 //@para $DBType refer to mysqli or mysql connection
@@ -1208,49 +1205,43 @@ function PopulateSQLData($NewSQL=false,$Demo=false,$db,$DBType,$NewDB = false){
 //@para $DemoDB is the demo database name
 //The purpose of this function is populate the database with mysql extention
 function PopulateSQLDataBySQL($File,$db,$DBType,$NewDB=false,$DemoDB='weberpdemo'){
-						$dbName = ($NewDB) ? $NewDB : $DemoDB;
-						($DBType=='mysqli')?mysqli_select_db($db,$dbName):mysql_select_db($dbName,$db);
-						$SQLScriptFile = file($File);
-						$ScriptFileEntries = sizeof($SQLScriptFile);
-						$SQL =' SET names UTF8;';
-						$InAFunction = false;
-						for ($i=0; $i<$ScriptFileEntries; $i++) {
+	$dbName = ($NewDB) ? $NewDB : $DemoDB;
+	($DBType=='mysqli')?mysqli_select_db($db,$dbName):mysql_select_db($dbName,$db);
+	$SQLScriptFile = file($File);
+	$ScriptFileEntries = sizeof($SQLScriptFile);
+	$SQL =' SET names UTF8;';
+	$InAFunction = false;
+	for ($i=0; $i<$ScriptFileEntries; $i++) {
 
-						$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);
-						//ignore lines that start with -- or USE or /*
-						if (mb_substr($SQLScriptFile[$i], 0, 2) != '--'
-						AND mb_strstr($SQLScriptFile[$i],'/*')==FALSE
-						AND mb_strlen($SQLScriptFile[$i])>1){
+		$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);
+		//ignore lines that start with -- or USE or /*
+		if (mb_substr($SQLScriptFile[$i], 0, 2) != '--'
+			AND mb_strstr($SQLScriptFile[$i],'/*')==FALSE
+			AND mb_strlen($SQLScriptFile[$i])>1){
 
-								$SQL .= ' ' . $SQLScriptFile[$i];
+			$SQL .= ' ' . $SQLScriptFile[$i];
 
-							//check if this line kicks off a function definition - pg chokes otherwise
-							if (mb_substr($SQLScriptFile[$i],0,15) == 'CREATE FUNCTION'){
-								$InAFunction = true;
-							}
-							//check if this line completes a function definition - pg chokes otherwise
-							if (mb_substr($SQLScriptFile[$i],0,8) == 'LANGUAGE'){
-								$InAFunction = false;
-							}
-							if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
-								// Database created above with correct name.
-							if (strncasecmp($SQL, ' CREATE DATABASE ', 17)
-				    				AND strncasecmp($SQL, ' USE ', 5)){
-								$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
+			//check if this line kicks off a function definition - pg chokes otherwise
+			if (mb_substr($SQLScriptFile[$i],0,15) == 'CREATE FUNCTION'){
+				$InAFunction = true;
+			}
+			//check if this line completes a function definition - pg chokes otherwise
+			if (mb_substr($SQLScriptFile[$i],0,8) == 'LANGUAGE'){
+				$InAFunction = false;
+			}
+			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
+				// Database created above with correct name.
+				if (strncasecmp($SQL, ' CREATE DATABASE ', 17)
+					AND strncasecmp($SQL, ' USE ', 5)){
+					$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
 
-								$result = ($DBType=='mysqli')?mysqli_query($db,$SQL):mysql_query($SQL,$db);
-								}
-								$SQL = '';
-							}
+					$result = ($DBType=='mysqli')?mysqli_query($db,$SQL):mysql_query($SQL,$db);
+				}
+				$SQL = '';
+			}
 
-						} //end if its a valid sql line not a comment
-					} //end of for loop around the lines of the sql script
-
-
-
-
-
-
+		} //end if its a valid sql line not a comment
+	} //end of for loop around the lines of the sql script
 }
 
 function CryptPass( $Password ) {
@@ -1286,7 +1277,7 @@ function DBUpdate($db,$DatabaseName,$DBConnectType,$AdminPasswd,$AdminEmail,$Adm
 	$Result = (!$MysqlExt) ? mysqli_query($db,$sql):mysql_query($sql,$db);
 	if(!$Result){
 
-			prnMsg(_('Failed to update the email address and password of the administrator and the error is').((!$MysqlExt)?mysqli_error($db):mysql_error($db)),'error');
+		echo _('Failed to update the email address and password of the administrator and the error is').((!$MysqlExt)?mysqli_error($db):mysql_error($db));
 	}
 
 	$sql = "UPDATE companies
@@ -1294,7 +1285,7 @@ function DBUpdate($db,$DatabaseName,$DBConnectType,$AdminPasswd,$AdminEmail,$Adm
 			WHERE coycode = 1";
 	$Result = (!$MysqlExt)?mysqli_query($db,$sql):mysql_query($sql,$db);
 	if(!$Result){
-			prnMsg(_('Failed to update the company name and the erroris').((!$MysqlExt)?mysqli_error($db):mysql_error($db)),'error');
+		echo _('Failed to update the company name and the erroris').((!$MysqlExt)?mysqli_error($db):mysql_error($db));
 	}
 
 

@@ -1308,7 +1308,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /*first the cost of sales entry*/
 
-				$COGSAccount = GetCOGSGLAccount($Area, $CreditLine->StockID, $_SESSION['CreditItems' . $identifier]->DefaultSalesType, $db);
+				$COGSAccount = GetCOGSGLAccount($Area, $CreditLine->StockID, $_SESSION['CreditItems' . $identifier]->DefaultSalesType);
 
 				$SQL = "INSERT INTO gltrans(type,
 											typeno,
@@ -1375,7 +1375,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			if($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $CreditLine->Price !=0) {
 
 //Post sales transaction to GL credit sales
-				$SalesGLAccounts = GetSalesGLAccount($Area, $CreditLine->StockID, $_SESSION['CreditItems' . $identifier]->DefaultSalesType, $db);
+				$SalesGLAccounts = GetSalesGLAccount($Area, $CreditLine->StockID, $_SESSION['CreditItems' . $identifier]->DefaultSalesType);
 
 				$SQL = "INSERT INTO gltrans(type,
 							typeno,

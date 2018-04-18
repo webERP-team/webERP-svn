@@ -35,7 +35,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifySalesType($salestype, sizeof($Errors), $Errors, $db);
+		$Errors = VerifySalesType($salestype, sizeof($Errors), $Errors);
 		if (sizeof($Errors)==0) {
 			$sql = "SELECT * FROM salestypes WHERE typeabbrev='".$salestype."'";
 			$result = DB_query($sql);

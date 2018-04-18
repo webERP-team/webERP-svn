@@ -70,7 +70,7 @@ Class Offer {
 		return $this->EmailAddress;
 	}
 
-	function Save($db, $Update='') {
+	function Save($Update='') {
 		if ($Update=='') {
 			foreach ($this->LineItems as $LineItems) {
 				if ($LineItems->Deleted==False) {
@@ -107,23 +107,23 @@ Class Offer {
 		} else {
 			foreach ($this->LineItems as $LineItem) {
 				if ($LineItem->Deleted==false){ //Update only the LineItems which is not flagged as deleted
-				$sql="UPDATE offers SET
-						quantity='".$LineItem->Quantity."',
-						price='".$LineItem->Price."',
-						expirydate='".FormatDateForSQL($LineItem->ExpiryDate)."'
-					WHERE offerid='".$LineItem->LineNo . "'";
-				$ErrMsg =  _('The suppliers offer could not be updated on the database because');
-				$DbgMsg = _('The SQL statement used to update the suppliers offer record and failed was');
-				$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
-				if (DB_error_no()==0) {
-					prnMsg( _('The offer for').' '.$LineItem->StockID.' '._('has been updated in the database'), 'success');
-					$this->OfferMailText .= $LineItem->Quantity.' '.$LineItem->Units.' '._('of').' '.$LineItem->StockID.' '._('at a price of').
-						' '.$this->CurrCode.$LineItem->Price."\n";
-				} else {
-					prnMsg( _('The offer for').' '.$LineItem->StockID.' '._('could not be updated in the database'), 'error');
-					include('includes/footer.php');
-					exit;
-				}
+					$sql="UPDATE offers SET
+							quantity='".$LineItem->Quantity."',
+							price='".$LineItem->Price."',
+							expirydate='".FormatDateForSQL($LineItem->ExpiryDate)."'
+						WHERE offerid='".$LineItem->LineNo . "'";
+					$ErrMsg =  _('The suppliers offer could not be updated on the database because');
+					$DbgMsg = _('The SQL statement used to update the suppliers offer record and failed was');
+					$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+					if (DB_error_no()==0) {
+						prnMsg( _('The offer for').' '.$LineItem->StockID.' '._('has been updated in the database'), 'success');
+						$this->OfferMailText .= $LineItem->Quantity.' '.$LineItem->Units.' '._('of').' '.$LineItem->StockID.' '._('at a price of').
+							' '.$this->CurrCode.$LineItem->Price."\n";
+					} else {
+						prnMsg( _('The offer for').' '.$LineItem->StockID.' '._('could not be updated in the database'), 'error');
+						include('includes/footer.php');
+						exit;
+					}
 				} else { // the LineItem is Deleted flag is true so delete it
 					$sql = "DELETE from offers WHERE offerid='" . $LineItem->LineNo . "'";
 					$ErrMsg = _('The supplier offer could not be deleted on the database because');
@@ -138,7 +138,7 @@ Class Offer {
 				}
 			}
 
-	}
+		}
 	}
 
 	function EmailOffer() {

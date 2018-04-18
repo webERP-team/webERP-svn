@@ -37,8 +37,7 @@ Class Shipment {
 							$QuantityOrd,
 							$QuantityRecd,
 							$StdCostUnit,
-							$DecimalPlaces,
-							&$db){
+							$DecimalPlaces){
 
 		$this->LineItems[$PODetailItem]= new LineDetails($PODetailItem,
 														$OrderNo,
@@ -62,7 +61,7 @@ Class Shipment {
 	}
 
 
-	function Remove_From_Shipment($PODetailItem,&$db){
+	function Remove_From_Shipment($PODetailItem){
 
 		if ($this->LineItems[$PODetailItem]->QtyInvoiced==0){
 

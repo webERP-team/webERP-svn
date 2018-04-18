@@ -1756,7 +1756,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 												'" . $InvoiceNo . "',
 												'" . $DefaultDispatchDate . "',
 												'" . $PeriodNo . "',
-												'" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db) . "',
+												'" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType) . "',
 												'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $OrderLine->StandardCost . "',
 												'" . $OrderLine->StandardCost * $OrderLine->Quantity . "')";
 
@@ -1790,7 +1790,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $OrderLine->Price !=0){
 
 		//Post sales transaction to GL credit sales
-				$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+				$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,

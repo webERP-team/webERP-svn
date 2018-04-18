@@ -487,7 +487,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $RecurrOrderLineRow['unitprice'] !=0){
 
 				//Post sales transaction to GL credit sales
-				$SalesGLAccounts = GetSalesGLAccount($Area, $RecurrOrderLineRow['stkcode'], $RecurrOrderRow['ordertype'], $db);
+				$SalesGLAccounts = GetSalesGLAccount($Area, $RecurrOrderLineRow['stkcode'], $RecurrOrderRow['ordertype']);
 
 				$SQL = "INSERT INTO gltrans (
 							type,

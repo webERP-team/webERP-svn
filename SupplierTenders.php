@@ -47,7 +47,7 @@ $Supplier=$myrow['suppname'];
 $Currency=$myrow['currcode'];
 
 if (isset($_POST['Confirm'])) {
-	$_SESSION['offer'.$identifier]->Save($db);
+	$_SESSION['offer'.$identifier]->Save();
 	$_SESSION['offer'.$identifier]->EmailOffer();
 	$sql="UPDATE tendersuppliers
 			SET responded=1
@@ -249,7 +249,7 @@ if (isset($_POST['Update'])) {
 			unset($ExpiryDate);
 		}
 	}
-	$_SESSION['offer'.$identifier]->Save($db, 'Yes');
+	$_SESSION['offer'.$identifier]->Save('Yes');
 	$_SESSION['offer'.$identifier]->EmailOffer();
 	unset($_SESSION['offer'.$identifier]);
 	include('includes/footer.php');
@@ -277,7 +277,7 @@ if (isset($_POST['Save'])) {
 			unset($ExpiryDate);
 		}
 	}
-	$_SESSION['offer'.$identifier]->Save($db);
+	$_SESSION['offer'.$identifier]->Save();
 	$_SESSION['offer'.$identifier]->EmailOffer();
 	unset($_SESSION['offer'.$identifier]);
 	include('includes/footer.php');

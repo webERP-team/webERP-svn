@@ -23,6 +23,11 @@ if (isset($_POST['FromPeriod'])
 	$_POST['SelectADifferentPeriod']=_('Select A Different Period');
 }
 
+if ($_POST['Period'] != '') {
+	$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
+	$_POST['ToPeriod'] = ReportPeriod($_POST['Period'], 'To');
+}
+
 if ((! isset($_POST['FromPeriod'])
 	AND ! isset($_POST['ToPeriod']))
 	OR isset($_POST['SelectADifferentPeriod'])){
@@ -108,6 +113,11 @@ if ((! isset($_POST['FromPeriod'])
 	echo '</select></td>
 		</tr>
 		<tr>
+			<td>
+				<h3>', _('OR'), '</h3>
+			</td>
+		</tr>
+		<tr>
 			<td>' . _('Select Period') . ':</td>
 			<td>' . ReportPeriodList( $_POST['Period'] ) . '</td>
 		</tr>
@@ -132,11 +142,6 @@ if ((! isset($_POST['FromPeriod'])
 	$PageNumber = 0;
 	$FontSize = 10;
 	$line_height = 12;
-
-	if ($_POST['Period'] != '') {
-		$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
-		$_POST['ToPeriod'] = ReportPeriod($_POST['Period'], 'To');
-	}
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 

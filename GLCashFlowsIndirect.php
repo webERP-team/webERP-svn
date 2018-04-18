@@ -68,6 +68,11 @@ if($_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 	prnMsg(_('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
 }
 
+if ($_POST['Period'] != '') {
+	$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
+	$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
+}
+
 // Main code:
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action']!='New') {// If all parameters are set and valid, generates the report:
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -779,9 +784,24 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	echo			'</select>',
 					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the end of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
 		 		'</td>
-			</tr>',
+			</tr>';
+
+	echo '<tr>
+			<td>
+				<h3>', _('OR'), '</h3>
+			</td>
+		</tr>';
+
+	if (!isset($_POST['Period'])) {
+		$_POST['Period'] = '';
+	}
+
+	echo '<tr>
+			<td>', _('Select Period'), ':</td>
+			<td>', ReportPeriodList($_POST['Period'], array('l', 't')), '</td>
+		</tr>';
 			// Show the budget for the period:
-			'<tr>',
+	echo '<tr>',
 			 	'<td><label for="ShowBudget">', _('Show the budget for the period'), '</label></td>
 			 	<td><input',($_POST['ShowBudget'] ? ' checked="checked"' : ''), ' id="ShowBudget" name="ShowBudget" type="checkbox">', // "Checked" if ShowBudget is set AND it is TRUE.
 			 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show the budget for the period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.

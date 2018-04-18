@@ -7,7 +7,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
@@ -157,7 +157,7 @@ CREATE TABLE `banktrans` (
   KEY `ref` (`ref`),
   CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,7 +249,7 @@ CREATE TABLE `cogsglpostings` (
   KEY `StkCat` (`stkcat`),
   KEY `GLCode` (`glcode`),
   KEY `SalesType` (`salestype`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -359,7 +359,7 @@ CREATE TABLE `contractreqts` (
   PRIMARY KEY (`contractreqid`),
   KEY `ContractRef` (`contractref`),
   CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contractref`) REFERENCES `contracts` (`contractref`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -433,7 +433,7 @@ CREATE TABLE `custallocns` (
   KEY `TransID_AllocTo` (`transid_allocto`),
   CONSTRAINT `custallocns_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `debtortrans` (`id`),
   CONSTRAINT `custallocns_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `debtortrans` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -508,7 +508,7 @@ CREATE TABLE `custcontacts` (
   `email` varchar(55) NOT NULL,
   `statement` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`contid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -650,7 +650,7 @@ CREATE TABLE `debtortrans` (
   KEY `salesperson` (`salesperson`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -680,7 +680,7 @@ CREATE TABLE `debtortype` (
   `typeid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `typename` varchar(100) NOT NULL,
   PRIMARY KEY (`typeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -733,7 +733,7 @@ CREATE TABLE `departments` (
   `description` varchar(100) NOT NULL DEFAULT '',
   `authoriser` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`departmentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -783,7 +783,7 @@ CREATE TABLE `edi_orders_segs` (
   PRIMARY KEY (`id`),
   KEY `SegTag` (`segtag`),
   KEY `SegNo` (`seggroup`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -937,7 +937,7 @@ CREATE TABLE `fixedassets` (
   `depnrate` double NOT NULL,
   `disposaldate` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`assetid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1077,7 +1077,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1105,7 +1105,7 @@ CREATE TABLE `grns` (
   KEY `SupplierID` (`supplierid`),
   CONSTRAINT `grns_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `grns_ibfk_2` FOREIGN KEY (`podetailitem`) REFERENCES `purchorderdetails` (`podetailitem`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1159,7 +1159,7 @@ CREATE TABLE `labelfields` (
   PRIMARY KEY (`labelfieldid`),
   KEY `labelid` (`labelid`),
   KEY `vpos` (`vpos`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1180,7 +1180,7 @@ CREATE TABLE `labels` (
   `rowheight` double NOT NULL DEFAULT '0',
   `columnwidth` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`labelid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1345,7 +1345,7 @@ CREATE TABLE `mailgroups` (
   `groupname` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `groupname` (`groupname`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1361,7 +1361,7 @@ CREATE TABLE `manufacturers` (
   `manufacturers_image` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`manufacturers_id`),
   KEY `manufacturers_name` (`manufacturers_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1428,7 +1428,7 @@ CREATE TABLE `mrpplannedorders` (
   `mrpdate` date DEFAULT NULL,
   `updateflag` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1452,7 +1452,7 @@ CREATE TABLE `offers` (
   KEY `offers_ibfk_2` (`stockid`),
   CONSTRAINT `offers_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `offers_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1494,7 +1494,7 @@ CREATE TABLE `paymentmethods` (
   `opencashdrawer` tinyint(4) NOT NULL DEFAULT '0',
   `percentdiscount` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`paymentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1881,7 +1881,7 @@ CREATE TABLE `purchorderdetails` (
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1933,7 +1933,7 @@ CREATE TABLE `purchorders` (
   KEY `AllowPrintPO` (`allowprint`),
   CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2131,7 +2131,7 @@ CREATE TABLE `reportheaders` (
   `lower4` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`reportid`),
   KEY `ReportHeading` (`reportheading`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2262,7 +2262,7 @@ CREATE TABLE `salesanalysis` (
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`),
   CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2277,7 +2277,7 @@ CREATE TABLE `salescat` (
   `salescatname` varchar(50) DEFAULT NULL,
   `active` int(11) NOT NULL DEFAULT '1' COMMENT '1 if active 0 if inactive',
   PRIMARY KEY (`salescatid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2332,7 +2332,7 @@ CREATE TABLE `salesglpostings` (
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `SalesType` (`salestype`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2519,7 +2519,7 @@ CREATE TABLE `securityroles` (
   `secroleid` int(11) NOT NULL AUTO_INCREMENT,
   `secrolename` text NOT NULL,
   PRIMARY KEY (`secroleid`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2559,7 +2559,7 @@ CREATE TABLE `sellthroughsupport` (
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`),
   KEY `categoryid` (`categoryid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2619,7 +2619,7 @@ CREATE TABLE `shippers` (
   `shippername` char(40) NOT NULL DEFAULT '',
   `mincharge` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`shipper_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2664,7 +2664,7 @@ CREATE TABLE `stockcatproperties` (
   PRIMARY KEY (`stkcatpropid`),
   KEY `categoryid` (`categoryid`),
   CONSTRAINT `stockcatproperties_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2702,7 +2702,7 @@ CREATE TABLE `stockcounts` (
   KEY `LocCode` (`loccode`),
   CONSTRAINT `stockcounts_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockcounts_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2834,7 +2834,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2879,7 +2879,7 @@ CREATE TABLE `stockrequest` (
   KEY `departmentid` (`departmentid`),
   CONSTRAINT `stockrequest_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockrequest_ibfk_2` FOREIGN KEY (`departmentid`) REFERENCES `departments` (`departmentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2920,12 +2920,10 @@ CREATE TABLE `stockserialitems` (
   `expirationdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `quantity` double NOT NULL DEFAULT '0',
   `qualitytext` text NOT NULL,
-  `createdate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
   KEY `serialno` (`serialno`),
-  KEY `createdate` (`createdate`),
   CONSTRAINT `stockserialitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockserialitems_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2970,7 +2968,7 @@ CREATE TABLE `suppallocs` (
   KEY `DateAlloc` (`datealloc`),
   CONSTRAINT `suppallocs_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `supptrans` (`id`),
   CONSTRAINT `suppallocs_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `supptrans` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3030,7 +3028,7 @@ CREATE TABLE `supplierdiscounts` (
   KEY `effectivefrom` (`effectivefrom`),
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3090,7 +3088,7 @@ CREATE TABLE `suppliertype` (
   `typeid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `typename` varchar(100) NOT NULL,
   PRIMARY KEY (`typeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3129,7 +3127,7 @@ CREATE TABLE `supptrans` (
   KEY `Type` (`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3174,7 +3172,7 @@ CREATE TABLE `tags` (
   `tagref` tinyint(4) NOT NULL AUTO_INCREMENT,
   `tagdescription` varchar(50) NOT NULL,
   PRIMARY KEY (`tagref`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3197,7 +3195,7 @@ CREATE TABLE `taxauthorities` (
   KEY `PurchTaxGLAccount` (`purchtaxglaccount`),
   CONSTRAINT `taxauthorities_ibfk_1` FOREIGN KEY (`taxglcode`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `taxauthorities_ibfk_2` FOREIGN KEY (`purchtaxglaccount`) REFERENCES `chartmaster` (`accountcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3231,7 +3229,7 @@ CREATE TABLE `taxcategories` (
   `taxcatid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `taxcatname` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`taxcatid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3244,7 +3242,7 @@ CREATE TABLE `taxgroups` (
   `taxgroupid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `taxgroupdescription` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`taxgroupid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3276,7 +3274,7 @@ CREATE TABLE `taxprovinces` (
   `taxprovinceid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `taxprovincename` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`taxprovinceid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3341,7 +3339,7 @@ CREATE TABLE `unitsofmeasure` (
   `unitid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `unitname` varchar(15) NOT NULL DEFAULT '',
   PRIMARY KEY (`unitid`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3488,7 +3486,7 @@ CREATE TABLE `www_users` (
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
@@ -3501,7 +3499,7 @@ CREATE TABLE `www_users` (
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
@@ -3523,6 +3521,20 @@ INSERT INTO `accountgroups` VALUES ('Outward Freight',2,1,5000,'Cost of Goods So
 INSERT INTO `accountgroups` VALUES ('Promotions',5,1,6000,'Marketing Expenses');
 INSERT INTO `accountgroups` VALUES ('Revenue',1,1,4000,'');
 INSERT INTO `accountgroups` VALUES ('Sales',1,1,10,'');
+
+--
+-- Dumping data for table `accountsection`
+--
+
+INSERT INTO `accountsection` VALUES (1,'Income');
+INSERT INTO `accountsection` VALUES (2,'Cost Of Sales');
+INSERT INTO `accountsection` VALUES (5,'Overheads');
+INSERT INTO `accountsection` VALUES (10,'Fixed Assets');
+INSERT INTO `accountsection` VALUES (15,'Inventory');
+INSERT INTO `accountsection` VALUES (20,'Amounts Receivable');
+INSERT INTO `accountsection` VALUES (25,'Cash');
+INSERT INTO `accountsection` VALUES (30,'Amounts Payable');
+INSERT INTO `accountsection` VALUES (50,'Financed By');
 
 --
 -- Dumping data for table `bankaccounts`
@@ -3685,17 +3697,153 @@ INSERT INTO `chartmaster` VALUES ('8900','Other Expenses','Other Revenue and Exp
 INSERT INTO `chartmaster` VALUES ('9100','Income Tax Provision','Income Tax',-1);
 
 --
+-- Dumping data for table `cogsglpostings`
+--
+
+INSERT INTO `cogsglpostings` VALUES (5,'AN','ANY','5000','AN');
+INSERT INTO `cogsglpostings` VALUES (6,'123','ANY','6100','AN');
+
+--
 -- Dumping data for table `companies`
 --
 
 INSERT INTO `companies` VALUES (1,'weberpdemo','not entered yet','','123 Web Way','PO Box 123','Queen Street','Melbourne','Victoria 3043','Australia','+61 3 4567 8901','+61 3 4567 8902','weberp@weberpdemo.com','USD','1100','4900','2100','2400','2150','4200','5200','3500',1,1,1,'5600');
 
 --
--- Dumping data for table `cogsglpostings`
+-- Dumping data for table `config`
 --
 
-INSERT INTO `cogsglpostings` VALUES (5,'AN','ANY','5000','AN');
-INSERT INTO `cogsglpostings` VALUES (6,'123','ANY','6100','AN');
+INSERT INTO `config` VALUES ('AllowOrderLineItemNarrative','1');
+INSERT INTO `config` VALUES ('AllowSalesOfZeroCostItems','0');
+INSERT INTO `config` VALUES ('AutoAuthorisePO','1');
+INSERT INTO `config` VALUES ('AutoCreateWOs','1');
+INSERT INTO `config` VALUES ('AutoDebtorNo','0');
+INSERT INTO `config` VALUES ('AutoIssue','1');
+INSERT INTO `config` VALUES ('AutoSupplierNo','0');
+INSERT INTO `config` VALUES ('CheckCreditLimits','1');
+INSERT INTO `config` VALUES ('Check_Price_Charged_vs_Order_Price','1');
+INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
+INSERT INTO `config` VALUES ('CountryOfOperation','US');
+INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
+INSERT INTO `config` VALUES ('DB_Maintenance','0');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2015-08-14');
+INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
+INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
+INSERT INTO `config` VALUES ('DefaultCustomerType','1');
+INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
+INSERT INTO `config` VALUES ('DefaultDisplayRecordsMax','50');
+INSERT INTO `config` VALUES ('DefaultFactoryLocation','MEL');
+INSERT INTO `config` VALUES ('DefaultPriceList','DE');
+INSERT INTO `config` VALUES ('DefaultSupplierType','1');
+INSERT INTO `config` VALUES ('DefaultTaxCategory','1');
+INSERT INTO `config` VALUES ('Default_Shipper','1');
+INSERT INTO `config` VALUES ('DefineControlledOnWOEntry','1');
+INSERT INTO `config` VALUES ('DispatchCutOffTime','14');
+INSERT INTO `config` VALUES ('DoFreightCalc','0');
+INSERT INTO `config` VALUES ('EDIHeaderMsgId','D:01B:UN:EAN010');
+INSERT INTO `config` VALUES ('EDIReference','WEBERP');
+INSERT INTO `config` VALUES ('EDI_Incoming_Orders','companies/weberp/EDI_Incoming_Orders');
+INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberp/EDI_Pending');
+INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberp/EDI_Sent');
+INSERT INTO `config` VALUES ('ExchangeRateFeed','Google');
+INSERT INTO `config` VALUES ('Extended_CustomerInfo','1');
+INSERT INTO `config` VALUES ('Extended_SupplierInfo','1');
+INSERT INTO `config` VALUES ('FactoryManagerEmail','manager@company.com');
+INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
+INSERT INTO `config` VALUES ('FreightTaxCategory','1');
+INSERT INTO `config` VALUES ('FrequentlyOrderedItems','0');
+INSERT INTO `config` VALUES ('geocode_integration','0');
+INSERT INTO `config` VALUES ('GoogleTranslatorAPIKey','');
+INSERT INTO `config` VALUES ('HTTPS_Only','0');
+INSERT INTO `config` VALUES ('InventoryManagerEmail','test@company.com');
+INSERT INTO `config` VALUES ('InvoicePortraitFormat','0');
+INSERT INTO `config` VALUES ('InvoiceQuantityDefault','1');
+INSERT INTO `config` VALUES ('ItemDescriptionLanguages',',fr_FR.utf8,');
+INSERT INTO `config` VALUES ('LogPath','');
+INSERT INTO `config` VALUES ('LogSeverity','0');
+INSERT INTO `config` VALUES ('MaxImageSize','300');
+INSERT INTO `config` VALUES ('MonthsAuditTrail','1');
+INSERT INTO `config` VALUES ('NumberOfMonthMustBeShown','6');
+INSERT INTO `config` VALUES ('NumberOfPeriodsOfStockUsage','12');
+INSERT INTO `config` VALUES ('OverChargeProportion','30');
+INSERT INTO `config` VALUES ('OverReceiveProportion','20');
+INSERT INTO `config` VALUES ('PackNoteFormat','1');
+INSERT INTO `config` VALUES ('PageLength','48');
+INSERT INTO `config` VALUES ('part_pics_dir','companies/weberp/part_pics');
+INSERT INTO `config` VALUES ('PastDueDays1','30');
+INSERT INTO `config` VALUES ('PastDueDays2','60');
+INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
+INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
+INSERT INTO `config` VALUES ('ProhibitNegativeStock','0');
+INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2013-12-31');
+INSERT INTO `config` VALUES ('PurchasingManagerEmail','test@company.com');
+INSERT INTO `config` VALUES ('QualityCOAText','');
+INSERT INTO `config` VALUES ('QualityLogSamples','0');
+INSERT INTO `config` VALUES ('QualityProdSpecText','');
+INSERT INTO `config` VALUES ('QuickEntries','10');
+INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
+INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
+INSERT INTO `config` VALUES ('RadioBeaconHomeDir','/home/RadioBeacon');
+INSERT INTO `config` VALUES ('RadioBeaconStockLocation','BL');
+INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
+INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
+INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
+INSERT INTO `config` VALUES ('reports_dir','companies/weberp/reports');
+INSERT INTO `config` VALUES ('RequirePickingNote','0');
+INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
+INSERT INTO `config` VALUES ('ShopAboutUs','This web-shop software has been developed by Logic Works Ltd for webERP. For support contact Phil Daintree by rn<a href=\\\"mailto:support@logicworks.co.nz\\\">email</a>rn');
+INSERT INTO `config` VALUES ('ShopAllowBankTransfer','1');
+INSERT INTO `config` VALUES ('ShopAllowCreditCards','1');
+INSERT INTO `config` VALUES ('ShopAllowPayPal','1');
+INSERT INTO `config` VALUES ('ShopAllowSurcharges','1');
+INSERT INTO `config` VALUES ('ShopBankTransferSurcharge','0.0');
+INSERT INTO `config` VALUES ('ShopBranchCode','ANGRY');
+INSERT INTO `config` VALUES ('ShopContactUs','For support contact Logic Works Ltd by rn<a href=\\\"mailto:support@logicworks.co.nz\\\">email</a>');
+INSERT INTO `config` VALUES ('ShopCreditCardBankAccount','1030');
+INSERT INTO `config` VALUES ('ShopCreditCardGateway','SwipeHQ');
+INSERT INTO `config` VALUES ('ShopCreditCardSurcharge','2.95');
+INSERT INTO `config` VALUES ('ShopDebtorNo','ANGRY');
+INSERT INTO `config` VALUES ('ShopFreightMethod','NoFreight');
+INSERT INTO `config` VALUES ('ShopFreightPolicy','Shipping information');
+INSERT INTO `config` VALUES ('ShopManagerEmail','shopmanager@yourdomain.com');
+INSERT INTO `config` VALUES ('ShopMode','test');
+INSERT INTO `config` VALUES ('ShopName','webERP Demo Store');
+INSERT INTO `config` VALUES ('ShopPayFlowMerchant','');
+INSERT INTO `config` VALUES ('ShopPayFlowPassword','');
+INSERT INTO `config` VALUES ('ShopPayFlowUser','');
+INSERT INTO `config` VALUES ('ShopPayFlowVendor','');
+INSERT INTO `config` VALUES ('ShopPayPalBankAccount','1040');
+INSERT INTO `config` VALUES ('ShopPaypalCommissionAccount','1');
+INSERT INTO `config` VALUES ('ShopPayPalPassword','');
+INSERT INTO `config` VALUES ('ShopPayPalProPassword','');
+INSERT INTO `config` VALUES ('ShopPayPalProSignature','');
+INSERT INTO `config` VALUES ('ShopPayPalProUser','');
+INSERT INTO `config` VALUES ('ShopPayPalSignature','');
+INSERT INTO `config` VALUES ('ShopPayPalSurcharge','3.4');
+INSERT INTO `config` VALUES ('ShopPayPalUser','');
+INSERT INTO `config` VALUES ('ShopPrivacyStatement','<h2>We are committed to protecting your privacy.</h2><p>We recognise that your personal information is confidential and we understand that it is important for you to know how we treat your personal information. Please read on for more information about our Privacy Policy.</p><ul><li><h2>1. What information do we collect and how do we use it?</h2><br />We use the information it collects from you for the following purposes:<ul><li>To assist us in providing you with a quality service</li><li>To respond to, and process, your request</li><li>To notify competition winners or fulfil promotional obligations</li><li>To inform you of, and provide you with, new and existing products and services offered by us from time to time </li></ul><p>Any information we collect will not be used in ways that you have not consented to.</p><p>If you send us an email, we will store your email address and the contents of the email. This information will only be used for the purpose for which you have provided it. Electronic mail submitted to us is handled and saved according to the provisions of the the relevant statues.</p><p>When we offer contests and promotions, customers who choose to enter are asked to provide personal information. This information may then be used by us to notify winners, or to fulfil promotional obligations.</p><p>We may use the information we collect to occasionally notify you about important functionality changes to our website, new and special offers we think you will find valuable. If at any stage you no longer wish to receive these notifications you may opt out by sending us an email.</p><p>We do monitor this website in order to identify user trends and to improve the site if necessary. Any of this information, such as the type of site browser your computer has, will be used only in aggregate form and your individual details will not be identified.</p></li><li><h2>2. How do we store and protect your personal information and who has access to that information?</h2><p>As required by statute, we follow strict procedures when storing and using the information you have provided.</p><p>We do not sell, trade or rent your personal information to others. We may provide aggregate statistics about our customers and website trends. However, these statistics will not have any personal information which would identify you.</p><p>Only specific employees within our company are able to access your personal data.</p><p>This policy means that we may require proof of identity before we disclose any information to you.</p></li><li><h2>3. What should I do if I want to change my details or if I donÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢t want to be contacted any more?</h2><p>At any stage you have the right to access and amend or update your personal details. If you do not want to receive any communications from us you may opt out by contacting us see <a href=\\\"index.php?Page=ContactUs\\\">the Contact Us Page</a></p></li><li><h2>4. What happens if we decide to change this Privacy Policy?</h2><p>If we change any aspect of our Privacy Policy we will post these changes on this page so that you are always aware of how we are treating your personal information.</p></li><li><h2>5. How can you contact us if you have any questions, comments or concerns about our Privacy Policy?</h2><p>We welcome any questions or comments you may have please email us via the contact details provided on our <a href=\\\"index.php?Page=ContactUs\\\">Contact Us Page</a></p></li></ul><p>Please also refer to our <a href=\\\"index.php?Page=TermsAndConditions\\\">Terms and Conditions</a> for more information.</p>');
+INSERT INTO `config` VALUES ('ShopShowOnlyAvailableItems','0');
+INSERT INTO `config` VALUES ('ShopShowQOHColumn','1');
+INSERT INTO `config` VALUES ('ShopStockLocations','MEL,TOR');
+INSERT INTO `config` VALUES ('ShopSurchargeStockID','PAYTSURCHARGE');
+INSERT INTO `config` VALUES ('ShopSwipeHQAPIKey','');
+INSERT INTO `config` VALUES ('ShopSwipeHQMerchantID','');
+INSERT INTO `config` VALUES ('ShopTermsConditions','<p>These terms cover the use of this website. Use includes visits to our sites, purchases on our sites, participation in our database and promotions. These terms of use apply to you when you use our websites. Please read these terms carefully - if you need to refer to them again they can be accessed from the link at the bottom of any page of our websites.</p><br /><ul><li><h2>1. Content</h2><p>While we endeavour to supply accurate information on this site, errors and omissions may occur. We do not accept any liability, direct or indirect, for any loss or damage which may directly or indirectly result from any advice, opinion, information, representation or omission whether negligent or otherwise, contained on this site. You are solely responsible for the actions you take in reliance on the content on, or accessed, through this site.</p><p>We reserve the right to make changes to the content on this site at any time and without notice.</p><p>To the extent permitted by law, we make no warranties in relation to the merchantability, fitness for purpose, freedom from computer virus, accuracy or availability of this web site or any other web site.</p></li><li><h2>2. Making a contract with us</h2><p>When you place an order with us, you are making an offer to buy goods. We will send you an e-mail to confirm that we have received and accepted your order, which indicates that a contract has been made between us. We will take payment from you when we accept your order. In the unlikely event that the goods are no longer available, we will refund your payment to the account it originated from, and advise that the goods are no longer available.</p><p>An order is placed on our website via adding a product to the shopping cart and proceeding through our checkout process. The checkout process includes giving us delivery and any other relevant details for your order, entering payment information and submitting your order. The final step consists of a confirmation page with full details of your order, which you are able to print as a receipt of your order. We will also email you with confirmation of your order.</p><p>We reserve the right to refuse or cancel any orders that we believe, solely by our own judgement, to be placed for commercial purposes, e.g. any kind of reseller. We also reserve the right to refuse or cancel any orders that we believe, solely by our own judgement, to have been placed fraudulently.</p><p>We reserve the right to limit the number of an item customers can purchase in a single transaction.</p></li><li><h2>3. Payment options</h2><p>We currently accept the following credit cards:</p><ul><li>Visa</li><li>MasterCard</li><li>American Express</li></ul>You can also pay using PayPal and internet bank transfer. Surcharges may apply for payment by PayPal or credit cards.</p></li><li><h2>4. Pricing</h2><p>All prices listed are inclusive of relevant taxes.  All prices are correct when published. Please note that we reserve the right to alter prices at any time for any reason. If this should happen after you have ordered a product, we will contact you prior to processing your order. Online and in store pricing may differ.</p></li><li><h2>5. Website and Credit Card Security</h2><p>We want you to have a safe and secure shopping experience online. All payments via our sites are processed using SSL (Secure Socket Layer) protocol, whereby sensitive information is encrypted to protect your privacy.</p><p>You can help to protect your details from unauthorised access by logging out each time you finish using the site, particularly if you are doing so from a public or shared computer.</p><p>For security purposes certain transactions may require proof of identification.</p></li><li><h2>6. Delivery and Delivery Charges</h2><p>We do not deliver to Post Office boxes.</p><p>Please note that a signature is required for all deliveries. The goods become the recipientÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s property and responsibility once they have been signed for at the time of delivery. If goods are lost or damaged in transit, please contact us within 7 business days <a href=\\\"index.php?Page=ContactUs\\\">see Contact Us page for contact details</a>. We will use this delivery information to make a claim against our courier company. We will offer you the choice of a replacement or a full refund, once we have received confirmation from our courier company that delivery was not successful.</p></li><li><h2>7. Restricted Products</h2><p>Some products on our site carry an age restriction, if a product you have selected is R16 or R18 a message will appear in the cart asking you to confirm you are an appropriate age to purchase the item(s).  Confirming this means that you are of an eligible age to purchase the selected product(s).  You are also agreeing that you are not purchasing the item on behalf of a person who is not the appropriate age.</p></li><li><h2>8. Delivery Period</h2><p>Delivery lead time for products may vary. Deliveries to rural addresses may take longer.  You will receive an email that confirms that your order has been dispatched.</p><p>To ensure successful delivery, please provide a delivery address where someone will be present during business hours to sign for the receipt of your package. You can track your order by entering the tracking number emailed to you in the dispatch email at the Courier\\\'s web-site.</p></li><li><h2>9. Disclaimer</h2><p>Our websites are intended to provide information for people shopping our products and accessing our services, including making purchases via our website and registering on our database to receive e-mails from us.</p><p>While we endeavour to supply accurate information on this site, errors and omissions may occur. We do not accept any liability, direct or indirect, for any loss or damage which may directly or indirectly result from any advice, opinion, information, representation or omission whether negligent or otherwise, contained on this site. You are solely responsible for the actions you take in reliance on the content on, or accessed, through this site.</p><p>We reserve the right to make changes to the content on this site at any time and without notice.</p><p>To the extent permitted by law, we make no warranties in relation to the merchantability, fitness for purpose, freedom from computer virus, accuracy or availability of this web site or any other web site.</p></li><li><h2>10. Links</h2><p>Please note that although this site has some hyperlinks to other third party websites, these sites have not been prepared by us are not under our control. The links are only provided as a convenience, and do not imply that we endorse, check, or approve of the third party site. We are not responsible for the privacy principles or content of these third party sites. We are not responsible for the availability of any of these links.</p></li><li><h2>11. Jurisdiction</h2><p>This website is governed by, and is to be interpreted in accordance with, the laws of  ????.</p></li><li><h2>12. Changes to this Agreement</h2><p>We reserve the right to alter, modify or update these terms of use. These terms apply to your order. We may change our terms and conditions at any time, so please do not assume that the same terms will apply to future orders.</p></li></ul>');
+INSERT INTO `config` VALUES ('ShopTitle','Shop Home');
+INSERT INTO `config` VALUES ('ShowStockidOnImages','0');
+INSERT INTO `config` VALUES ('ShowValueOnGRN','1');
+INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
+INSERT INTO `config` VALUES ('SmtpSetting','0');
+INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
+INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
+INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
+INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2017-12-05');
+INSERT INTO `config` VALUES ('VersionNumber','4.14.1');
+INSERT INTO `config` VALUES ('WeightedAverageCosting','0');
+INSERT INTO `config` VALUES ('WikiApp','DokuWiki');
+INSERT INTO `config` VALUES ('WikiPath','wiki');
+INSERT INTO `config` VALUES ('WorkingDaysWeek','5');
+INSERT INTO `config` VALUES ('YearEnd','3');
 
 --
 -- Dumping data for table `currencies`
@@ -3707,6 +3855,149 @@ INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0,1);
 INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0,0);
 INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,0,0);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',2,1,1);
+
+--
+-- Dumping data for table `edi_orders_seg_groups`
+--
+
+INSERT INTO `edi_orders_seg_groups` VALUES (0,1,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (1,9999,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (2,99,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (3,99,2);
+INSERT INTO `edi_orders_seg_groups` VALUES (5,5,2);
+INSERT INTO `edi_orders_seg_groups` VALUES (6,5,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (7,5,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (8,10,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (9,9999,8);
+INSERT INTO `edi_orders_seg_groups` VALUES (10,10,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (11,10,10);
+INSERT INTO `edi_orders_seg_groups` VALUES (12,5,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (13,99,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (14,5,13);
+INSERT INTO `edi_orders_seg_groups` VALUES (15,10,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (19,99,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (20,1,19);
+INSERT INTO `edi_orders_seg_groups` VALUES (21,1,19);
+INSERT INTO `edi_orders_seg_groups` VALUES (22,2,19);
+INSERT INTO `edi_orders_seg_groups` VALUES (23,1,19);
+INSERT INTO `edi_orders_seg_groups` VALUES (24,5,19);
+INSERT INTO `edi_orders_seg_groups` VALUES (28,200000,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (32,25,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (33,9999,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (34,99,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (36,5,34);
+INSERT INTO `edi_orders_seg_groups` VALUES (37,9999,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (38,10,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (39,999,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (42,5,39);
+INSERT INTO `edi_orders_seg_groups` VALUES (43,99,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (44,1,43);
+INSERT INTO `edi_orders_seg_groups` VALUES (45,1,43);
+INSERT INTO `edi_orders_seg_groups` VALUES (46,2,43);
+INSERT INTO `edi_orders_seg_groups` VALUES (47,1,43);
+INSERT INTO `edi_orders_seg_groups` VALUES (48,5,43);
+INSERT INTO `edi_orders_seg_groups` VALUES (49,10,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (50,1,0);
+
+--
+-- Dumping data for table `edi_orders_segs`
+--
+
+INSERT INTO `edi_orders_segs` VALUES (1,'UNB',0,1);
+INSERT INTO `edi_orders_segs` VALUES (2,'UNH',0,1);
+INSERT INTO `edi_orders_segs` VALUES (3,'BGM',0,1);
+INSERT INTO `edi_orders_segs` VALUES (4,'DTM',0,35);
+INSERT INTO `edi_orders_segs` VALUES (5,'PAI',0,1);
+INSERT INTO `edi_orders_segs` VALUES (6,'ALI',0,5);
+INSERT INTO `edi_orders_segs` VALUES (7,'FTX',0,99);
+INSERT INTO `edi_orders_segs` VALUES (8,'RFF',1,1);
+INSERT INTO `edi_orders_segs` VALUES (9,'DTM',1,5);
+INSERT INTO `edi_orders_segs` VALUES (10,'NAD',2,1);
+INSERT INTO `edi_orders_segs` VALUES (11,'LOC',2,99);
+INSERT INTO `edi_orders_segs` VALUES (12,'FII',2,5);
+INSERT INTO `edi_orders_segs` VALUES (13,'RFF',3,1);
+INSERT INTO `edi_orders_segs` VALUES (14,'CTA',5,1);
+INSERT INTO `edi_orders_segs` VALUES (15,'COM',5,5);
+INSERT INTO `edi_orders_segs` VALUES (16,'TAX',6,1);
+INSERT INTO `edi_orders_segs` VALUES (17,'MOA',6,1);
+INSERT INTO `edi_orders_segs` VALUES (18,'CUX',7,1);
+INSERT INTO `edi_orders_segs` VALUES (19,'DTM',7,5);
+INSERT INTO `edi_orders_segs` VALUES (20,'PAT',8,1);
+INSERT INTO `edi_orders_segs` VALUES (21,'DTM',8,5);
+INSERT INTO `edi_orders_segs` VALUES (22,'PCD',8,1);
+INSERT INTO `edi_orders_segs` VALUES (23,'MOA',9,1);
+INSERT INTO `edi_orders_segs` VALUES (24,'TDT',10,1);
+INSERT INTO `edi_orders_segs` VALUES (25,'LOC',11,1);
+INSERT INTO `edi_orders_segs` VALUES (26,'DTM',11,5);
+INSERT INTO `edi_orders_segs` VALUES (27,'TOD',12,1);
+INSERT INTO `edi_orders_segs` VALUES (28,'LOC',12,2);
+INSERT INTO `edi_orders_segs` VALUES (29,'PAC',13,1);
+INSERT INTO `edi_orders_segs` VALUES (30,'PCI',14,1);
+INSERT INTO `edi_orders_segs` VALUES (31,'RFF',14,1);
+INSERT INTO `edi_orders_segs` VALUES (32,'DTM',14,5);
+INSERT INTO `edi_orders_segs` VALUES (33,'GIN',14,10);
+INSERT INTO `edi_orders_segs` VALUES (34,'EQD',15,1);
+INSERT INTO `edi_orders_segs` VALUES (35,'ALC',19,1);
+INSERT INTO `edi_orders_segs` VALUES (36,'ALI',19,5);
+INSERT INTO `edi_orders_segs` VALUES (37,'DTM',19,5);
+INSERT INTO `edi_orders_segs` VALUES (38,'QTY',20,1);
+INSERT INTO `edi_orders_segs` VALUES (39,'RNG',20,1);
+INSERT INTO `edi_orders_segs` VALUES (40,'PCD',21,1);
+INSERT INTO `edi_orders_segs` VALUES (41,'RNG',21,1);
+INSERT INTO `edi_orders_segs` VALUES (42,'MOA',22,1);
+INSERT INTO `edi_orders_segs` VALUES (43,'RNG',22,1);
+INSERT INTO `edi_orders_segs` VALUES (44,'RTE',23,1);
+INSERT INTO `edi_orders_segs` VALUES (45,'RNG',23,1);
+INSERT INTO `edi_orders_segs` VALUES (46,'TAX',24,1);
+INSERT INTO `edi_orders_segs` VALUES (47,'MOA',24,1);
+INSERT INTO `edi_orders_segs` VALUES (48,'LIN',28,1);
+INSERT INTO `edi_orders_segs` VALUES (49,'PIA',28,25);
+INSERT INTO `edi_orders_segs` VALUES (50,'IMD',28,99);
+INSERT INTO `edi_orders_segs` VALUES (51,'MEA',28,99);
+INSERT INTO `edi_orders_segs` VALUES (52,'QTY',28,99);
+INSERT INTO `edi_orders_segs` VALUES (53,'ALI',28,5);
+INSERT INTO `edi_orders_segs` VALUES (54,'DTM',28,35);
+INSERT INTO `edi_orders_segs` VALUES (55,'MOA',28,10);
+INSERT INTO `edi_orders_segs` VALUES (56,'GIN',28,127);
+INSERT INTO `edi_orders_segs` VALUES (57,'QVR',28,1);
+INSERT INTO `edi_orders_segs` VALUES (58,'FTX',28,99);
+INSERT INTO `edi_orders_segs` VALUES (59,'PRI',32,1);
+INSERT INTO `edi_orders_segs` VALUES (60,'CUX',32,1);
+INSERT INTO `edi_orders_segs` VALUES (61,'DTM',32,5);
+INSERT INTO `edi_orders_segs` VALUES (62,'RFF',33,1);
+INSERT INTO `edi_orders_segs` VALUES (63,'DTM',33,5);
+INSERT INTO `edi_orders_segs` VALUES (64,'PAC',34,1);
+INSERT INTO `edi_orders_segs` VALUES (65,'QTY',34,5);
+INSERT INTO `edi_orders_segs` VALUES (66,'PCI',36,1);
+INSERT INTO `edi_orders_segs` VALUES (67,'RFF',36,1);
+INSERT INTO `edi_orders_segs` VALUES (68,'DTM',36,5);
+INSERT INTO `edi_orders_segs` VALUES (69,'GIN',36,10);
+INSERT INTO `edi_orders_segs` VALUES (70,'LOC',37,1);
+INSERT INTO `edi_orders_segs` VALUES (71,'QTY',37,1);
+INSERT INTO `edi_orders_segs` VALUES (72,'DTM',37,5);
+INSERT INTO `edi_orders_segs` VALUES (73,'TAX',38,1);
+INSERT INTO `edi_orders_segs` VALUES (74,'MOA',38,1);
+INSERT INTO `edi_orders_segs` VALUES (75,'NAD',39,1);
+INSERT INTO `edi_orders_segs` VALUES (76,'CTA',42,1);
+INSERT INTO `edi_orders_segs` VALUES (77,'COM',42,5);
+INSERT INTO `edi_orders_segs` VALUES (78,'ALC',43,1);
+INSERT INTO `edi_orders_segs` VALUES (79,'ALI',43,5);
+INSERT INTO `edi_orders_segs` VALUES (80,'DTM',43,5);
+INSERT INTO `edi_orders_segs` VALUES (81,'QTY',44,1);
+INSERT INTO `edi_orders_segs` VALUES (82,'RNG',44,1);
+INSERT INTO `edi_orders_segs` VALUES (83,'PCD',45,1);
+INSERT INTO `edi_orders_segs` VALUES (84,'RNG',45,1);
+INSERT INTO `edi_orders_segs` VALUES (85,'MOA',46,1);
+INSERT INTO `edi_orders_segs` VALUES (86,'RNG',46,1);
+INSERT INTO `edi_orders_segs` VALUES (87,'RTE',47,1);
+INSERT INTO `edi_orders_segs` VALUES (88,'RNG',47,1);
+INSERT INTO `edi_orders_segs` VALUES (89,'TAX',48,1);
+INSERT INTO `edi_orders_segs` VALUES (90,'MOA',48,1);
+INSERT INTO `edi_orders_segs` VALUES (91,'TDT',49,1);
+INSERT INTO `edi_orders_segs` VALUES (92,'UNS',50,1);
+INSERT INTO `edi_orders_segs` VALUES (93,'MOA',50,1);
+INSERT INTO `edi_orders_segs` VALUES (94,'CNT',50,1);
+INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
 
 --
 -- Dumping data for table `holdreasons`
@@ -3723,6 +4014,14 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 INSERT INTO `locations` VALUES ('AN','Anaheim',' ','','','','','United States','','','','Brett',1,'',0,'',0,1,'',1);
 INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','2345','Australia','+(61) (3) 5678901','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,'ANGRY',0,'ANGRY',1,1,'',1);
 INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,'',1,'',1,1,'',1);
+
+--
+-- Dumping data for table `paymentmethods`
+--
+
+INSERT INTO `paymentmethods` VALUES (1,'Cheque',1,1,1,0,0);
+INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1,0,0,0.25);
+INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1,0,0,0);
 
 --
 -- Dumping data for table `paymentterms`
@@ -6459,406 +6758,6 @@ INSERT INTO `salesglpostings` VALUES (2,'AN','AIRCON','5000','4800','DE');
 INSERT INTO `salesglpostings` VALUES (3,'AN','ZPAYT','7230','7230','AN');
 
 --
--- Dumping data for table `systypes`
---
-
-INSERT INTO `systypes` VALUES (0,'Journal - GL',8);
-INSERT INTO `systypes` VALUES (1,'Payment - GL',7);
-INSERT INTO `systypes` VALUES (2,'Receipt - GL',1);
-INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',2);
-INSERT INTO `systypes` VALUES (11,'Credit Note',1);
-INSERT INTO `systypes` VALUES (12,'Receipt',5);
-INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
-INSERT INTO `systypes` VALUES (16,'Location Transfer',28);
-INSERT INTO `systypes` VALUES (17,'Stock Adjustment',28);
-INSERT INTO `systypes` VALUES (18,'Purchase Order',37);
-INSERT INTO `systypes` VALUES (19,'Picking List',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',45);
-INSERT INTO `systypes` VALUES (21,'Debit Note',8);
-INSERT INTO `systypes` VALUES (22,'Creditors Payment',11);
-INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',59);
-INSERT INTO `systypes` VALUES (26,'Work Order Receipt',8);
-INSERT INTO `systypes` VALUES (28,'Work Order Issue',17);
-INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',12);
-INSERT INTO `systypes` VALUES (31,'Shipment Close',28);
-INSERT INTO `systypes` VALUES (32,'Contract Close',6);
-INSERT INTO `systypes` VALUES (35,'Cost Update',26);
-INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
-INSERT INTO `systypes` VALUES (37,'Tenders',0);
-INSERT INTO `systypes` VALUES (38,'Stock Requests',2);
-INSERT INTO `systypes` VALUES (40,'Work Order',37);
-INSERT INTO `systypes` VALUES (41,'Asset Addition',1);
-INSERT INTO `systypes` VALUES (42,'Asset Category Change',1);
-INSERT INTO `systypes` VALUES (43,'Delete w/down asset',1);
-INSERT INTO `systypes` VALUES (44,'Depreciation',1);
-INSERT INTO `systypes` VALUES (49,'Import Fixed Assets',1);
-INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
-INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',21);
-INSERT INTO `systypes` VALUES (600,'Auto Supplier Number',0);
-
---
--- Dumping data for table `taxauthorities`
---
-
-INSERT INTO `taxauthorities` VALUES (1,'Australian GST','2300','2310','','','','');
-INSERT INTO `taxauthorities` VALUES (5,'Sales Tax','2300','2310','','','','');
-INSERT INTO `taxauthorities` VALUES (11,'Canadian GST','2300','2310','','','','');
-INSERT INTO `taxauthorities` VALUES (12,'Ontario PST','2300','2310','','','','');
-INSERT INTO `taxauthorities` VALUES (13,'UK VAT','2300','2310','','','','');
-
---
--- Dumping data for table `taxgroups`
---
-
-INSERT INTO `taxgroups` VALUES (1,'Default');
-INSERT INTO `taxgroups` VALUES (2,'Ontario');
-INSERT INTO `taxgroups` VALUES (3,'UK Inland Revenue');
-
---
--- Dumping data for table `taxauthrates`
---
-
-INSERT INTO `taxauthrates` VALUES (1,1,1,0.1);
-INSERT INTO `taxauthrates` VALUES (1,1,2,0);
-INSERT INTO `taxauthrates` VALUES (1,1,5,0);
-INSERT INTO `taxauthrates` VALUES (5,1,1,0.2);
-INSERT INTO `taxauthrates` VALUES (5,1,2,0.35);
-INSERT INTO `taxauthrates` VALUES (5,1,5,0);
-INSERT INTO `taxauthrates` VALUES (11,1,1,0.07);
-INSERT INTO `taxauthrates` VALUES (11,1,2,0.12);
-INSERT INTO `taxauthrates` VALUES (11,1,5,0.07);
-INSERT INTO `taxauthrates` VALUES (12,1,1,0.05);
-INSERT INTO `taxauthrates` VALUES (12,1,2,0.075);
-INSERT INTO `taxauthrates` VALUES (12,1,5,0);
-INSERT INTO `taxauthrates` VALUES (13,1,1,0);
-INSERT INTO `taxauthrates` VALUES (13,1,2,0);
-INSERT INTO `taxauthrates` VALUES (13,1,5,0);
-
---
--- Dumping data for table `taxcategories`
---
-
-INSERT INTO `taxcategories` VALUES (1,'Taxable supply');
-INSERT INTO `taxcategories` VALUES (2,'Luxury Items');
-INSERT INTO `taxcategories` VALUES (4,'Exempt');
-INSERT INTO `taxcategories` VALUES (5,'Freight');
-
---
--- Dumping data for table `taxprovinces`
---
-
-INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
-
---
--- Dumping data for table `www_users`
---
-
-INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2017-12-05 18:46:18','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'fluid','en_GB.utf8',0,0);
-INSERT INTO `www_users` VALUES ('WEB0000021','$2y$10$aTt/treAhiVVd0mPw1Ums.GcOxBtX/3cIsD1RL//0iT3QUYjvIDlS','Phil Daintree','WEB0000021','','','1234564','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000021','A4','1,0,0,0,0,0,0,0,0,0,0',0,1,1,0,30,'','en_GB.utf8',0,0);
-
---
--- Dumping data for table `edi_orders_segs`
---
-
-INSERT INTO `edi_orders_segs` VALUES (1,'UNB',0,1);
-INSERT INTO `edi_orders_segs` VALUES (2,'UNH',0,1);
-INSERT INTO `edi_orders_segs` VALUES (3,'BGM',0,1);
-INSERT INTO `edi_orders_segs` VALUES (4,'DTM',0,35);
-INSERT INTO `edi_orders_segs` VALUES (5,'PAI',0,1);
-INSERT INTO `edi_orders_segs` VALUES (6,'ALI',0,5);
-INSERT INTO `edi_orders_segs` VALUES (7,'FTX',0,99);
-INSERT INTO `edi_orders_segs` VALUES (8,'RFF',1,1);
-INSERT INTO `edi_orders_segs` VALUES (9,'DTM',1,5);
-INSERT INTO `edi_orders_segs` VALUES (10,'NAD',2,1);
-INSERT INTO `edi_orders_segs` VALUES (11,'LOC',2,99);
-INSERT INTO `edi_orders_segs` VALUES (12,'FII',2,5);
-INSERT INTO `edi_orders_segs` VALUES (13,'RFF',3,1);
-INSERT INTO `edi_orders_segs` VALUES (14,'CTA',5,1);
-INSERT INTO `edi_orders_segs` VALUES (15,'COM',5,5);
-INSERT INTO `edi_orders_segs` VALUES (16,'TAX',6,1);
-INSERT INTO `edi_orders_segs` VALUES (17,'MOA',6,1);
-INSERT INTO `edi_orders_segs` VALUES (18,'CUX',7,1);
-INSERT INTO `edi_orders_segs` VALUES (19,'DTM',7,5);
-INSERT INTO `edi_orders_segs` VALUES (20,'PAT',8,1);
-INSERT INTO `edi_orders_segs` VALUES (21,'DTM',8,5);
-INSERT INTO `edi_orders_segs` VALUES (22,'PCD',8,1);
-INSERT INTO `edi_orders_segs` VALUES (23,'MOA',9,1);
-INSERT INTO `edi_orders_segs` VALUES (24,'TDT',10,1);
-INSERT INTO `edi_orders_segs` VALUES (25,'LOC',11,1);
-INSERT INTO `edi_orders_segs` VALUES (26,'DTM',11,5);
-INSERT INTO `edi_orders_segs` VALUES (27,'TOD',12,1);
-INSERT INTO `edi_orders_segs` VALUES (28,'LOC',12,2);
-INSERT INTO `edi_orders_segs` VALUES (29,'PAC',13,1);
-INSERT INTO `edi_orders_segs` VALUES (30,'PCI',14,1);
-INSERT INTO `edi_orders_segs` VALUES (31,'RFF',14,1);
-INSERT INTO `edi_orders_segs` VALUES (32,'DTM',14,5);
-INSERT INTO `edi_orders_segs` VALUES (33,'GIN',14,10);
-INSERT INTO `edi_orders_segs` VALUES (34,'EQD',15,1);
-INSERT INTO `edi_orders_segs` VALUES (35,'ALC',19,1);
-INSERT INTO `edi_orders_segs` VALUES (36,'ALI',19,5);
-INSERT INTO `edi_orders_segs` VALUES (37,'DTM',19,5);
-INSERT INTO `edi_orders_segs` VALUES (38,'QTY',20,1);
-INSERT INTO `edi_orders_segs` VALUES (39,'RNG',20,1);
-INSERT INTO `edi_orders_segs` VALUES (40,'PCD',21,1);
-INSERT INTO `edi_orders_segs` VALUES (41,'RNG',21,1);
-INSERT INTO `edi_orders_segs` VALUES (42,'MOA',22,1);
-INSERT INTO `edi_orders_segs` VALUES (43,'RNG',22,1);
-INSERT INTO `edi_orders_segs` VALUES (44,'RTE',23,1);
-INSERT INTO `edi_orders_segs` VALUES (45,'RNG',23,1);
-INSERT INTO `edi_orders_segs` VALUES (46,'TAX',24,1);
-INSERT INTO `edi_orders_segs` VALUES (47,'MOA',24,1);
-INSERT INTO `edi_orders_segs` VALUES (48,'LIN',28,1);
-INSERT INTO `edi_orders_segs` VALUES (49,'PIA',28,25);
-INSERT INTO `edi_orders_segs` VALUES (50,'IMD',28,99);
-INSERT INTO `edi_orders_segs` VALUES (51,'MEA',28,99);
-INSERT INTO `edi_orders_segs` VALUES (52,'QTY',28,99);
-INSERT INTO `edi_orders_segs` VALUES (53,'ALI',28,5);
-INSERT INTO `edi_orders_segs` VALUES (54,'DTM',28,35);
-INSERT INTO `edi_orders_segs` VALUES (55,'MOA',28,10);
-INSERT INTO `edi_orders_segs` VALUES (56,'GIN',28,127);
-INSERT INTO `edi_orders_segs` VALUES (57,'QVR',28,1);
-INSERT INTO `edi_orders_segs` VALUES (58,'FTX',28,99);
-INSERT INTO `edi_orders_segs` VALUES (59,'PRI',32,1);
-INSERT INTO `edi_orders_segs` VALUES (60,'CUX',32,1);
-INSERT INTO `edi_orders_segs` VALUES (61,'DTM',32,5);
-INSERT INTO `edi_orders_segs` VALUES (62,'RFF',33,1);
-INSERT INTO `edi_orders_segs` VALUES (63,'DTM',33,5);
-INSERT INTO `edi_orders_segs` VALUES (64,'PAC',34,1);
-INSERT INTO `edi_orders_segs` VALUES (65,'QTY',34,5);
-INSERT INTO `edi_orders_segs` VALUES (66,'PCI',36,1);
-INSERT INTO `edi_orders_segs` VALUES (67,'RFF',36,1);
-INSERT INTO `edi_orders_segs` VALUES (68,'DTM',36,5);
-INSERT INTO `edi_orders_segs` VALUES (69,'GIN',36,10);
-INSERT INTO `edi_orders_segs` VALUES (70,'LOC',37,1);
-INSERT INTO `edi_orders_segs` VALUES (71,'QTY',37,1);
-INSERT INTO `edi_orders_segs` VALUES (72,'DTM',37,5);
-INSERT INTO `edi_orders_segs` VALUES (73,'TAX',38,1);
-INSERT INTO `edi_orders_segs` VALUES (74,'MOA',38,1);
-INSERT INTO `edi_orders_segs` VALUES (75,'NAD',39,1);
-INSERT INTO `edi_orders_segs` VALUES (76,'CTA',42,1);
-INSERT INTO `edi_orders_segs` VALUES (77,'COM',42,5);
-INSERT INTO `edi_orders_segs` VALUES (78,'ALC',43,1);
-INSERT INTO `edi_orders_segs` VALUES (79,'ALI',43,5);
-INSERT INTO `edi_orders_segs` VALUES (80,'DTM',43,5);
-INSERT INTO `edi_orders_segs` VALUES (81,'QTY',44,1);
-INSERT INTO `edi_orders_segs` VALUES (82,'RNG',44,1);
-INSERT INTO `edi_orders_segs` VALUES (83,'PCD',45,1);
-INSERT INTO `edi_orders_segs` VALUES (84,'RNG',45,1);
-INSERT INTO `edi_orders_segs` VALUES (85,'MOA',46,1);
-INSERT INTO `edi_orders_segs` VALUES (86,'RNG',46,1);
-INSERT INTO `edi_orders_segs` VALUES (87,'RTE',47,1);
-INSERT INTO `edi_orders_segs` VALUES (88,'RNG',47,1);
-INSERT INTO `edi_orders_segs` VALUES (89,'TAX',48,1);
-INSERT INTO `edi_orders_segs` VALUES (90,'MOA',48,1);
-INSERT INTO `edi_orders_segs` VALUES (91,'TDT',49,1);
-INSERT INTO `edi_orders_segs` VALUES (92,'UNS',50,1);
-INSERT INTO `edi_orders_segs` VALUES (93,'MOA',50,1);
-INSERT INTO `edi_orders_segs` VALUES (94,'CNT',50,1);
-INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
-
---
--- Dumping data for table `edi_orders_seg_groups`
---
-
-INSERT INTO `edi_orders_seg_groups` VALUES (0,1,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (1,9999,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (2,99,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (3,99,2);
-INSERT INTO `edi_orders_seg_groups` VALUES (5,5,2);
-INSERT INTO `edi_orders_seg_groups` VALUES (6,5,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (7,5,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (8,10,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (9,9999,8);
-INSERT INTO `edi_orders_seg_groups` VALUES (10,10,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (11,10,10);
-INSERT INTO `edi_orders_seg_groups` VALUES (12,5,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (13,99,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (14,5,13);
-INSERT INTO `edi_orders_seg_groups` VALUES (15,10,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (19,99,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (20,1,19);
-INSERT INTO `edi_orders_seg_groups` VALUES (21,1,19);
-INSERT INTO `edi_orders_seg_groups` VALUES (22,2,19);
-INSERT INTO `edi_orders_seg_groups` VALUES (23,1,19);
-INSERT INTO `edi_orders_seg_groups` VALUES (24,5,19);
-INSERT INTO `edi_orders_seg_groups` VALUES (28,200000,0);
-INSERT INTO `edi_orders_seg_groups` VALUES (32,25,28);
-INSERT INTO `edi_orders_seg_groups` VALUES (33,9999,28);
-INSERT INTO `edi_orders_seg_groups` VALUES (34,99,28);
-INSERT INTO `edi_orders_seg_groups` VALUES (36,5,34);
-INSERT INTO `edi_orders_seg_groups` VALUES (37,9999,28);
-INSERT INTO `edi_orders_seg_groups` VALUES (38,10,28);
-INSERT INTO `edi_orders_seg_groups` VALUES (39,999,28);
-INSERT INTO `edi_orders_seg_groups` VALUES (42,5,39);
-INSERT INTO `edi_orders_seg_groups` VALUES (43,99,28);
-INSERT INTO `edi_orders_seg_groups` VALUES (44,1,43);
-INSERT INTO `edi_orders_seg_groups` VALUES (45,1,43);
-INSERT INTO `edi_orders_seg_groups` VALUES (46,2,43);
-INSERT INTO `edi_orders_seg_groups` VALUES (47,1,43);
-INSERT INTO `edi_orders_seg_groups` VALUES (48,5,43);
-INSERT INTO `edi_orders_seg_groups` VALUES (49,10,28);
-INSERT INTO `edi_orders_seg_groups` VALUES (50,1,0);
-
---
--- Dumping data for table `config`
---
-
-INSERT INTO `config` VALUES ('AllowOrderLineItemNarrative','1');
-INSERT INTO `config` VALUES ('AllowSalesOfZeroCostItems','0');
-INSERT INTO `config` VALUES ('AutoAuthorisePO','1');
-INSERT INTO `config` VALUES ('AutoCreateWOs','1');
-INSERT INTO `config` VALUES ('AutoDebtorNo','0');
-INSERT INTO `config` VALUES ('AutoIssue','1');
-INSERT INTO `config` VALUES ('AutoSupplierNo','0');
-INSERT INTO `config` VALUES ('CheckCreditLimits','1');
-INSERT INTO `config` VALUES ('Check_Price_Charged_vs_Order_Price','1');
-INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
-INSERT INTO `config` VALUES ('CountryOfOperation','US');
-INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
-INSERT INTO `config` VALUES ('DB_Maintenance','0');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2015-08-14');
-INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
-INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
-INSERT INTO `config` VALUES ('DefaultCustomerType','1');
-INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
-INSERT INTO `config` VALUES ('DefaultDisplayRecordsMax','50');
-INSERT INTO `config` VALUES ('DefaultFactoryLocation','MEL');
-INSERT INTO `config` VALUES ('DefaultPriceList','DE');
-INSERT INTO `config` VALUES ('DefaultSupplierType','1');
-INSERT INTO `config` VALUES ('DefaultTaxCategory','1');
-INSERT INTO `config` VALUES ('Default_Shipper','1');
-INSERT INTO `config` VALUES ('DefineControlledOnWOEntry','1');
-INSERT INTO `config` VALUES ('DispatchCutOffTime','14');
-INSERT INTO `config` VALUES ('DoFreightCalc','0');
-INSERT INTO `config` VALUES ('EDIHeaderMsgId','D:01B:UN:EAN010');
-INSERT INTO `config` VALUES ('EDIReference','WEBERP');
-INSERT INTO `config` VALUES ('EDI_Incoming_Orders','companies/test/EDI_Incoming_Orders');
-INSERT INTO `config` VALUES ('EDI_MsgPending','companies/test/EDI_Pending');
-INSERT INTO `config` VALUES ('EDI_MsgSent','companies/test/EDI_Sent');
-INSERT INTO `config` VALUES ('ExchangeRateFeed','Google');
-INSERT INTO `config` VALUES ('Extended_CustomerInfo','1');
-INSERT INTO `config` VALUES ('Extended_SupplierInfo','1');
-INSERT INTO `config` VALUES ('FactoryManagerEmail','manager@company.com');
-INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
-INSERT INTO `config` VALUES ('FreightTaxCategory','1');
-INSERT INTO `config` VALUES ('FrequentlyOrderedItems','0');
-INSERT INTO `config` VALUES ('geocode_integration','0');
-INSERT INTO `config` VALUES ('GoogleTranslatorAPIKey','');
-INSERT INTO `config` VALUES ('HTTPS_Only','0');
-INSERT INTO `config` VALUES ('InventoryManagerEmail','test@company.com');
-INSERT INTO `config` VALUES ('InvoicePortraitFormat','0');
-INSERT INTO `config` VALUES ('InvoiceQuantityDefault','1');
-INSERT INTO `config` VALUES ('ItemDescriptionLanguages',',fr_FR.utf8,');
-INSERT INTO `config` VALUES ('LogPath','');
-INSERT INTO `config` VALUES ('LogSeverity','0');
-INSERT INTO `config` VALUES ('MaxImageSize','300');
-INSERT INTO `config` VALUES ('MonthsAuditTrail','1');
-INSERT INTO `config` VALUES ('NumberOfMonthMustBeShown','6');
-INSERT INTO `config` VALUES ('NumberOfPeriodsOfStockUsage','12');
-INSERT INTO `config` VALUES ('OverChargeProportion','30');
-INSERT INTO `config` VALUES ('OverReceiveProportion','20');
-INSERT INTO `config` VALUES ('PackNoteFormat','1');
-INSERT INTO `config` VALUES ('PageLength','48');
-INSERT INTO `config` VALUES ('part_pics_dir','companies/weberpdemo/part_pics');
-INSERT INTO `config` VALUES ('PastDueDays1','30');
-INSERT INTO `config` VALUES ('PastDueDays2','60');
-INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
-INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
-INSERT INTO `config` VALUES ('ProhibitNegativeStock','0');
-INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2013-12-31');
-INSERT INTO `config` VALUES ('PurchasingManagerEmail','test@company.com');
-INSERT INTO `config` VALUES ('QualityCOAText','');
-INSERT INTO `config` VALUES ('QualityLogSamples','0');
-INSERT INTO `config` VALUES ('QualityProdSpecText','');
-INSERT INTO `config` VALUES ('QuickEntries','10');
-INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
-INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
-INSERT INTO `config` VALUES ('RadioBeaconHomeDir','/home/RadioBeacon');
-INSERT INTO `config` VALUES ('RadioBeaconStockLocation','BL');
-INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
-INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
-INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
-INSERT INTO `config` VALUES ('reports_dir','companies/weberpdemo/reports');
-INSERT INTO `config` VALUES ('RequirePickingNote','0');
-INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
-INSERT INTO `config` VALUES ('ShopAboutUs','This web-shop software has been developed by Logic Works Ltd for webERP. For support contact Phil Daintree by rn<a href=\\\"mailto:support@logicworks.co.nz\\\">email</a>rn');
-INSERT INTO `config` VALUES ('ShopAllowBankTransfer','1');
-INSERT INTO `config` VALUES ('ShopAllowCreditCards','1');
-INSERT INTO `config` VALUES ('ShopAllowPayPal','1');
-INSERT INTO `config` VALUES ('ShopAllowSurcharges','1');
-INSERT INTO `config` VALUES ('ShopBankTransferSurcharge','0.0');
-INSERT INTO `config` VALUES ('ShopBranchCode','ANGRY');
-INSERT INTO `config` VALUES ('ShopContactUs','For support contact Logic Works Ltd by rn<a href=\\\"mailto:support@logicworks.co.nz\\\">email</a>');
-INSERT INTO `config` VALUES ('ShopCreditCardBankAccount','1030');
-INSERT INTO `config` VALUES ('ShopCreditCardGateway','SwipeHQ');
-INSERT INTO `config` VALUES ('ShopCreditCardSurcharge','2.95');
-INSERT INTO `config` VALUES ('ShopDebtorNo','ANGRY');
-INSERT INTO `config` VALUES ('ShopFreightMethod','NoFreight');
-INSERT INTO `config` VALUES ('ShopFreightPolicy','Shipping information');
-INSERT INTO `config` VALUES ('ShopManagerEmail','shopmanager@yourdomain.com');
-INSERT INTO `config` VALUES ('ShopMode','test');
-INSERT INTO `config` VALUES ('ShopName','webERP Demo Store');
-INSERT INTO `config` VALUES ('ShopPayFlowMerchant','');
-INSERT INTO `config` VALUES ('ShopPayFlowPassword','');
-INSERT INTO `config` VALUES ('ShopPayFlowUser','');
-INSERT INTO `config` VALUES ('ShopPayFlowVendor','');
-INSERT INTO `config` VALUES ('ShopPayPalBankAccount','1040');
-INSERT INTO `config` VALUES ('ShopPaypalCommissionAccount','1');
-INSERT INTO `config` VALUES ('ShopPayPalPassword','');
-INSERT INTO `config` VALUES ('ShopPayPalProPassword','');
-INSERT INTO `config` VALUES ('ShopPayPalProSignature','');
-INSERT INTO `config` VALUES ('ShopPayPalProUser','');
-INSERT INTO `config` VALUES ('ShopPayPalSignature','');
-INSERT INTO `config` VALUES ('ShopPayPalSurcharge','3.4');
-INSERT INTO `config` VALUES ('ShopPayPalUser','');
-INSERT INTO `config` VALUES ('ShopPrivacyStatement','<h2>We are committed to protecting your privacy.</h2><p>We recognise that your personal information is confidential and we understand that it is important for you to know how we treat your personal information. Please read on for more information about our Privacy Policy.</p><ul><li><h2>1. What information do we collect and how do we use it?</h2><br />We use the information it collects from you for the following purposes:<ul><li>To assist us in providing you with a quality service</li><li>To respond to, and process, your request</li><li>To notify competition winners or fulfil promotional obligations</li><li>To inform you of, and provide you with, new and existing products and services offered by us from time to time </li></ul><p>Any information we collect will not be used in ways that you have not consented to.</p><p>If you send us an email, we will store your email address and the contents of the email. This information will only be used for the purpose for which you have provided it. Electronic mail submitted to us is handled and saved according to the provisions of the the relevant statues.</p><p>When we offer contests and promotions, customers who choose to enter are asked to provide personal information. This information may then be used by us to notify winners, or to fulfil promotional obligations.</p><p>We may use the information we collect to occasionally notify you about important functionality changes to our website, new and special offers we think you will find valuable. If at any stage you no longer wish to receive these notifications you may opt out by sending us an email.</p><p>We do monitor this website in order to identify user trends and to improve the site if necessary. Any of this information, such as the type of site browser your computer has, will be used only in aggregate form and your individual details will not be identified.</p></li><li><h2>2. How do we store and protect your personal information and who has access to that information?</h2><p>As required by statute, we follow strict procedures when storing and using the information you have provided.</p><p>We do not sell, trade or rent your personal information to others. We may provide aggregate statistics about our customers and website trends. However, these statistics will not have any personal information which would identify you.</p><p>Only specific employees within our company are able to access your personal data.</p><p>This policy means that we may require proof of identity before we disclose any information to you.</p></li><li><h2>3. What should I do if I want to change my details or if I donÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢t want to be contacted any more?</h2><p>At any stage you have the right to access and amend or update your personal details. If you do not want to receive any communications from us you may opt out by contacting us see <a href=\\\"index.php?Page=ContactUs\\\">the Contact Us Page</a></p></li><li><h2>4. What happens if we decide to change this Privacy Policy?</h2><p>If we change any aspect of our Privacy Policy we will post these changes on this page so that you are always aware of how we are treating your personal information.</p></li><li><h2>5. How can you contact us if you have any questions, comments or concerns about our Privacy Policy?</h2><p>We welcome any questions or comments you may have please email us via the contact details provided on our <a href=\\\"index.php?Page=ContactUs\\\">Contact Us Page</a></p></li></ul><p>Please also refer to our <a href=\\\"index.php?Page=TermsAndConditions\\\">Terms and Conditions</a> for more information.</p>');
-INSERT INTO `config` VALUES ('ShopShowOnlyAvailableItems','0');
-INSERT INTO `config` VALUES ('ShopShowQOHColumn','1');
-INSERT INTO `config` VALUES ('ShopStockLocations','MEL,TOR');
-INSERT INTO `config` VALUES ('ShopSurchargeStockID','PAYTSURCHARGE');
-INSERT INTO `config` VALUES ('ShopSwipeHQAPIKey','');
-INSERT INTO `config` VALUES ('ShopSwipeHQMerchantID','');
-INSERT INTO `config` VALUES ('ShopTermsConditions','<p>These terms cover the use of this website. Use includes visits to our sites, purchases on our sites, participation in our database and promotions. These terms of use apply to you when you use our websites. Please read these terms carefully - if you need to refer to them again they can be accessed from the link at the bottom of any page of our websites.</p><br /><ul><li><h2>1. Content</h2><p>While we endeavour to supply accurate information on this site, errors and omissions may occur. We do not accept any liability, direct or indirect, for any loss or damage which may directly or indirectly result from any advice, opinion, information, representation or omission whether negligent or otherwise, contained on this site. You are solely responsible for the actions you take in reliance on the content on, or accessed, through this site.</p><p>We reserve the right to make changes to the content on this site at any time and without notice.</p><p>To the extent permitted by law, we make no warranties in relation to the merchantability, fitness for purpose, freedom from computer virus, accuracy or availability of this web site or any other web site.</p></li><li><h2>2. Making a contract with us</h2><p>When you place an order with us, you are making an offer to buy goods. We will send you an e-mail to confirm that we have received and accepted your order, which indicates that a contract has been made between us. We will take payment from you when we accept your order. In the unlikely event that the goods are no longer available, we will refund your payment to the account it originated from, and advise that the goods are no longer available.</p><p>An order is placed on our website via adding a product to the shopping cart and proceeding through our checkout process. The checkout process includes giving us delivery and any other relevant details for your order, entering payment information and submitting your order. The final step consists of a confirmation page with full details of your order, which you are able to print as a receipt of your order. We will also email you with confirmation of your order.</p><p>We reserve the right to refuse or cancel any orders that we believe, solely by our own judgement, to be placed for commercial purposes, e.g. any kind of reseller. We also reserve the right to refuse or cancel any orders that we believe, solely by our own judgement, to have been placed fraudulently.</p><p>We reserve the right to limit the number of an item customers can purchase in a single transaction.</p></li><li><h2>3. Payment options</h2><p>We currently accept the following credit cards:</p><ul><li>Visa</li><li>MasterCard</li><li>American Express</li></ul>You can also pay using PayPal and internet bank transfer. Surcharges may apply for payment by PayPal or credit cards.</p></li><li><h2>4. Pricing</h2><p>All prices listed are inclusive of relevant taxes.  All prices are correct when published. Please note that we reserve the right to alter prices at any time for any reason. If this should happen after you have ordered a product, we will contact you prior to processing your order. Online and in store pricing may differ.</p></li><li><h2>5. Website and Credit Card Security</h2><p>We want you to have a safe and secure shopping experience online. All payments via our sites are processed using SSL (Secure Socket Layer) protocol, whereby sensitive information is encrypted to protect your privacy.</p><p>You can help to protect your details from unauthorised access by logging out each time you finish using the site, particularly if you are doing so from a public or shared computer.</p><p>For security purposes certain transactions may require proof of identification.</p></li><li><h2>6. Delivery and Delivery Charges</h2><p>We do not deliver to Post Office boxes.</p><p>Please note that a signature is required for all deliveries. The goods become the recipientÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s property and responsibility once they have been signed for at the time of delivery. If goods are lost or damaged in transit, please contact us within 7 business days <a href=\\\"index.php?Page=ContactUs\\\">see Contact Us page for contact details</a>. We will use this delivery information to make a claim against our courier company. We will offer you the choice of a replacement or a full refund, once we have received confirmation from our courier company that delivery was not successful.</p></li><li><h2>7. Restricted Products</h2><p>Some products on our site carry an age restriction, if a product you have selected is R16 or R18 a message will appear in the cart asking you to confirm you are an appropriate age to purchase the item(s).  Confirming this means that you are of an eligible age to purchase the selected product(s).  You are also agreeing that you are not purchasing the item on behalf of a person who is not the appropriate age.</p></li><li><h2>8. Delivery Period</h2><p>Delivery lead time for products may vary. Deliveries to rural addresses may take longer.  You will receive an email that confirms that your order has been dispatched.</p><p>To ensure successful delivery, please provide a delivery address where someone will be present during business hours to sign for the receipt of your package. You can track your order by entering the tracking number emailed to you in the dispatch email at the Courier\\\'s web-site.</p></li><li><h2>9. Disclaimer</h2><p>Our websites are intended to provide information for people shopping our products and accessing our services, including making purchases via our website and registering on our database to receive e-mails from us.</p><p>While we endeavour to supply accurate information on this site, errors and omissions may occur. We do not accept any liability, direct or indirect, for any loss or damage which may directly or indirectly result from any advice, opinion, information, representation or omission whether negligent or otherwise, contained on this site. You are solely responsible for the actions you take in reliance on the content on, or accessed, through this site.</p><p>We reserve the right to make changes to the content on this site at any time and without notice.</p><p>To the extent permitted by law, we make no warranties in relation to the merchantability, fitness for purpose, freedom from computer virus, accuracy or availability of this web site or any other web site.</p></li><li><h2>10. Links</h2><p>Please note that although this site has some hyperlinks to other third party websites, these sites have not been prepared by us are not under our control. The links are only provided as a convenience, and do not imply that we endorse, check, or approve of the third party site. We are not responsible for the privacy principles or content of these third party sites. We are not responsible for the availability of any of these links.</p></li><li><h2>11. Jurisdiction</h2><p>This website is governed by, and is to be interpreted in accordance with, the laws of  ????.</p></li><li><h2>12. Changes to this Agreement</h2><p>We reserve the right to alter, modify or update these terms of use. These terms apply to your order. We may change our terms and conditions at any time, so please do not assume that the same terms will apply to future orders.</p></li></ul>');
-INSERT INTO `config` VALUES ('ShopTitle','Shop Home');
-INSERT INTO `config` VALUES ('ShowStockidOnImages','0');
-INSERT INTO `config` VALUES ('ShowValueOnGRN','1');
-INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
-INSERT INTO `config` VALUES ('SmtpSetting','0');
-INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
-INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
-INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
-INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2017-12-05');
-INSERT INTO `config` VALUES ('VersionNumber','4.14.1');
-INSERT INTO `config` VALUES ('WeightedAverageCosting','0');
-INSERT INTO `config` VALUES ('WikiApp','DokuWiki');
-INSERT INTO `config` VALUES ('WikiPath','wiki');
-INSERT INTO `config` VALUES ('WorkingDaysWeek','5');
-INSERT INTO `config` VALUES ('YearEnd','3');
-
---
--- Dumping data for table `unitsofmeasure`
---
-
-INSERT INTO `unitsofmeasure` VALUES (1,'each');
-INSERT INTO `unitsofmeasure` VALUES (2,'meters');
-INSERT INTO `unitsofmeasure` VALUES (3,'kgs');
-INSERT INTO `unitsofmeasure` VALUES (4,'litres');
-INSERT INTO `unitsofmeasure` VALUES (5,'length');
-INSERT INTO `unitsofmeasure` VALUES (6,'hours');
-INSERT INTO `unitsofmeasure` VALUES (7,'feet');
-
---
--- Dumping data for table `paymentmethods`
---
-
-INSERT INTO `paymentmethods` VALUES (1,'Cheque',1,1,1,0,0);
-INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1,0,0,0.25);
-INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1,0,0,0);
-
---
 -- Dumping data for table `scripts`
 --
 
@@ -7340,6 +7239,20 @@ INSERT INTO `securitygroups` VALUES (9,0);
 INSERT INTO `securitygroups` VALUES (9,9);
 
 --
+-- Dumping data for table `securityroles`
+--
+
+INSERT INTO `securityroles` VALUES (1,'Inquiries/Order Entry');
+INSERT INTO `securityroles` VALUES (2,'Manufac/Stock Admin');
+INSERT INTO `securityroles` VALUES (3,'Purchasing Officer');
+INSERT INTO `securityroles` VALUES (4,'AP Clerk');
+INSERT INTO `securityroles` VALUES (5,'AR Clerk');
+INSERT INTO `securityroles` VALUES (6,'Accountant');
+INSERT INTO `securityroles` VALUES (7,'Customer Log On Only');
+INSERT INTO `securityroles` VALUES (8,'System Administrator');
+INSERT INTO `securityroles` VALUES (9,'Supplier Log On Only');
+
+--
 -- Dumping data for table `securitytokens`
 --
 
@@ -7364,36 +7277,122 @@ INSERT INTO `securitytokens` VALUES (18,'Cost authority');
 INSERT INTO `securitytokens` VALUES (19,'Internal stock request fully access authority');
 
 --
--- Dumping data for table `securityroles`
+-- Dumping data for table `systypes`
 --
 
-INSERT INTO `securityroles` VALUES (1,'Inquiries/Order Entry');
-INSERT INTO `securityroles` VALUES (2,'Manufac/Stock Admin');
-INSERT INTO `securityroles` VALUES (3,'Purchasing Officer');
-INSERT INTO `securityroles` VALUES (4,'AP Clerk');
-INSERT INTO `securityroles` VALUES (5,'AR Clerk');
-INSERT INTO `securityroles` VALUES (6,'Accountant');
-INSERT INTO `securityroles` VALUES (7,'Customer Log On Only');
-INSERT INTO `securityroles` VALUES (8,'System Administrator');
-INSERT INTO `securityroles` VALUES (9,'Supplier Log On Only');
+INSERT INTO `systypes` VALUES (0,'Journal - GL',8);
+INSERT INTO `systypes` VALUES (1,'Payment - GL',7);
+INSERT INTO `systypes` VALUES (2,'Receipt - GL',1);
+INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',2);
+INSERT INTO `systypes` VALUES (11,'Credit Note',1);
+INSERT INTO `systypes` VALUES (12,'Receipt',5);
+INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
+INSERT INTO `systypes` VALUES (16,'Location Transfer',28);
+INSERT INTO `systypes` VALUES (17,'Stock Adjustment',28);
+INSERT INTO `systypes` VALUES (18,'Purchase Order',37);
+INSERT INTO `systypes` VALUES (19,'Picking List',0);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',45);
+INSERT INTO `systypes` VALUES (21,'Debit Note',8);
+INSERT INTO `systypes` VALUES (22,'Creditors Payment',11);
+INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',59);
+INSERT INTO `systypes` VALUES (26,'Work Order Receipt',8);
+INSERT INTO `systypes` VALUES (28,'Work Order Issue',17);
+INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
+INSERT INTO `systypes` VALUES (30,'Sales Order',12);
+INSERT INTO `systypes` VALUES (31,'Shipment Close',28);
+INSERT INTO `systypes` VALUES (32,'Contract Close',6);
+INSERT INTO `systypes` VALUES (35,'Cost Update',26);
+INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
+INSERT INTO `systypes` VALUES (37,'Tenders',0);
+INSERT INTO `systypes` VALUES (38,'Stock Requests',2);
+INSERT INTO `systypes` VALUES (40,'Work Order',37);
+INSERT INTO `systypes` VALUES (41,'Asset Addition',1);
+INSERT INTO `systypes` VALUES (42,'Asset Category Change',1);
+INSERT INTO `systypes` VALUES (43,'Delete w/down asset',1);
+INSERT INTO `systypes` VALUES (44,'Depreciation',1);
+INSERT INTO `systypes` VALUES (49,'Import Fixed Assets',1);
+INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
+INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',21);
+INSERT INTO `systypes` VALUES (600,'Auto Supplier Number',0);
 
 --
--- Dumping data for table `accountsection`
+-- Dumping data for table `taxauthorities`
 --
 
-INSERT INTO `accountsection` VALUES (1,'Income');
-INSERT INTO `accountsection` VALUES (2,'Cost Of Sales');
-INSERT INTO `accountsection` VALUES (5,'Overheads');
-INSERT INTO `accountsection` VALUES (10,'Fixed Assets');
-INSERT INTO `accountsection` VALUES (15,'Inventory');
-INSERT INTO `accountsection` VALUES (20,'Amounts Receivable');
-INSERT INTO `accountsection` VALUES (25,'Cash');
-INSERT INTO `accountsection` VALUES (30,'Amounts Payable');
-INSERT INTO `accountsection` VALUES (50,'Financed By');
+INSERT INTO `taxauthorities` VALUES (1,'Australian GST','2300','2310','','','','');
+INSERT INTO `taxauthorities` VALUES (5,'Sales Tax','2300','2310','','','','');
+INSERT INTO `taxauthorities` VALUES (11,'Canadian GST','2300','2310','','','','');
+INSERT INTO `taxauthorities` VALUES (12,'Ontario PST','2300','2310','','','','');
+INSERT INTO `taxauthorities` VALUES (13,'UK VAT','2300','2310','','','','');
+
+--
+-- Dumping data for table `taxauthrates`
+--
+
+INSERT INTO `taxauthrates` VALUES (1,1,1,0.1);
+INSERT INTO `taxauthrates` VALUES (1,1,2,0);
+INSERT INTO `taxauthrates` VALUES (1,1,5,0);
+INSERT INTO `taxauthrates` VALUES (5,1,1,0.2);
+INSERT INTO `taxauthrates` VALUES (5,1,2,0.35);
+INSERT INTO `taxauthrates` VALUES (5,1,5,0);
+INSERT INTO `taxauthrates` VALUES (11,1,1,0.07);
+INSERT INTO `taxauthrates` VALUES (11,1,2,0.12);
+INSERT INTO `taxauthrates` VALUES (11,1,5,0.07);
+INSERT INTO `taxauthrates` VALUES (12,1,1,0.05);
+INSERT INTO `taxauthrates` VALUES (12,1,2,0.075);
+INSERT INTO `taxauthrates` VALUES (12,1,5,0);
+INSERT INTO `taxauthrates` VALUES (13,1,1,0);
+INSERT INTO `taxauthrates` VALUES (13,1,2,0);
+INSERT INTO `taxauthrates` VALUES (13,1,5,0);
+
+--
+-- Dumping data for table `taxcategories`
+--
+
+INSERT INTO `taxcategories` VALUES (1,'Taxable supply');
+INSERT INTO `taxcategories` VALUES (2,'Luxury Items');
+INSERT INTO `taxcategories` VALUES (4,'Exempt');
+INSERT INTO `taxcategories` VALUES (5,'Freight');
+
+--
+-- Dumping data for table `taxgroups`
+--
+
+INSERT INTO `taxgroups` VALUES (1,'Default');
+INSERT INTO `taxgroups` VALUES (2,'Ontario');
+INSERT INTO `taxgroups` VALUES (3,'UK Inland Revenue');
+
+--
+-- Dumping data for table `taxprovinces`
+--
+
+INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
+
+--
+-- Dumping data for table `unitsofmeasure`
+--
+
+INSERT INTO `unitsofmeasure` VALUES (1,'each');
+INSERT INTO `unitsofmeasure` VALUES (2,'meters');
+INSERT INTO `unitsofmeasure` VALUES (3,'kgs');
+INSERT INTO `unitsofmeasure` VALUES (4,'litres');
+INSERT INTO `unitsofmeasure` VALUES (5,'length');
+INSERT INTO `unitsofmeasure` VALUES (6,'hours');
+INSERT INTO `unitsofmeasure` VALUES (7,'feet');
+
+--
+-- Dumping data for table `www_users`
+--
+
+INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2017-12-05 18:46:18','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'fluid','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('WEB0000021','$2y$10$aTt/treAhiVVd0mPw1Ums.GcOxBtX/3cIsD1RL//0iT3QUYjvIDlS','Phil Daintree','WEB0000021','','','1234564','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000021','A4','1,0,0,0,0,0,0,0,0,0,0',0,1,1,0,30,'','en_GB.utf8',0,0);
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 

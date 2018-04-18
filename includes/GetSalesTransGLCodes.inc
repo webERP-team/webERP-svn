@@ -6,7 +6,7 @@ $Area, $StockID to determine the stock category and the SalesType (Price List)
 
 Function returns the relavent GL Code to post COGS entries to*/
 
-Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
+Function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 
 	$ErrMsg = _('Can not retrieve the cost of sales GL code because');
 	$DbgMsg =_('SQL to get the cost of sales GL Code');
@@ -146,7 +146,7 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 	Return $myrow[0];
 }
 
-Function GetSalesGLAccount ($Area, $StockID, $SalesType, &$db) {
+Function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 
 /*Gets the  Sales GL Code for a specific area, sales type and stock category */
 

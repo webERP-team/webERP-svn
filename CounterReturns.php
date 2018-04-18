@@ -1303,7 +1303,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 												'" . $CreditNoteNo . "',
 												'" . $ReturnDate . "',
 												'" . $PeriodNo . "',
-												'" . GetCOGSGLAccount($Area, $ReturnItemLine->StockID, $_SESSION['Items' . $identifier]->DefaultSalesType, $db) . "',
+												'" . GetCOGSGLAccount($Area, $ReturnItemLine->StockID, $_SESSION['Items' . $identifier]->DefaultSalesType) . "',
 												'" . $_SESSION['Items' . $identifier]->DebtorNo . " - " . $ReturnItemLine->StockID . " x " . -$ReturnItemLine->Quantity . " @ " . $ReturnItemLine->StandardCost . "',
 												'" . $ReturnItemLine->StandardCost * -$ReturnItemLine->Quantity . "')";
 
@@ -1337,7 +1337,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $ReturnItemLine->Price !=0){
 
 		//Post sales transaction to GL credit sales
-				$SalesGLAccounts = GetSalesGLAccount($Area, $ReturnItemLine->StockID, $_SESSION['Items' . $identifier]->DefaultSalesType, $db);
+				$SalesGLAccounts = GetSalesGLAccount($Area, $ReturnItemLine->StockID, $_SESSION['Items' . $identifier]->DefaultSalesType);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,

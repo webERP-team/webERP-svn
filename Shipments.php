@@ -284,12 +284,11 @@ if (isset($_GET['Add'])
 											$myrow['quantityord'],
 											$myrow['quantityrecd'],
 											$StandardCost,
-											$myrow['decimalplaces'],
-											$db);
+											$myrow['decimalplaces']);
 }
 
 if (isset($_GET['Delete']) AND $_SESSION['Shipment']->Closed==0){ //shipment is open and user hit delete on a line
-	$_SESSION['Shipment']->Remove_From_Shipment($_GET['Delete'],$db);
+	$_SESSION['Shipment']->Remove_From_Shipment($_GET['Delete']);
 }
 
 

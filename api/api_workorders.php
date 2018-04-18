@@ -181,7 +181,7 @@
 		foreach ($WorkOrderDetails as $key => $value) {
 			$WorkOrderDetails[$key] = DB_escape_string($value);
 		}
-		$WorkOrder['wo']=GetNextTransactionNo(40);
+		$WorkOrder['wo']=GetNextTransNo(40);
 		$WorkOrderItem['wo']=$WorkOrder['wo'];
 		if (isset($WorkOrderDetails['loccode'])){
 			$Errors=VerifyFromStockLocation($WorkOrderDetails['loccode'], sizeof($Errors), $Errors);
@@ -241,7 +241,7 @@
 				'VALUES ('.mb_substr($WOFieldValues,0,-2).') ';
 			$itemsql = 'INSERT INTO woitems ('.mb_substr($ItemFieldNames,0,-2).') '.
 				'VALUES ('.mb_substr($ItemFieldValues,0,-2).') ';
-			$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(40).' where typeid=40';
+			$systypessql = 'UPDATE systypes set typeno='.GetNextTransNo(40).' where typeid=40';
 			DB_Txn_Begin();
 			$woresult = DB_query($wosql);
 			$itemresult = DB_query($itemsql);
@@ -285,7 +285,7 @@
 			$wipglact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'wipact');
 			$stockact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact');
 			$cost=$itemdetails[1]['materialcost']+$itemdetails[1]['labourcost']+$itemdetails[1]['overheadcost'];
-			$TransactionNo=GetNextTransactionNo(28);
+			$TransactionNo=GetNextTransNo(28);
 
 			$stockmovesql="INSERT INTO stockmoves (stockid,
                                                    type,
@@ -394,7 +394,7 @@
 			$costresult=DB_query($costsql);
 			$myrow=DB_fetch_row($costresult);
 			$cost=$myrow[0];
-			$TransactionNo=GetNextTransactionNo(26);
+			$TransactionNo=GetNextTransNo(26);
 			$stockmovesql="INSERT INTO stockmoves (stockid,
                                                    type,
                                                    transno,

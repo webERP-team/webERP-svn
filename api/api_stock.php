@@ -806,7 +806,7 @@
                                                newqoh)
                                VALUES ('" . $StockID . "',
                                        '17',
-                                       '" .GetNextTransactionNo(17)."',
+                                       '" .GetNextTransNo(17)."',
                                        '".$Location."',
                                        '".$TranDate."',
                                        '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
@@ -824,7 +824,7 @@
                                             amount,
                                             narrative)
                                     VALUES ('17',
-                                           '" . GetNextTransactionNo(17)."',
+                                           '" . GetNextTransNo(17)."',
                                            '" . $TranDate. "',
                                            '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
                                            '" .$adjglact."',
@@ -838,13 +838,13 @@
                                             amount,
                                             narrative)
 						VALUES ('17',
-                        '" .GetNextTransactionNo(17)."',
+                        '" .GetNextTransNo(17)."',
                         '" .$TranDate."',
                         '" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
                         '" .$stockact."',
                         '" .$itemdetails['materialcost']*$Quantity. "',
                         '" .$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost']."')";
-		$systypessql = "UPDATE systypes set typeno='".GetNextTransactionNo(17)."' where typeid='17'";
+		$systypessql = "UPDATE systypes set typeno='".GetNextTransNo(17)."' where typeid='17'";
 
 		DB_Txn_Begin();
 		DB_query($stockmovesql);

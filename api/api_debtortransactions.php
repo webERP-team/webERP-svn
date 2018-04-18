@@ -257,7 +257,7 @@ function ConvertToSQLDate($DateEntry) {
 */
 
 /* Retrieves the default debtors code for webERP */
-	function GetDebtorsGLCode($db) {
+	function GetDebtorsGLCode() {
 		$sql="SELECT debtorsact FROM companies";
 		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -344,7 +344,7 @@ function ConvertToSQLDate($DateEntry) {
 		DB_Txn_Begin();
 
 		$ReceiptNo = GetNextTransNo(12);
-		$PeriodNo = GetCurrentPeriod($db);
+		$PeriodNo = GetCurrentPeriod();
 /*now enter the BankTrans entry */
 
 		$SQL="INSERT INTO banktrans (type,
@@ -549,7 +549,7 @@ function ConvertToSQLDate($DateEntry) {
 		$result = DB_Txn_Begin();
 	/*Now Get the next credit note number - function in SQL_CommonFunctions*/
 		$CreditNoteNo = GetNextTransNo(11);
-		$PeriodNo = GetCurrentPeriod($db);
+		$PeriodNo = GetCurrentPeriod();
 
 		$TotalFXNetCredit = 0;
 		$TotalFXTax = 0;
@@ -1192,7 +1192,7 @@ function ConvertToSQLDate($DateEntry) {
 		unset($InvoiceDetails['partcode']);
 		$SalesArea=$InvoiceDetails['salesarea'];
 		unset($InvoiceDetails['salesarea']);
-		$InvoiceDetails['transno']=GetNextTransactionNo(10);
+		$InvoiceDetails['transno']=GetNextTransNo(10);
 		$InvoiceDetails['type'] = 10;
 		$Errors=VerifyDebtorExists($InvoiceDetails['debtorno'], sizeof($Errors), $Errors);
 		$Errors=VerifyBranchNoExists($InvoiceDetails['debtorno'],$InvoiceDetails['branchcode'], sizeof($Errors), $Errors);
@@ -1256,13 +1256,13 @@ function ConvertToSQLDate($DateEntry) {
 			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) .")
 									VALUES ('" . mb_substr($FieldValues,0,-2) ."') ";
 			$result = DB_query($sql);
-			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(10) . "' WHERE typeid=10";
+			$sql = "UPDATE systypes SET typeno='" . GetNextTransNo(10) . "' WHERE typeid=10";
 			$result = DB_query($sql);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode);
-			$DebtorsGLCode=GetDebtorsGLCode($db);
+			$DebtorsGLCode=GetDebtorsGLCode();
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(10) . "',
+											'" . GetNextTransNo(10) . "',
 											0,
 											'" . $InvoiceDetails['trandate'] ."',
 											'" . $InvoiceDetails['prd'] . "',
@@ -1275,7 +1275,7 @@ function ConvertToSQLDate($DateEntry) {
 			$result = api_DB_query($sql);
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(10) . "',
+											'" . GetNextTransNo(10) . "',
 											0,
 											'" . $InvoiceDetails['trandate'] ."',
 											'" . $InvoiceDetails['prd'] . "',
@@ -1490,7 +1490,7 @@ function ConvertToSQLDate($DateEntry) {
 		unset($CreditDetails['partcode']);
 		$SalesArea=$CreditDetails['salesarea'];
 		unset($CreditDetails['salesarea']);
-		$CreditDetails['transno']=GetNextTransactionNo(11);
+		$CreditDetails['transno']=GetNextTransNo(11);
 		$CreditDetails['type'] = 10;
 		$Errors=VerifyDebtorExists($CreditDetails['debtorno'], sizeof($Errors), $Errors);
 		$Errors=VerifyBranchNoExists($CreditDetails['debtorno'],$CreditDetails['branchcode'], sizeof($Errors), $Errors);
@@ -1554,13 +1554,13 @@ function ConvertToSQLDate($DateEntry) {
 			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('".mb_substr($FieldValues,0,-2) ."') ";
 			$result = DB_query($sql);
-			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(11) ."' WHERE typeid=10";
+			$sql = "UPDATE systypes SET typeno='" . GetNextTransNo(11) ."' WHERE typeid=10";
 			$result = DB_query($sql);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode);
-			$DebtorsGLCode=GetDebtorsGLCode($db);
+			$DebtorsGLCode=GetDebtorsGLCode();
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(11). "',
+											'" . GetNextTransNo(11). "',
 											0,
 											'" . $CreditDetails['trandate'] . "',
 											'" . $CreditDetails['prd'] . "',
@@ -1572,7 +1572,7 @@ function ConvertToSQLDate($DateEntry) {
 			$result = DB_query($sql);
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(11) . "',
+											'" . GetNextTransNo(11) . "',
 											0,
 											'" . $CreditDetails['trandate'] ."',
 											'" . $CreditDetails['prd'] . "',

@@ -26,6 +26,11 @@ if(isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])) 
 	$_POST['SelectADifferentPeriod']='Select A Different Period';
 }
 
+if ($_POST['Period'] != '') {
+	$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
+	$_POST['ToPeriod'] = ReportPeriod($_POST['Period'], 'To');
+}
+
 include('includes/header.php');
 if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -105,6 +110,20 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 	echo		'</select></td>
 			</tr>
 			<tr>
+				<td>
+					<h3>', _('OR'), '</h3>
+				</td>
+			</tr>';
+
+	if (!isset($_POST['Period'])) {
+		$_POST['Period'] = '';
+	}
+
+	echo '<tr>
+			<td>', _('Select Period'), ':</td>
+			<td>', ReportPeriodList($_POST['Period'], array('l', 't')), '</td>
+		</tr>
+		<tr>
 				<td>', _('Detail or summary'), ':</td>
 				<td><select name="Detail" required="required" title="', _('Selecting Summary will show on the totals at the account group level'), '" >
 					<option value="Summary">', _('Summary'), '</option>

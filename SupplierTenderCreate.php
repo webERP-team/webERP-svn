@@ -171,7 +171,7 @@ if (isset($_GET['Edit'])) {
 
 if (isset($_POST['Save'])) {
 	$_SESSION['tender'.$identifier]->RequiredByDate=$_POST['RequiredByDate'];
-	$_SESSION['tender'.$identifier]->save($db);
+	$_SESSION['tender'.$identifier]->save();
 	$_SESSION['tender'.$identifier]->EmailSuppliers();
 	prnMsg( _('The tender has been successfully saved'), 'success');
 	include('includes/footer.php');

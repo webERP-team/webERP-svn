@@ -38,7 +38,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 }
 
 
-function CheckForRecursiveBOM ($UltimateParent, $ComponentToCheck, $db) {
+function CheckForRecursiveBOM ($UltimateParent, $ComponentToCheck) {
 
 /* returns true ie 1 if the BOM contains the parent part as a component
 ie the BOM is recursive otherwise false ie 0 */
@@ -53,7 +53,7 @@ ie the BOM is recursive otherwise false ie 0 */
 			if ($myrow['component']==$UltimateParent){
 				return 1;
 			}
-			if (CheckForRecursiveBOM($UltimateParent, $myrow['component'],$db)){
+			if (CheckForRecursiveBOM($UltimateParent, $myrow['component'])){
 				return 1;
 			}
 		} //(while loop)
@@ -63,7 +63,7 @@ ie the BOM is recursive otherwise false ie 0 */
 
 } //end of function CheckForRecursiveBOM
 
-function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
+function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level) {
 
 		global $ParentMBflag;
 		$sql = "SELECT bom.sequence,
@@ -310,7 +310,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		//need to check not recursive BOM component of itself!
 
-			if (!CheckForRecursiveBOM ($SelectedParent, $_POST['Component'], $db)) {
+			if (!CheckForRecursiveBOM ($SelectedParent, $_POST['Component'])) {
 
 				/*Now check to see that the component is not already on the BOM */
 				$sql = "SELECT component
@@ -579,7 +579,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 			echo '<tr class="striped_row">';
 
-			DisplayBOMItems($UltimateParent, $Parent, $Component, $Level, $db);
+			DisplayBOMItems($UltimateParent, $Parent, $Component, $Level);
 		}
 	}
 	echo '</table>

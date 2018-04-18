@@ -1,6 +1,6 @@
 <?php
 
-function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
+function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 
 	set_time_limit(1800);
 	ini_set('max_execution_time',1800);
@@ -194,7 +194,7 @@ function SQLite_Escape($String) {
   return $String;
 }
 
-function Delete_POS_Data($PathPrefix, $db){
+function Delete_POS_Data($PathPrefix){
 
 	$result = DB_query("SELECT confvalue FROM config WHERE confname='reports_dir'");
 	$ReportDirRow = DB_fetch_row($result);

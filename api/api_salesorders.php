@@ -721,7 +721,7 @@ $SOH_DateFields = array ('orddate',
 		$result = DB_Txn_Begin();
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
 		$InvoiceNo = GetNextTransNo(10);
-		$PeriodNo = GetCurrentPeriod($db);
+		$PeriodNo = GetCurrentPeriod();
 
 		$TaxTotals =array();
 
@@ -1288,7 +1288,7 @@ $SOH_DateFields = array ('orddate',
 	} //end InvoiceSalesOrder function
 
 
-	function GetCurrentPeriod (&$db) {
+	function GetCurrentPeriod () {
 
 		$TransDate = time(); //The current date to find the period for
 		/* Find the unix timestamp of the last period end date in periods table */

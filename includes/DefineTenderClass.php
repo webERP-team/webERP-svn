@@ -70,7 +70,7 @@ Class Tender {
 		}
 	}
 
-	function save($db) {
+	function save() {
 		/* Does record exist for this tender
 		 */
 		if ($this->TenderId=='') {
