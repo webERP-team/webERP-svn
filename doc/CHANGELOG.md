@@ -245,27 +245,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 | Add meta viewport for initial-scale=1 for working css in small devices. |  | RChacon | 2017-06-21 |  |  |
 
 
-
 [Unreleased]: https://github.com/webERP-team/webERP/compare/v4.14.1...HEAD
 [v4.14.1]: https://github.com/webERP-team/webERP/compare/v4.14...v4.14.1
-[v4.14]: https://github.com/webERP-team/webERP/compare/v4.13.1...v4.14
-[v4.13.1]: https://github.com/webERP-team/webERP/compare/v4.13...v4.13.1
-[v4.13]: https://github.com/webERP-team/webERP/compare/v4.12.3...v4.13
-[v4.12.3]: https://github.com/webERP-team/webERP/compare/v4.12.2...v4.12.3
-[v4.12.2]: https://github.com/webERP-team/webERP/compare/v4.12.1...v4.12.2
-[v4.12.1]: https://github.com/webERP-team/webERP/compare/v4.12...v4.12.1
-[v4.12]: https://github.com/webERP-team/webERP/compare/v4.11.5...v4.12
-[v4.11.3]: https://github.com/webERP-team/webERP/compare/v4.11.2...v4.11.3
-[v4.11.0]: https://github.com/webERP-team/webERP/compare/v4.10.1...v4.11.0
-[v4.08.1]: https://github.com/webERP-team/webERP/compare/v4.08...v4.08.1
-[v4.08]: https://github.com/webERP-team/webERP/compare/v4.07...v4.08
-[v3.11]: https://github.com/webERP-team/webERP/compare/v3.10...v3.11
-[v3.10]: https://github.com/webERP-team/webERP/compare/v3.09...v3.10
-[v3.09]: https://github.com/webERP-team/webERP/compare/v3.08...v3.09
-[v3.05]: https://github.com/webERP-team/webERP/compare/v3.04...v3.05
-[v3.02]: https://github.com/webERP-team/webERP/compare/v3.01...v3.02
-[v3.01]: https://github.com/webERP-team/webERP/compare/v3.0...v3.01
-
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
 [CHANGELOG_ARCHIVE.md]: CHANGELOG_ARCHIVE.md
