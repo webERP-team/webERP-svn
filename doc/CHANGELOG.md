@@ -15,6 +15,44 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:------------|:----:|:------:|:----:|:-------:|:---:|
+| Fix the bug of wrong affected scope of bom changing in BOMs.php | Fixed | Exson Qu | 2018-04-26 | [View](http://github.com/webERP-team/webERP/commit/9e8585e91) |  |
+| Rebuild languages files | Changed | Rafael Chacon | 2018-04-24 | [View](http://github.com/webERP-team/webERP/commit/1cdd72b5f) |  |
+| Minor changes to GeneratePickingList.php | Changed | Rafael Chacon | 2018-04-24 | [View](http://github.com/webERP-team/webERP/commit/ccaf2c404) |  |
+| Rebuild languages files Part 3 | Changed | Rafael Chacon | 2018-04-24 | [View](http://github.com/webERP-team/webERP/commit/417971114) |  |
+| Rebuild languages files Part 2 | Changed | Rafael Chacon | 2018-04-24 | [View](http://github.com/webERP-team/webERP/commit/bee02030a) |  |
+| Rebuild languages files Part 1 | Changed | Rafael Chacon | 2018-04-24 | [View](http://github.com/webERP-team/webERP/commit/04ab5753c) |  |
+| Rebuild languages files | Changed | Rafael Chacon | 2018-04-24 | [View](http://github.com/webERP-team/webERP/commit/9b2b54858) |  |
+| Correct menu link caption | Fixed | PaulT | 2018-04-20 | [View](http://github.com/webERP-team/webERP/commit/c9fb416a7) |  |
+| Fixed the cost calculation bug in Work Order Costing for different standcost of the same stock and use Total Cost Variance to calculate cost variance instead of Total Cost variance for WAC' | Fixed | Exson Qu | 2018-04-18 | [View](http://github.com/webERP-team/webERP/commit/74ac6b4a5) |  |
+| New script to graph GL account | Added | Paul Becker | 2018-04-17 | [View](http://github.com/webERP-team/webERP/commit/a930ba0b4) |  |
+| Redo changes lost in the last commit | Added | Tim Schofield | 2018-04-11 | [View](http://github.com/webERP-team/webERP/commit/3548fa1b1) |  |
+| Add in checkbox for showing zero stocks | Added | Tim Schofield | 2018-04-10 | [View](http://github.com/webERP-team/webERP/commit/74592f0e1) |  |
+| Show only non-zero balances, and whether controlled item. | Added | Paul Becker | 2018-04-10 | [View](http://github.com/webERP-team/webERP/commit/a14d3d7b7) |  |
+| Fixes incorrect counter numbering of form elements | Fixed | Tim Schofield | 2018-04-10 | [View](http://github.com/webERP-team/webERP/commit/3fcaa6b92) |  |
+| Remove tabindex attributes | Changed | Tim Schofield/Jeff Harr | 2018-04-06 | [View](http://github.com/webERP-team/webERP/commit/7d6cec6a2) |  |
+| Add XML files to new company copy | Added | PaulT | 2018-04-03 | [View](http://github.com/webERP-team/webERP/commit/5072343f7) |  |
+| Fixes to the database files | Fixed | Ap Muthu | 2018-04-03 | [View](http://github.com/webERP-team/webERP/commit/f4d6ff0ac) |  |
+| Fix messages not being shown | Fixed | Ap Muthu | 2018-04-03 | [View](http://github.com/webERP-team/webERP/commit/0fcf1c414) |  |
+| Synch sqls with upgrade sqls #28 | Fixed | Ap Muthu | 2018-04-03 | [View](http://github.com/webERP-team/webERP/commit/83d8e9ba4) |  |
+| Wrong $MysqlExt value in installer | Fixed | Ap Muthu | 2018-04-03 | [View](http://github.com/webERP-team/webERP/commit/eda1245c3) |  |
+| Add session name to avoid conflicts | Fixed | PaulT | 2018-04-02 | [View](http://github.com/webERP-team/webERP/commit/2bf01bf9e) |  |
+| Remove more unused $db parameters | Deprecated | PaulT | 2018-04-01 | [View](http://github.com/webERP-team/webERP/commit/517f3ed2f) |  |
+| Use new period selection functions | Added | Tim Schofield/Paul Becker | 2018-03-31 | [View](http://github.com/webERP-team/webERP/commit/4d3e7d35c) |  |
+| If config.php is already in place the error message will never be displayed, so print direct to screen | Fixed | Ap Muthu | 2018-03-31 | [View](http://github.com/webERP-team/webERP/commit/e6e56ac8c) |  |
+| Correct invalid function name and clean up code Files Changed: api/api_debtortransactions.ph api/api_stock.php api/api_workorders.php Correct function call from GetNextTransactionNo() to GetNextTransNo() Change variable names to conform to coding standards Change code layout to conform to coding standards Fixes issue no #24 | Fixed | Tim Schofield | 2018-03-29 | [View](http://github.com/webERP-team/webERP/commit/cec3387b2) | [Issue](https://github.com/timschofield/webERP-svn/issues/24) |
+| Meet coding standards and more commentary. | Changed | PaulT | 2018-03-27 | [View](http://github.com/webERP-team/webERP/commit/e04d4580b) |  |
+| Files to ignore | Changed | Tim Schofield | 2018-03-22 | [View](http://github.com/webERP-team/webERP/commit/22045a5b2) |  |
+| Improvements to the period selection functions: 1 Changed variable names to conform to coding standards 2 Added  options to show financial years as well as calendar years 3 Added extra parameter to allow only some options to appear in drop down list 4 Added default case to prevent dropping through without anything being selected | Added | Tim Schofield | 2018-03-20 | [View](http://github.com/webERP-team/webERP/commit/1fd7a0d8e) |  |
+| Misspelling of Aged Suppliers Report | Fixed | PaulT/Paul Becker | 2018-03-16 | [View](http://github.com/webERP-team/webERP/commit/c8dc092fc) |  |
+| DeliveryDetails.php: Sales Order required date not reflected in Work Order. | Fixed | PaulT/Jeff Harr | 2018-03-16 | [View](http://github.com/webERP-team/webERP/commit/d58fb9632) |  |
+| GLAccountInquiry: Fix that the script does not automatically show data | Fixed | PaulT/Paul Becker | 2018-03-16 | [View](http://github.com/webERP-team/webERP/commit/02b212294) |  |
+| Add from and to period in links to GLAccountInquiry.php | Added | Tim Schofield | 2018-03-16 | [View](http://github.com/webERP-team/webERP/commit/f492056dc) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8138&pid=14667#pid14667) |
+| Consider discount with SalesGraph | Added | PaulT/Paul Becker | 2018-03-16 | [View](http://github.com/webERP-team/webERP/commit/acfacde4b) |  |
+| Remove unused $db parameter | Deprecated | PaulT | 2018-03-16 | [View](http://github.com/webERP-team/webERP/commit/ff9c4106e) |  |
+| Dismissible notification functionality added. New icons and styling added to all themes. Messages now stored in an array before being printed. Assistance from @timschofield and @TurboPT. | Added | Andrew Couling | 2018-03-15 | [View](http://github.com/webERP-team/webERP/commit/488a32560) |  |
+| Remove .gitignore from branch | Changed | PaulT | 2018-03-13 | [View](http://github.com/webERP-team/webERP/commit/8294000b6) |  |
+| Move hidden input | Changed | PaulT | 2018-03-13 | [View](http://github.com/webERP-team/webERP/commit/2c915bd82) |  |
+| "Periods in GL Reports" mod | Added | PaulT/Paul Becker | 2018-03-12 | [View](http://github.com/webERP-team/webERP/commit/1d5e2e28d) |  |
 | code review GLPosting.php and Payments.php | Changed | Phil Daintree | 2018-03-12 | [View](http://github.com/webERP-team/webERP/commit/e4d5e9cb7) |  |
 | Removed unused variable | Changed | PaulT | 2018-03-09 | [View](http://github.com/webERP-team/webERP/commit/1411c48fb) |  |
 | Link updates to GLAccountInquiry | Changed | PaulT/Paul Becker | 2018-03-09 | [View](http://github.com/webERP-team/webERP/commit/ee91eb111) |  |
