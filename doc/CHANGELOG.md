@@ -8,7 +8,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 - If including html tags in your description, please surround them with back ticks.  
 - The commit Type, will typically be one of the following: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`  
 - Enter dates in format yyyy-mm-dd.  
-- Add links to the associated GtHub commit in Details column.  
+- Add links to the associated GitHub commit in Details column.  
 - Add links to supporting info in Ref column, such as Forum posts, Mailing List archives or GitHub issues.  
 
 ## [Unreleased]
