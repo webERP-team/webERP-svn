@@ -367,7 +367,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$result = DB_query($sql,$ErrMsg,$DbgMsg);
 			$msg = _('Details for') . ' - ' . $SelectedComponent . ' ' . _('have been updated') . '.';
 			if ($_SESSION['WeightedAverageCosting'] != 1) {
-				UpdateCost($SelectedComponent);
+				UpdateCost($SelectedParent);
 			}
 
 		} elseif ($InputError !=1 AND ! isset($SelectedComponent) AND isset($SelectedParent)) {
@@ -425,7 +425,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 			if ($_SESSION['WeightedAverageCosting'] != 1) {
-					UpdateCost($_POST['Component']);
+					UpdateCost($SelectedParent);
 			}
 					$msg = _('A new component part') . ' ' . $_POST['Component'] . ' ' . _('has been added to the bill of material for part') . ' - ' . $SelectedParent . '.';
 
@@ -465,7 +465,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$ComponentArray = DB_fetch_row($ComponentResult);
 
 		if ($_SESSION['WeightedAverageCosting'] != 1) {//only update the cost for standard cost
-			UpdateCost($ComponentArray[0]);
+			UpdateCost($SelectedParent);
 		}
 
 		prnMsg(_('The component part') . ' - ' . $SelectedComponent . ' - ' . _('has been deleted from this BOM'),'success');

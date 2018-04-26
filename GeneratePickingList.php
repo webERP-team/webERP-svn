@@ -493,7 +493,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 		$YPos = $Page_Height - 45;
 		$pdf->setFont('', 'B');
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, _('Signed for: ') . '______________________________');
-		$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, _('Date : ') . '__________');
+		$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, _('Date') . ' : __________');
 		$pdf->setFont('', '');
 	} /*end if there are order details to show on the order*/
 } /*end for loop to print the whole lot twice */

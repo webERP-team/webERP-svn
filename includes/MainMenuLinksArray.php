@@ -41,7 +41,7 @@ $MenuItems['AP']['Transactions']['Caption'] = array(_('Select Supplier'), _('Sup
 
 $MenuItems['AP']['Transactions']['URL'] = array('/SelectSupplier.php', '/SupplierAllocations.php');
 
-$MenuItems['AP']['Reports']['Caption'] = array(_('Where Allocated Inquiry.php'), _('Aged Supplier Report'), _('Payment Run Report'), _('Remittance Advices'), _('Outstanding GRNs Report'), _('Supplier Balances At A Prior Month End'), _('List Daily Transactions'), _('Supplier Transaction Inquiries'));
+$MenuItems['AP']['Reports']['Caption'] = array(_('Where Allocated Inquiry'), _('Aged Supplier Report'), _('Payment Run Report'), _('Remittance Advices'), _('Outstanding GRNs Report'), _('Supplier Balances At A Prior Month End'), _('List Daily Transactions'), _('Supplier Transaction Inquiries'));
 
 $MenuItems['AP']['Reports']['URL'] = array('/SuppWhereAlloc.php', '/AgedSuppliers.php', '/SuppPaymentRun.php', '/PDFRemittanceAdvice.php', '/OutstandingGRNs.php', '/SupplierBalsAtPeriodEnd.php', '/PDFSuppTransListing.php', '/SupplierTransInquiry.php');
 
