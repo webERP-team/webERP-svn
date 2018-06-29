@@ -207,7 +207,7 @@ If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName']
 	$Theme = $_SESSION['Theme'];
 } else {
 	$Theme = $DefaultTheme;
-	$_SESSION['Theme'] = '$DefaultTheme';
+	$_SESSION['Theme'] = $DefaultTheme;
 }
 
 

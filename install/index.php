@@ -36,88 +36,115 @@ if(!extension_loaded('mbstring')){
 	//once the user has selected their language, use the language user selected
 	if(!isset($_POST['Language'])){
 		if(!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])){//get users preferred language
-			$ClientLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
+			$ClientLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,5);
 			switch($ClientLang){
-				case 'ar':
+				case 'ar-EG':
 					$Language = 'ar_EG.utf8';
 					break;
-				case 'cs':
+				case 'ar-SY':
+					$Language = 'ar_SY.utf8';
+					break;
+				case 'cs-CZ':
 					$Language = 'cs_CZ.utf8';
 					break;
-				case 'de':
+				case 'de-DE':
 					$Language = 'de_DE.utf8';
 					break;
-				case 'el':
+				case 'el-GR':
 					$Language = 'el_GR.utf8';
 					break;
-				case 'en':
+				case 'en-GB':
 					$Language = 'en_GB.utf8';
 					break;
-				case 'es':
+				case 'en-US':
+					$Language = 'en_US.utf8';
+					break;
+				case 'es-ES':
 					$Language = 'es_ES.utf8';
 					break;
-				case 'et':
+				case 'et-EE':
 					$Language = 'et_EE.utf8';
 					break;
-				case 'fa':
+				case 'fa-IR':
 					$Language = 'fa_IR.utf8';
 					break;
-				case 'fr':
-					$Langauge = 'fr_CA.utf8';
+				case 'fr-CA':
+					$Language = 'fr_CA.utf8';
 					break;
-				case 'hi':
+				case 'fr-FR':
+					$Language = 'fr_FR.utf8';
+					break;
+				case 'he-IL':
+					$Language = 'he_IL.utf8';
+					break;
+				case 'hi-IN':
 					$Language = 'hi_IN.utf8';
 					break;
-				case 'hr':
+				case 'hr-HR':
 					$Language = 'hr_HR.utf8';
 					break;
-				case 'hu':
+				case 'hu-HU':
 					$Language = 'hu_HU.utf8';
 					break;
-				case 'id':
+				case 'id-ID':
 					$Language = 'id_ID.utf8';
 					break;
-				case 'it':
+				case 'it-IT':
 					$Language = 'it_IT.utf8';
 					break;
-				case 'ja':
+				case 'ja-JP':
 					$Language = 'ja_JP.utf8';
 					break;
-				case 'lv':
+				case 'ko-KR':
+					$Language = 'ko_KR.utf8';
+					break;
+				case 'lv-LV':
 					$Language = 'lv_LV.utf8';
 					break;
-				case 'nl':
+				case 'mr-IN':
+					$Language = 'mr_IN.utf8';
+					break;
+				case 'nl-NL':
 					$Language = 'nl_NL.utf8';
 					break;
-				case 'pl':
+				case 'pl-PL':
 					$Language = 'pl_PL.utf8';
 					break;
-				case 'pt':
-					$Language = 'pt-PT.utf8';
+				case 'pt-BR':
+					$Language = 'pt_BR.utf8';
 					break;
-				case 'ro':
+				case 'pt-PT':
+					$Language = 'pt_PT.utf8';
+					break;
+				case 'ro-RO':
 					$Language = 'ro_RO.utf8';
 					break;
-				case 'ru':
+				case 'ru-RU':
 					$Language = 'ru_RU.utf8';
 					break;
-				case 'sq':
+				case 'sq-AL':
 					$Language = 'sq_AL.utf8';
 					break;
-				case 'sv':
+				case 'sv-SE':
 					$Language = 'sv_SE.utf8';
 					break;
-				case 'sw':
+				case 'sw-KE':
 					$Language = 'sw_KE.utf8';
 					break;
-				case 'tr':
+				case 'tr-TR':
 					$Language = 'tr_TR.utf8';
 					break;
-				case 'vi':
+				case 'vi-VN':
 					$Language = 'vi_VN.utf8';
 					break;
-				case 'zh':
+				case 'zh-CN':
 					$Language = 'zh_CN.utf8';
+					break;
+				case 'zh-HK':
+					$Language = 'zh_HK.utf8';
+					break;
+				case 'zh-TW':
+					$Language = 'zh_TW.utf8';
 					break;
 				default:
 					$Language = 'en_GB.utf8';
@@ -310,18 +337,24 @@ if(!extension_loaded('mbstring')){
 			if((isset($DualCompany) and $DualCompany == 1) or (isset($NewCompany) and $NewCompany == 1)){
 				$CompanyDir = $Path_To_Root . '/companies/' . $DatabaseName;
 			    $Result = mkdir($CompanyDir);
-				$Result = mkdir($CompanyDir . '/part_pics');
 				$Result = mkdir($CompanyDir . '/EDI_Incoming_Orders');
-				$Result = mkdir($CompanyDir . '/reports');
-				$Result = mkdir($CompanyDir . '/EDI_Sent');
 				$Result = mkdir($CompanyDir . '/EDI_Pending');
+				$Result = mkdir($CompanyDir . '/EDI_Sent');
+				$Result = mkdir($CompanyDir . '/FormDesigns');
+				$Result = mkdir($CompanyDir . '/part_pics');
+				$Result = mkdir($CompanyDir . '/reports');
 				$Result = mkdir($CompanyDir . '/reportwriter');
 				$Result = mkdir($CompanyDir . '/pdf_append');
-				$Result = mkdir($CompanyDir . '/FormDesigns');
+
+				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/FGLabel.xml', $CompanyDir . '/FormDesigns/FGLabel.xml');
 				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
+				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/Journal.xml', $CompanyDir . '/FormDesigns/Journal.xml');
 				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
 				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
-				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/Journal.xml', $CompanyDir . '/FormDesigns/Journal.xml');
+				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/QALabel.xml', $CompanyDir . '/FormDesigns/QALabel.xml');
+				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/ShippingLabel.xml', $CompanyDir . '/FormDesigns/ShippingLabel.xml');
+				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/WOPaperwork.xml', $CompanyDir . '/FormDesigns/WOPaperwork.xml');
+
 				if(isset($File_Temp_Name)){
 					$Result = move_uploaded_file($File_Temp_Name, $CompanyDir . '/logo.jpg');
 
@@ -999,7 +1032,7 @@ function DbCheck($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,$Mysq
 		}
 
 }
-//@para $UsersLanguage the language select by the user it will be used as the default langauge in config.php
+//@para $UsersLanguage the language select by the user it will be used as the default language in config.php
 //@para $HostName is the host for mysql server
 //@para $UserName is the name of mysql user
 //@para $Password is the password for mysql server
@@ -1206,13 +1239,30 @@ function PopulateSQLData($NewSQL=false,$Demo=false,$db,$DBType,$NewDB = false){
 //The purpose of this function is populate the database with mysql extention
 function PopulateSQLDataBySQL($File,$db,$DBType,$NewDB=false,$DemoDB='weberpdemo'){
 	$dbName = ($NewDB) ? $NewDB : $DemoDB;
-	($DBType=='mysqli')?mysqli_select_db($db,$dbName):mysql_select_db($dbName,$db);
+	$useMySQLi = ($DBType=='mysqli');
+
+	if ($useMySQLi) {
+	    mysqli_select_db($db,$dbName);
+        }
+        else{
+            mysql_select_db($dbName,$db);
+        }
 	$SQLScriptFile = file($File);
 	$ScriptFileEntries = sizeof($SQLScriptFile);
 	$SQL =' SET names UTF8;';
 	$InAFunction = false;
+	$FK_SQL = "SET FOREIGN_KEY_CHECKS = 0;";
 	for ($i=0; $i<$ScriptFileEntries; $i++) {
-
+            // This query is necessary for some situations where not all
+            // of the tables get created during install. It seems that PHP
+            // drivers tend to reset the FOREIGN KEY settings, but it's not
+            // clear why. See: http://weberp.org/forum/showthread.php?tid=8167&pid=14870#pid14870
+            if ($useMySQLi) {
+                $FK_Result = mysqli_query($db,$FK_SQL);
+            }
+            else {
+                $FK_Result = mysql_query($FK_SQL,$db);
+            }
 		$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);
 		//ignore lines that start with -- or USE or /*
 		if (mb_substr($SQLScriptFile[$i], 0, 2) != '--'
@@ -1260,7 +1310,7 @@ function CryptPass( $Password ) {
 //@para $DBConnectType if it is mysql extention or not
 //@para $AdminPasswd the weberp administrator's password
 //@para $AdminEmail the weberp administrators' email
-//@para $AdminLangauge the administrator's language for login
+//@para $AdminLanguage the administrator's language for login
 //@para $CompanyName the company
 //The purpose of this function is to update the admin accounts and company name information
 
