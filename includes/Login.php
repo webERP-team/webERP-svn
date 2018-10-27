@@ -1,7 +1,6 @@
 <?php
 // Display demo user name and password within login form if $AllowDemoMode is true
 
-//include ('LanguageSetup.php');
 if ((isset($AllowDemoMode)) AND ($AllowDemoMode == True) AND (!isset($demo_text))) {
 	$demo_text = _('Login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>' .
 		'<br /><a href="../">' . _('Return') . '</a>';// This line is to add a return link.

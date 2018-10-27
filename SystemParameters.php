@@ -386,6 +386,10 @@ if (isset($_POST['submit'])) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_ShortcutMenu'] . "' WHERE confname='ShortcutMenu'";
 
 		}
+		if ($_SESSION['LastDayOfWeek'] != $_POST['X_LastDayOfWeek']){
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_LastDayOfWeek'] . "' WHERE confname='LastDayOfWeek'";
+
+		} 
 		
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
@@ -1271,6 +1275,24 @@ echo '</select>
 	 <td>' .  _('The flag determines if the system allows users to create the javascript short cut menu - this can cause confusion to some users with some themes.').'
 	 </td>
 	</tr>
+
+	<tr style="outline: 1px solid">
+	<td>' . _('Last day of the week'). '</td>
+	<td>
+		<select type="text" name="X_LastDayOfWeek" >
+			<option ' . ($_SESSION['LastDayOfWeek'] == 0 ?'selected="selected"':'') . ' value="0">' . _('Sunday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 1 ?'selected="selected"':'') . ' value="1">' . _('Monday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 2 ?'selected="selected"':'') . ' value="2">' . _('Tuesday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 3 ?'selected="selected"':'') . ' value="3">' . _('Wednesday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 4 ?'selected="selected"':'') . ' value="4">' . _('Thursday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 5 ?'selected="selected"':'') . ' value="5">' . _('Friday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 6 ?'selected="selected"':'') . ' value="6">' . _('Saturday') . '</option>
+	</select>
+         </td>
+	 <td>' .  _('Timesheet entry default to weeks ending on this day').'
+	 </td>
+	</tr>
+
 
 	</table>
 		<br /><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div>
