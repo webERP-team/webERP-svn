@@ -43,10 +43,11 @@ INSERT INTO `securitygroups` (`secroleid`, `tokenid`) VALUES ('9', '20');
 
 
 CREATE TABLE `timesheets` (
-  `wo` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `wo` int(11) NOT NULL COMMENT 'loose FK with workorders',
   `employeeid` INT NOT NULL,
   `weekending` DATE NOT NULL DEFAULT '1900-01-01',
-  `workcentre` varchar(5) NOT NULL,
+  `workcentre` varchar(5) NOT NULL COMMENT 'loose FK with workcentres',
   `day1` double NOT NULL default 0,
   `day2` double NOT NULL default 0,
   `day3` double NOT NULL default 0,
@@ -54,7 +55,7 @@ CREATE TABLE `timesheets` (
   `day5` double NOT NULL default 0,
   `day6` double NOT NULL default 0,
   `day7` double NOT NULL default 0,
-  PRIMARY KEY (`employeeid`,`weekending`,`wo`,`workcentre`),
+  `status` tinyint(4) NOT NULL default 0,
   KEY `workcentre` (`workcentre`),
   KEY `employees` (`employeeid`),
   KEY `wo` (`wo`),

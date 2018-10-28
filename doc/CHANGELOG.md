@@ -15,6 +15,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| New script to enter timeshees with the new table timesheets| Added | Phil | 2018-10-28 |  | 
 | Fix error in prnMsg display - DB errors were not reported - had to define $Messages as global inside DB_query function| Fixed | Phil | 2018-10-20 |  | 
 | New script to add employees Employees.php with new table employees for the purposes of time-sheet entry| Added | Phil | 2018-10-20 |  | 
 | Add new config option to allow shortcut menus to be disabled as they can confuse some folks| Changed | Phil | 2018-10-20 |  | 
