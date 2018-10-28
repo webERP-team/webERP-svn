@@ -15,11 +15,12 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| New script to enter timeshees with the new table timesheets| Added | Phil | 2018-10-28 |  | 
+| New script to enter timeshees with the new table timesheets| Added | Phil | 2018-10-28 |  |
+| Updates to the manual to describe labour functionality| Added | Phil | 2018-10-20 | [View] (https://github.com/webERP-team/webERP/commit/b466bb45d20d1510947bd64048fcaec3c55e6f78) |
 | Fix error in prnMsg display - DB errors were not reported - had to define $Messages as global inside DB_query function| Fixed | Phil | 2018-10-20 |  | 
-| New script to add employees Employees.php with new table employees for the purposes of time-sheet entry| Added | Phil | 2018-10-20 |  | 
-| Add new config option to allow shortcut menus to be disabled as they can confuse some folks| Changed | Phil | 2018-10-20 |  | 
-| Add manual links for MRP scripts | Changed | Phil | 2018-10-20 |  |  |
+| New script to add employees Employees.php with new table employees for the purposes of time-sheet entry| Added | Phil | 2018-10-20 | https://github.com/webERP-team/webERP/commit/c0bea42348118135c9f19230d8048c1d46d4e2e9 | 
+| Add new config option to allow shortcut menus to be disabled as they can confuse some folks| Changed | Phil | 2018-10-20 | https://github.com/webERP-team/webERP/commit/c0bea42348118135c9f19230d8048c1d46d4e2e9 | 
+| Add manual links for MRP scripts | Changed | Phil | 2018-10-20 |https://github.com/webERP-team/webERP/commit/c0bea42348118135c9f19230d8048c1d46d4e2e9  |  |
 | Eliminate pdf_append/ and stockmaster appendfile column | Removed | Paul Becker / Tim | 2018-09-09 | [View](https://github.com/webERP-team/webERP/commit/e0daaed8a9859f41f50821a3339de627b277d954) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8206) |
 | Fix filename output in PDFQALabel | Fixed | Paul Becker | 2018-09-02 | [View](https://github.com/webERP-team/webERP/commit/d54dae8c60530b80591081778810e19709e47dbe) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8198) |
 | Fix calculation descrepancy in Z_CheckDebtorsControl | Fixed | Paul Becker | 2018-09-02 | [View](https://github.com/webERP-team/webERP/commit/bc14d0d28e4356139d4a05a56d97761c47df1eaf) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8188) |
