@@ -31,7 +31,7 @@ CREATE TABLE `employees` (
   KEY `firstname` (`firstname`),
   KEY `stockid` (`stockid`),
   KEY `manager` (`manager`),
-  KEY `userid` (`userid`);
+  KEY `userid` (`userid`),
   CONSTRAINT `stk_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
