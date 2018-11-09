@@ -1,9 +1,9 @@
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.15  Distrib 10.0.34-MariaDB, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	10.0.34-MariaDB-0ubuntu0.16.04.1
+-- Server version	5.7.24-0ubuntu0.16.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -148,7 +148,6 @@ CREATE TABLE `banktrans` (
   `banktranstype` varchar(30) NOT NULL DEFAULT '',
   `amount` double NOT NULL DEFAULT '0',
   `currcode` char(3) NOT NULL DEFAULT '',
-  `chequeno` varchar(16) NOT NULL DEFAULT '',
   PRIMARY KEY (`banktransid`),
   KEY `BankAct` (`bankact`,`ref`),
   KEY `TransDate` (`transdate`),
@@ -453,8 +452,8 @@ CREATE TABLE `custbranch` (
   `braddress4` varchar(50) NOT NULL DEFAULT '',
   `braddress5` varchar(20) NOT NULL DEFAULT '',
   `braddress6` varchar(40) NOT NULL DEFAULT '',
-  `lat` float(12,8) NOT NULL DEFAULT '0.00000000',
-  `lng` float(12,8) NOT NULL DEFAULT '0.00000000',
+  `lat` float(10,6) NOT NULL DEFAULT '0.000000',
+  `lng` float(10,6) NOT NULL DEFAULT '0.000000',
   `estdeliverydays` smallint(6) NOT NULL DEFAULT '1',
   `area` char(3) NOT NULL,
   `salesman` varchar(4) NOT NULL DEFAULT '',
@@ -842,6 +841,30 @@ CREATE TABLE `emailsettings` (
   `companyname` varchar(50) DEFAULT NULL,
   `auth` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `employees`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `employees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `surname` varchar(20) NOT NULL,
+  `firstname` varchar(30) NOT NULL,
+  `stockid` varchar(20) NOT NULL COMMENT 'FK with stockmaster - ',
+  `manager` int(11) DEFAULT NULL,
+  `normalhours` double NOT NULL DEFAULT '40',
+  `userid` varchar(20) NOT NULL,
+  `email` varchar(55) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `surname` (`surname`),
+  KEY `firstname` (`firstname`),
+  KEY `stockid` (`stockid`),
+  KEY `manager` (`manager`),
+  KEY `userid` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2467,7 +2490,6 @@ CREATE TABLE `salesorders` (
   `quotedate` date NOT NULL DEFAULT '0000-00-00',
   `poplaced` tinyint(4) NOT NULL DEFAULT '0',
   `salesperson` varchar(4) NOT NULL,
-  `internalcomment` blob,
   PRIMARY KEY (`orderno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `OrdDate` (`orddate`),
@@ -2821,6 +2843,7 @@ CREATE TABLE `stockmaster` (
   `discountcategory` char(2) NOT NULL DEFAULT '',
   `taxcatid` tinyint(4) NOT NULL DEFAULT '1',
   `serialised` tinyint(4) NOT NULL DEFAULT '0',
+  `appendfile` varchar(40) NOT NULL DEFAULT 'none',
   `perishable` tinyint(1) NOT NULL DEFAULT '0',
   `decimalplaces` tinyint(4) NOT NULL DEFAULT '0',
   `pansize` double NOT NULL DEFAULT '0',
@@ -2968,12 +2991,10 @@ CREATE TABLE `stockserialitems` (
   `expirationdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `quantity` double NOT NULL DEFAULT '0',
   `qualitytext` text NOT NULL,
-  `createdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
   KEY `serialno` (`serialno`),
-  KEY `createdate` (`createdate`),
   CONSTRAINT `stockserialitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockserialitems_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -3163,10 +3184,9 @@ CREATE TABLE `supptrans` (
   `alloc` double NOT NULL DEFAULT '0',
   `transtext` text,
   `hold` tinyint(4) NOT NULL DEFAULT '0',
-  `chequeno` varchar(16) NOT NULL DEFAULT '',
-  `void` tinyint(1) NOT NULL DEFAULT '0',
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `TypeTransNo` (`transno`,`type`),
   KEY `DueDate` (`duedate`),
   KEY `Hold` (`hold`),
   KEY `SupplierNo` (`supplierno`),
@@ -3176,7 +3196,6 @@ CREATE TABLE `supptrans` (
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type` (`type`),
-  KEY `TypeTransNo` (`transno`,`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -3382,6 +3401,35 @@ CREATE TABLE `tendersuppliers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `timesheets`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `timesheets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wo` int(11) NOT NULL COMMENT 'loose FK with workorders',
+  `employeeid` int(11) NOT NULL,
+  `weekending` date NOT NULL DEFAULT '1900-01-01',
+  `workcentre` varchar(5) NOT NULL COMMENT 'loose FK with workcentres',
+  `day1` double NOT NULL DEFAULT '0',
+  `day2` double NOT NULL DEFAULT '0',
+  `day3` double NOT NULL DEFAULT '0',
+  `day4` double NOT NULL DEFAULT '0',
+  `day5` double NOT NULL DEFAULT '0',
+  `day6` double NOT NULL DEFAULT '0',
+  `day7` double NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `workcentre` (`workcentre`),
+  KEY `employees` (`employeeid`),
+  KEY `wo` (`wo`),
+  KEY `weekending` (`weekending`),
+  CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`employeeid`) REFERENCES `employees` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `unitsofmeasure`
 --
 
@@ -3542,14 +3590,15 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-20 18:59:07
--- MySQL dump 10.15  Distrib 10.0.34-MariaDB, for debian-linux-gnu (i686)
+-- Dump completed on 2018-11-09 19:47:06
+-- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	10.0.34-MariaDB-0ubuntu0.16.04.1
+-- Server version	5.7.24-0ubuntu0.16.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -6605,7 +6654,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$SVRX8Q.TR5a7MvDg.8JzFeSYa3tH9mNW1b0Djv2YCax5QhM/zlwZq','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2017-12-05 18:46:18','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'fluid','en_US.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2018-10-28 21:38:56','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'xenos','en_GB.utf8',0,0);
 INSERT INTO `www_users` VALUES ('WEB0000021','$2y$10$aTt/treAhiVVd0mPw1Ums.GcOxBtX/3cIsD1RL//0iT3QUYjvIDlS','Phil Daintree','WEB0000021','','','1234564','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000021','A4','1,0,0,0,0,0,0,0,0,0,0',0,1,1,0,30,'','en_GB.utf8',0,0);
 
 --
@@ -6801,6 +6850,7 @@ INSERT INTO `config` VALUES ('InventoryManagerEmail','test@company.com');
 INSERT INTO `config` VALUES ('InvoicePortraitFormat','0');
 INSERT INTO `config` VALUES ('InvoiceQuantityDefault','1');
 INSERT INTO `config` VALUES ('ItemDescriptionLanguages',',fr_FR.utf8,');
+INSERT INTO `config` VALUES ('LastDayOfWeek','0');
 INSERT INTO `config` VALUES ('LogPath','');
 INSERT INTO `config` VALUES ('LogSeverity','0');
 INSERT INTO `config` VALUES ('MaxImageSize','300');
@@ -6831,7 +6881,7 @@ INSERT INTO `config` VALUES ('RadioBeaconStockLocation','BL');
 INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
 INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
-INSERT INTO `config` VALUES ('reports_dir','companies/weberpdemo/reports');
+INSERT INTO `config` VALUES ('reports_dir','companies/weberpdemo/EDI_Incoming_Orders');
 INSERT INTO `config` VALUES ('RequirePickingNote','0');
 INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
 INSERT INTO `config` VALUES ('ShopAboutUs','This web-shop software has been developed by Logic Works Ltd for webERP. For support contact Phil Daintree by rn<a href=\\\"mailto:support@logicworks.co.nz\\\">email</a>rn');
@@ -6873,6 +6923,7 @@ INSERT INTO `config` VALUES ('ShopSwipeHQAPIKey','');
 INSERT INTO `config` VALUES ('ShopSwipeHQMerchantID','');
 INSERT INTO `config` VALUES ('ShopTermsConditions','<p>These terms cover the use of this website. Use includes visits to our sites, purchases on our sites, participation in our database and promotions. These terms of use apply to you when you use our websites. Please read these terms carefully - if you need to refer to them again they can be accessed from the link at the bottom of any page of our websites.</p><br /><ul><li><h2>1. Content</h2><p>While we endeavour to supply accurate information on this site, errors and omissions may occur. We do not accept any liability, direct or indirect, for any loss or damage which may directly or indirectly result from any advice, opinion, information, representation or omission whether negligent or otherwise, contained on this site. You are solely responsible for the actions you take in reliance on the content on, or accessed, through this site.</p><p>We reserve the right to make changes to the content on this site at any time and without notice.</p><p>To the extent permitted by law, we make no warranties in relation to the merchantability, fitness for purpose, freedom from computer virus, accuracy or availability of this web site or any other web site.</p></li><li><h2>2. Making a contract with us</h2><p>When you place an order with us, you are making an offer to buy goods. We will send you an e-mail to confirm that we have received and accepted your order, which indicates that a contract has been made between us. We will take payment from you when we accept your order. In the unlikely event that the goods are no longer available, we will refund your payment to the account it originated from, and advise that the goods are no longer available.</p><p>An order is placed on our website via adding a product to the shopping cart and proceeding through our checkout process. The checkout process includes giving us delivery and any other relevant details for your order, entering payment information and submitting your order. The final step consists of a confirmation page with full details of your order, which you are able to print as a receipt of your order. We will also email you with confirmation of your order.</p><p>We reserve the right to refuse or cancel any orders that we believe, solely by our own judgement, to be placed for commercial purposes, e.g. any kind of reseller. We also reserve the right to refuse or cancel any orders that we believe, solely by our own judgement, to have been placed fraudulently.</p><p>We reserve the right to limit the number of an item customers can purchase in a single transaction.</p></li><li><h2>3. Payment options</h2><p>We currently accept the following credit cards:</p><ul><li>Visa</li><li>MasterCard</li><li>American Express</li></ul>You can also pay using PayPal and internet bank transfer. Surcharges may apply for payment by PayPal or credit cards.</p></li><li><h2>4. Pricing</h2><p>All prices listed are inclusive of relevant taxes.  All prices are correct when published. Please note that we reserve the right to alter prices at any time for any reason. If this should happen after you have ordered a product, we will contact you prior to processing your order. Online and in store pricing may differ.</p></li><li><h2>5. Website and Credit Card Security</h2><p>We want you to have a safe and secure shopping experience online. All payments via our sites are processed using SSL (Secure Socket Layer) protocol, whereby sensitive information is encrypted to protect your privacy.</p><p>You can help to protect your details from unauthorised access by logging out each time you finish using the site, particularly if you are doing so from a public or shared computer.</p><p>For security purposes certain transactions may require proof of identification.</p></li><li><h2>6. Delivery and Delivery Charges</h2><p>We do not deliver to Post Office boxes.</p><p>Please note that a signature is required for all deliveries. The goods become the recipientÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s property and responsibility once they have been signed for at the time of delivery. If goods are lost or damaged in transit, please contact us within 7 business days <a href=\\\"index.php?Page=ContactUs\\\">see Contact Us page for contact details</a>. We will use this delivery information to make a claim against our courier company. We will offer you the choice of a replacement or a full refund, once we have received confirmation from our courier company that delivery was not successful.</p></li><li><h2>7. Restricted Products</h2><p>Some products on our site carry an age restriction, if a product you have selected is R16 or R18 a message will appear in the cart asking you to confirm you are an appropriate age to purchase the item(s).  Confirming this means that you are of an eligible age to purchase the selected product(s).  You are also agreeing that you are not purchasing the item on behalf of a person who is not the appropriate age.</p></li><li><h2>8. Delivery Period</h2><p>Delivery lead time for products may vary. Deliveries to rural addresses may take longer.  You will receive an email that confirms that your order has been dispatched.</p><p>To ensure successful delivery, please provide a delivery address where someone will be present during business hours to sign for the receipt of your package. You can track your order by entering the tracking number emailed to you in the dispatch email at the Courier\\\'s web-site.</p></li><li><h2>9. Disclaimer</h2><p>Our websites are intended to provide information for people shopping our products and accessing our services, including making purchases via our website and registering on our database to receive e-mails from us.</p><p>While we endeavour to supply accurate information on this site, errors and omissions may occur. We do not accept any liability, direct or indirect, for any loss or damage which may directly or indirectly result from any advice, opinion, information, representation or omission whether negligent or otherwise, contained on this site. You are solely responsible for the actions you take in reliance on the content on, or accessed, through this site.</p><p>We reserve the right to make changes to the content on this site at any time and without notice.</p><p>To the extent permitted by law, we make no warranties in relation to the merchantability, fitness for purpose, freedom from computer virus, accuracy or availability of this web site or any other web site.</p></li><li><h2>10. Links</h2><p>Please note that although this site has some hyperlinks to other third party websites, these sites have not been prepared by us are not under our control. The links are only provided as a convenience, and do not imply that we endorse, check, or approve of the third party site. We are not responsible for the privacy principles or content of these third party sites. We are not responsible for the availability of any of these links.</p></li><li><h2>11. Jurisdiction</h2><p>This website is governed by, and is to be interpreted in accordance with, the laws of  ????.</p></li><li><h2>12. Changes to this Agreement</h2><p>We reserve the right to alter, modify or update these terms of use. These terms apply to your order. We may change our terms and conditions at any time, so please do not assume that the same terms will apply to future orders.</p></li></ul>');
 INSERT INTO `config` VALUES ('ShopTitle','Shop Home');
+INSERT INTO `config` VALUES ('ShortcutMenu','0');
 INSERT INTO `config` VALUES ('ShowStockidOnImages','0');
 INSERT INTO `config` VALUES ('ShowValueOnGRN','1');
 INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
@@ -6880,7 +6931,7 @@ INSERT INTO `config` VALUES ('SmtpSetting','0');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
-INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2017-12-05');
+INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
 INSERT INTO `config` VALUES ('VersionNumber','4.15');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','0');
 INSERT INTO `config` VALUES ('WikiApp','DokuWiki');
@@ -6982,6 +7033,7 @@ INSERT INTO `scripts` VALUES ('EDISendInvoices.php',15,'Processes invoiced EDI c
 INSERT INTO `scripts` VALUES ('EmailConfirmation.php',2,'');
 INSERT INTO `scripts` VALUES ('EmailCustStatements.php',2,'Email Customer Statements');
 INSERT INTO `scripts` VALUES ('EmailCustTrans.php',2,'Emails selected invoice or credit to the customer');
+INSERT INTO `scripts` VALUES ('Employees.php',10,'Employees requiring time-sheets maintenance and entry ');
 INSERT INTO `scripts` VALUES ('ExchangeRateTrend.php',2,'Shows the trend in exchange rates as retrieved from ECB');
 INSERT INTO `scripts` VALUES ('Factors.php',5,'Defines supplier factor companies');
 INSERT INTO `scripts` VALUES ('FixedAssetCategories.php',11,'Defines the various categories of fixed assets');
@@ -7253,6 +7305,7 @@ INSERT INTO `scripts` VALUES ('TaxCategories.php',15,'Allows for categories of i
 INSERT INTO `scripts` VALUES ('TaxGroups.php',15,'Allows for taxes to be grouped together where multiple taxes might apply on sale or purchase of items');
 INSERT INTO `scripts` VALUES ('TaxProvinces.php',15,'Allows for inventory locations to be defined so that tax applicable from sales in different provinces can be dealt with');
 INSERT INTO `scripts` VALUES ('TestPlanResults.php',16,'Test Plan Results Entry');
+INSERT INTO `scripts` VALUES ('Timesheets.php',1,'Entry of Timesheets');
 INSERT INTO `scripts` VALUES ('TopItems.php',2,'Shows the top selling items');
 INSERT INTO `scripts` VALUES ('UnitsOfMeasure.php',15,'Allows for units of measure to be defined');
 INSERT INTO `scripts` VALUES ('UpgradeDatabase.php',15,'Allows for the database to be automatically upgraded based on currently recorded DBUpgradeNumber config option');
@@ -7397,8 +7450,10 @@ INSERT INTO `securitygroups` VALUES (8,13);
 INSERT INTO `securitygroups` VALUES (8,14);
 INSERT INTO `securitygroups` VALUES (8,15);
 INSERT INTO `securitygroups` VALUES (8,16);
+INSERT INTO `securitygroups` VALUES (8,20);
 INSERT INTO `securitygroups` VALUES (9,0);
 INSERT INTO `securitygroups` VALUES (9,9);
+INSERT INTO `securitygroups` VALUES (9,20);
 
 --
 -- Dumping data for table `securitytokens`
@@ -7423,6 +7478,7 @@ INSERT INTO `securitytokens` VALUES (15,'User Management and System Administrati
 INSERT INTO `securitytokens` VALUES (16,'QA');
 INSERT INTO `securitytokens` VALUES (18,'Cost authority');
 INSERT INTO `securitytokens` VALUES (19,'Internal stock request fully access authority');
+INSERT INTO `securitytokens` VALUES (20,'Timesheet administrator');
 
 --
 -- Dumping data for table `securityroles`
@@ -7455,9 +7511,10 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-20 18:59:07
+-- Dump completed on 2018-11-09 19:47:07
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);

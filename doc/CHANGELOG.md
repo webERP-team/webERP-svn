@@ -15,7 +15,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| New script to enter timeshees with the new table timesheets| Added | Phil | 2018-10-28 |  |
+| Fix rounding of shrink factor in Stocks.php | Fixed | Paul Becker | 2018-11-10 | [View](https://github.com/webERP-team/webERP/commit/) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8240) |
+| New script to enter timeshees with the new table timesheets| Added | Phil | 2018-10-28 | [View] (https://github.com/webERP-team/webERP/commit/53f3e4688b2d42661199ceed9ffcc519c5b2b963) |
 | Updates to the manual to describe labour functionality| Added | Phil | 2018-10-20 | [View] (https://github.com/webERP-team/webERP/commit/b466bb45d20d1510947bd64048fcaec3c55e6f78) |
 | Fix error in prnMsg display - DB errors were not reported - had to define $Messages as global inside DB_query function| Fixed | Phil | 2018-10-20 |  | 
 | New script to add employees Employees.php with new table employees for the purposes of time-sheet entry| Added | Phil | 2018-10-20 | https://github.com/webERP-team/webERP/commit/c0bea42348118135c9f19230d8048c1d46d4e2e9 | 
