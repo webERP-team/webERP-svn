@@ -1369,7 +1369,7 @@ echo '<tr>
 	</tr>
 	 <tr>
 		<td><label for="ShrinkageFactor">' . _('Shrinkage Factor') . ':</label></td>
-		<td><input class="number" id="ShrinkageFactor" maxlength="6" name="ShrinkFactor" size="6" title="' . _('Amount by which an output falls short of the estimated or planned output.') . '" type="text" value="' . locale_number_format($_POST['ShrinkFactor'],0) . '" /></td>
+		<td><input class="number" id="ShrinkageFactor" maxlength="6" name="ShrinkFactor" size="6" title="' . _('Amount by which an output falls short of the estimated or planned output.') . '" type="text" value="' . locale_number_format($_POST['ShrinkFactor'],'Variable') . '" /></td>
 	</tr>';
 
 echo '</table>
