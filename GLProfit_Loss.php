@@ -1,15 +1,18 @@
 <?php
-/* Shows the profit and loss of the company for the range of periods entered. */
+// GLProfit_Loss.php
+// Shows the profit and loss of the company for the range of periods entered.
 
 include ('includes/session.php');
-$Title = _('Profit and Loss');// Screen identification.
-$ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'ProfitAndLoss';// Anchor's id in the manual's html document.
+$Title = _('Profit and Loss');
+$Title2 = _('Statement of Comprehensive Income');// Name as IAS
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'ProfitAndLoss';
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 
 
-if (isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])){
+if (isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])) {
 	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period'),'error');
 	$_POST['SelectADifferentPeriod']='Select A Different Period';
 }
@@ -21,14 +24,13 @@ if ($_POST['Period'] != '') {
 
 if ((!isset($_POST['FromPeriod'])
 	AND !isset($_POST['ToPeriod']))
-		OR isset($_POST['SelectADifferentPeriod'])){
+		OR isset($_POST['SelectADifferentPeriod'])) {
 
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-		'/images/printer.png" title="' .// Icon image.
-		_('Print Statement of Comprehensive Income') . '" /> ' .// Icon title.
-		_('Print Profit and Loss Report') . '</p>';// Page title.
-//		_('Print Statement of Comprehensive Income') . '</p>';// Page title.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/printer.png" title="', // Icon image.
+		$Title2, '" /> ', // Icon title.
+		$Title, '</p>';// Page title.
 
 	echo '<div class="page_help_text">' . _('Profit and loss statement (P&amp;L), also called an Income Statement, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') .
 		'<br />'
@@ -40,7 +42,7 @@ if ((!isset($_POST['FromPeriod'])
 	echo '<div>';// div class=?
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (Date('m') > $_SESSION['YearEnd']){
+	if (Date('m') > $_SESSION['YearEnd']) {
 		/*Dates in SQL format */
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
@@ -62,15 +64,15 @@ if ((!isset($_POST['FromPeriod'])
 	$Periods = DB_query($sql);
 
 
-	while ($myrow=DB_fetch_array($Periods)){
-		if(isset($_POST['FromPeriod']) AND $_POST['FromPeriod']!=''){
-			if( $_POST['FromPeriod']== $myrow['periodno']){
+	while ($myrow=DB_fetch_array($Periods)) {
+		if(isset($_POST['FromPeriod']) AND $_POST['FromPeriod']!='') {
+			if( $_POST['FromPeriod']== $myrow['periodno']) {
 				echo '<option selected="selected" value="' . $myrow['periodno'] . '">' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			} else {
 				echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			}
 		} else {
-			if($myrow['lastdate_in_period']==$DefaultFromDate){
+			if($myrow['lastdate_in_period']==$DefaultFromDate) {
 				echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			} else {
 				echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
@@ -80,7 +82,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	echo '</select></td>
 		</tr>';
-	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
+	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']=='') {
 		$LastDate = date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y')));
 		$sql = "SELECT periodno FROM periods where lastdate_in_period = '" . $LastDate . "'";
 		$MaxPrd = DB_query($sql);
@@ -97,9 +99,9 @@ if ((!isset($_POST['FromPeriod'])
 
 	$RetResult = DB_data_seek($Periods,0);
 
-	while ($myrow=DB_fetch_array($Periods)){
+	while ($myrow=DB_fetch_array($Periods)) {
 
-		if($myrow['periodno']==$DefaultToPeriod){
+		if($myrow['periodno']==$DefaultToPeriod) {
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 		} else {
 			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
@@ -160,7 +162,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
-	if ($NumberOfMonths > 12){
+	if ($NumberOfMonths > 12) {
 		include('includes/header.php');
 		echo '<p>';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
@@ -208,13 +210,13 @@ if ((!isset($_POST['FromPeriod'])
 		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
-		if ($debug == 1){
+		if ($debug == 1) {
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
 		exit;
 	}
-	if (DB_num_rows($AccountsResult)==0){
+	if (DB_num_rows($AccountsResult)==0) {
 		$Title = _('Print Profit and Loss Error');
 		include('includes/header.php');
 		echo '<br />';
@@ -245,23 +247,23 @@ if ((!isset($_POST['FromPeriod'])
 	$PeriodBudgetProfitLoss=0;
 	$PeriodLYProfitLoss=0;
 
-	while ($myrow = DB_fetch_array($AccountsResult)){
+	while ($myrow = DB_fetch_array($AccountsResult)) {
 
 		// Print heading if at end of page
-		if ($YPos < ($Bottom_Margin)){
+		if ($YPos < ($Bottom_Margin)) {
 			include('includes/PDFProfitAndLossPageHeader.inc');
 		}
 
-		if ($myrow['groupname'] != $ActGrp){
-			if ($ActGrp != ''){
-				if ($myrow['parentgroupname']!=$ActGrp){
+		if ($myrow['groupname'] != $ActGrp) {
+			if ($ActGrp != '') {
+				if ($myrow['parentgroupname']!=$ActGrp) {
 					while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
-						if ($_POST['Detail'] == 'Detailed'){
+						if ($_POST['Detail'] == 'Detailed') {
 							$ActGrpLabel = $ParentGroups[$Level] . ' ' . _('total');
 						} else {
 							$ActGrpLabel = $ParentGroups[$Level];
 						}
-						if ($Section == 1){ /*Income */
+						if ($Section == 1) { /*Income */
 							$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel);
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
@@ -280,17 +282,17 @@ if ((!isset($_POST['FromPeriod'])
 						$ParentGroups[$Level] ='';
 						$Level--;
 // Print heading if at end of page
-						if ($YPos < ($Bottom_Margin + (2*$line_height))){
+						if ($YPos < ($Bottom_Margin + (2*$line_height))) {
 							include('includes/PDFProfitAndLossPageHeader.inc');
 						}
 					} //end of loop
 					//still need to print out the group total for the same level
-					if ($_POST['Detail'] == 'Detailed'){
+					if ($_POST['Detail'] == 'Detailed') {
 						$ActGrpLabel = $ParentGroups[$Level] . ' ' . _('total');
 					} else {
 						$ActGrpLabel = $ParentGroups[$Level];
 					}
-					if ($Section == 1){ /*Income */
+					if ($Section == 1) { /*Income */
 						$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel); $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
@@ -311,14 +313,14 @@ if ((!isset($_POST['FromPeriod'])
 		}
 
 		// Print heading if at end of page
-		if ($YPos < ($Bottom_Margin +(2 * $line_height))){
+		if ($YPos < ($Bottom_Margin +(2 * $line_height))) {
 			include('includes/PDFProfitAndLossPageHeader.inc');
 		}
 
-		if ($myrow['sectioninaccounts'] != $Section){
+		if ($myrow['sectioninaccounts'] != $Section) {
 			$pdf->setFont('','B');
 			$FontSize =10;
-			if ($Section != ''){
+			if ($Section != '') {
 				$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 				$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
 				if ($Section == 1) { /*Income*/
@@ -339,7 +341,7 @@ if ((!isset($_POST['FromPeriod'])
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$YPos -= (2 * $line_height);
 				}
-				if ($Section == 2){ /*Cost of Sales - need sub total for Gross Profit*/
+				if ($Section == 2) { /*Cost of Sales - need sub total for Gross Profit*/
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Gross Profit'));
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($TotalIncome - $SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($TotalBudgetIncome - $SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
@@ -348,17 +350,17 @@ if ((!isset($_POST['FromPeriod'])
 					$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
 					$YPos -= (2 * $line_height);
 
-					if ($TotalIncome != 0){
+					if ($TotalIncome != 0) {
 						$PrdGPPercent = 100 *($TotalIncome - $SectionPrdActual) / $TotalIncome;
 					} else {
 						$PrdGPPercent = 0;
 					}
-					if ($TotalBudgetIncome != 0){
+					if ($TotalBudgetIncome != 0) {
 						$BudgetGPPercent = 100 * ($TotalBudgetIncome - $SectionPrdBudget) / $TotalBudgetIncome;
 					} else {
 						$BudgetGPPercent = 0;
 					}
-					if ($TotalLYIncome != 0){
+					if ($TotalLYIncome != 0) {
 						$LYGPPercent = 100 * ($TotalLYIncome - $SectionPrdLY) / $TotalLYIncome;
 					} else {
 						$LYGPPercent = 0;
@@ -376,7 +378,7 @@ if ((!isset($_POST['FromPeriod'])
 
 			$Section = $myrow['sectioninaccounts'];
 
-			if ($_POST['Detail'] == 'Detailed'){
+			if ($_POST['Detail'] == 'Detailed') {
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$myrow['sectioninaccounts']]);
 				$YPos -= (2 * $line_height);
 			}
@@ -384,13 +386,13 @@ if ((!isset($_POST['FromPeriod'])
 			$pdf->setFont('',''); //sets to normal type in the default font
 		}
 
-		if ($myrow['groupname'] != $ActGrp){
-			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp !=''){ //adding another level of nesting
+		if ($myrow['groupname'] != $ActGrp) {
+			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp !='') { //adding another level of nesting
 				$Level++;
 			}
 			$ActGrp = $myrow['groupname'];
 			$ParentGroups[$Level]=$ActGrp;
-			if ($_POST['Detail'] == 'Detailed'){
+			if ($_POST['Detail'] == 'Detailed') {
 				$FontSize =10;
 				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$myrow['groupname']);
@@ -407,7 +409,7 @@ if ((!isset($_POST['FromPeriod'])
 		$PeriodBudgetProfitLoss += $AccountPeriodBudget;
 		$PeriodLYProfitLoss += $AccountPeriodLY;
 
-		for ($i=0;$i<=$Level;$i++){
+		for ($i=0;$i<=$Level;$i++) {
 			if (!isset($GrpPrdLY[$i])) {
 				$GrpPrdLY[$i]=0;
 			}
@@ -429,7 +431,7 @@ if ((!isset($_POST['FromPeriod'])
 
 		if ($_POST['Detail'] == 'Detailed') {
 
-			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountPeriodActual <> 0 OR $AccountPeriodBudget <> 0 OR $AccountPeriodLY <> 0))){ //condition for pdf
+			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountPeriodActual <> 0 OR $AccountPeriodBudget <> 0 OR $AccountPeriodLY <> 0))) { //condition for pdf
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['accountcode']);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$myrow['accountname']);
 
@@ -448,17 +450,17 @@ if ((!isset($_POST['FromPeriod'])
 	}
 	//end of loop
 
-	if ($ActGrp != ''){
+	if ($ActGrp != '') {
 
-		if ($myrow['parentgroupname']!=$ActGrp){
+		if ($myrow['parentgroupname']!=$ActGrp) {
 
 			while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
-				if ($_POST['Detail'] == 'Detailed'){
+				if ($_POST['Detail'] == 'Detailed') {
 					$ActGrpLabel = $ParentGroups[$Level] . ' ' . _('total');
 				} else {
 					$ActGrpLabel = $ParentGroups[$Level];
 				}
-				if ($Section == 1){ /*Income */
+				if ($Section == 1) { /*Income */
 					$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel);
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
@@ -477,17 +479,17 @@ if ((!isset($_POST['FromPeriod'])
 				$ParentGroups[$Level] ='';
 				$Level--;
 				// Print heading if at end of page
-				if ($YPos < ($Bottom_Margin + (2*$line_height))){
+				if ($YPos < ($Bottom_Margin + (2*$line_height))) {
 					include('includes/PDFProfitAndLossPageHeader.inc');
 				}
 			}
 			//still need to print out the group total for the same level
-			if ($_POST['Detail'] == 'Detailed'){
+			if ($_POST['Detail'] == 'Detailed') {
 				$ActGrpLabel = $ParentGroups[$Level] . ' ' . _('total');
 			} else {
 				$ActGrpLabel = $ParentGroups[$Level];
 			}
-			if ($Section == 1){ /*Income */
+			if ($Section == 1) { /*Income */
 				$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel); $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
@@ -506,10 +508,10 @@ if ((!isset($_POST['FromPeriod'])
 		}
 	}
 	// Print heading if at end of page
-	if ($YPos < ($Bottom_Margin + (2*$line_height))){
+	if ($YPos < ($Bottom_Margin + (2*$line_height))) {
 		include('includes/PDFProfitAndLossPageHeader.inc');
 	}
-	if ($Section != ''){
+	if ($Section != '') {
 
 		$pdf->setFont('','B');
 		$pdf->line($Left_Margin+310, $YPos+10,$Left_Margin+500, $YPos+10);
@@ -532,7 +534,7 @@ if ((!isset($_POST['FromPeriod'])
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 			$YPos -= (2 * $line_height);
 		}
-		if ($Section == 2){ /*Cost of Sales - need sub total for Gross Profit*/
+		if ($Section == 2) { /*Cost of Sales - need sub total for Gross Profit*/
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Gross Profit'));
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($TotalIncome - $SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($TotalBudgetIncome - $SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
@@ -552,17 +554,17 @@ if ((!isset($_POST['FromPeriod'])
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(-$PeriodLYProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 	$YPos -= (2 * $line_height);
 
-	if ($TotalIncome != 0){
+	if ($TotalIncome != 0) {
 		$PrdPLPercent = 100 *(-$PeriodProfitLoss) / $TotalIncome;
 	} else {
 		$PrdPLPercent = 0;
 	}
-	if ($TotalBudgetIncome != 0){
+	if ($TotalBudgetIncome != 0) {
 		$BudgetPLPercent = 100 * (-$PeriodBudgetProfitLoss) / $TotalBudgetIncome;
 	} else {
 		$BudgetPLPercent = 0;
 	}
-	if ($TotalLYIncome != 0){
+	if ($TotalLYIncome != 0) {
 		$LYPLPercent = 100 * (-$PeriodLYProfitLoss) / $TotalLYIncome;
 	} else {
 		$LYPLPercent = 0;
@@ -591,7 +593,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
-	if ($NumberOfMonths >12){
+	if ($NumberOfMonths >12) {
 		echo '<br />';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
 		include('includes/footer.php');
@@ -634,11 +636,10 @@ if ((!isset($_POST['FromPeriod'])
 	// Page title as IAS1 numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo '<div id="Report">';// Division to identify the report block.
-	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-		'/images/gl.png" title="' .// Icon image.
-		_('Statement of Comprehensive Income') . '" /> ' .// Icon title.
-		_('Profit and Loss Statement') . '<br />' .// Page title, reporting statement.
-//		_('Statement of Comprehensive Income') . '<br />' .// Page title, reporting statement.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/gl.png" title="', // Icon image.
+		$Title2, '" /> ', // Icon title.
+		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
 		_('For') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period.
 //		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period. ???
@@ -649,7 +650,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	echo '<table class="selection">';
 
-	if ($_POST['Detail']=='Detailed'){
+	if ($_POST['Detail']=='Detailed') {
 		$TableHeader = '<tr>
 							<th>' . _('Account') . '</th>
 							<th>' . _('Account Name')  . '</th>
@@ -691,10 +692,10 @@ if ((!isset($_POST['FromPeriod'])
 	$TotalLYIncome=0;
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
-		if ($myrow['groupname']!= $ActGrp){
-			if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
+		if ($myrow['groupname']!= $ActGrp) {
+			if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!='') {
 				while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
-					if ($_POST['Detail']=='Detailed'){
+					if ($_POST['Detail']=='Detailed') {
 						echo '<tr>
 								<td colspan="2"></td>
 								<td colspan="6"><hr /></td>
@@ -703,7 +704,7 @@ if ((!isset($_POST['FromPeriod'])
 					} else {
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 					}
-					if ($Section ==1){ /*Income */
+					if ($Section ==1) { /*Income */
 						printf('<tr>
 								<td colspan="2"><h4><i>%s</i></h4></td>
 								<td></td>
@@ -740,7 +741,7 @@ if ((!isset($_POST['FromPeriod'])
 					$Level--;
 				}//end while
 				//still need to print out the old group totals
-				if ($_POST['Detail']=='Detailed'){
+				if ($_POST['Detail']=='Detailed') {
 					echo '<tr>
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
@@ -750,7 +751,7 @@ if ((!isset($_POST['FromPeriod'])
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 				}
 
-				if ($Section ==1){ /*Income */
+				if ($Section ==1) { /*Income */
 					printf('<tr>
 							<td colspan="2"><h4><i>%s </i></h4></td>
 							<td></td>
@@ -786,9 +787,9 @@ if ((!isset($_POST['FromPeriod'])
 			}
 		}
 
-		if ($myrow['sectioninaccounts']!= $Section){
+		if ($myrow['sectioninaccounts']!= $Section) {
 
-			if ($SectionPrdLY+$SectionPrdActual+$SectionPrdBudget !=0){
+			if ($SectionPrdLY+$SectionPrdActual+$SectionPrdBudget !=0) {
 				if ($Section==1) { /*Income*/
 
 					echo '<tr>
@@ -839,7 +840,7 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format($SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']));
 				}
-				if ($Section==2){ /*Cost of Sales - need sub total for Gross Profit*/
+				if ($Section==2) { /*Cost of Sales - need sub total for Gross Profit*/
 					echo '<tr>
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
@@ -857,17 +858,17 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($TotalBudgetIncome - $SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format($TotalLYIncome - $SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']));
 
-					if ($TotalIncome !=0){
+					if ($TotalIncome !=0) {
 						$PrdGPPercent = 100*($TotalIncome - $SectionPrdActual)/$TotalIncome;
 					} else {
 						$PrdGPPercent =0;
 					}
-					if ($TotalBudgetIncome !=0){
+					if ($TotalBudgetIncome !=0) {
 						$BudgetGPPercent = 100*($TotalBudgetIncome - $SectionPrdBudget)/$TotalBudgetIncome;
 					} else {
 						$BudgetGPPercent =0;
 					}
-					if ($TotalLYIncome !=0){
+					if ($TotalLYIncome !=0) {
 						$LYGPPercent = 100*($TotalLYIncome - $SectionPrdLY)/$TotalLYIncome;
 					} else {
 						$LYGPPercent = 0;
@@ -890,7 +891,7 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($LYGPPercent,1). '%');
 				}
 
-				if (($Section!=1) AND ($Section!=2)){
+				if (($Section!=1) AND ($Section!=2)) {
 					echo '<tr>
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
@@ -909,17 +910,17 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format(-$PeriodBudgetProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format(-$PeriodLYProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']) );
 
-					if ($TotalIncome !=0){
+					if ($TotalIncome !=0) {
 						$PrdNPPercent = 100*(-$PeriodProfitLoss)/$TotalIncome;
 					} else {
 						$PrdNPPercent =0;
 					}
-					if ($TotalBudgetIncome !=0){
+					if ($TotalBudgetIncome !=0) {
 						$BudgetNPPercent=100*(-$PeriodBudgetProfitLoss)/$TotalBudgetIncome;
 					} else {
 						$BudgetNPPercent=0;
 					}
-					if ($TotalLYIncome !=0){
+					if ($TotalLYIncome !=0) {
 						$LYNPPercent = 100*(-$PeriodLYProfitLoss)/$TotalLYIncome;
 					} else {
 						$LYNPPercent = 0;
@@ -951,7 +952,7 @@ if ((!isset($_POST['FromPeriod'])
 
 			$Section = $myrow['sectioninaccounts'];
 
-			if ($_POST['Detail']=='Detailed'){
+			if ($_POST['Detail']=='Detailed') {
 				printf('<tr>
 					<td colspan="6"><h2><b>%s</b></h2></td>
 					</tr>',
@@ -961,15 +962,15 @@ if ((!isset($_POST['FromPeriod'])
 
 
 
-		if ($myrow['groupname']!= $ActGrp){
+		if ($myrow['groupname']!= $ActGrp) {
 
-			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp !=''){ //adding another level of nesting
+			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp !='') { //adding another level of nesting
 				$Level++;
 			}
 
 			$ParentGroups[$Level] = $myrow['groupname'];
 			$ActGrp = $myrow['groupname'];
-			if ($_POST['Detail']=='Detailed'){
+			if ($_POST['Detail']=='Detailed') {
 				printf('<tr>
 					<th colspan="8"><b>%s</b></th>
 					</tr>',
@@ -985,7 +986,7 @@ if ((!isset($_POST['FromPeriod'])
 		$PeriodBudgetProfitLoss += $AccountPeriodBudget;
 		$PeriodLYProfitLoss += $AccountPeriodLY;
 
-		for ($i=0;$i<=$Level;$i++){
+		for ($i=0;$i<=$Level;$i++) {
 			if (!isset($GrpPrdLY[$i])) {$GrpPrdLY[$i]=0;}
 			$GrpPrdLY[$i] +=$AccountPeriodLY;
 			if (!isset($GrpPrdActual[$i])) {$GrpPrdActual[$i]=0;}
@@ -997,11 +998,11 @@ if ((!isset($_POST['FromPeriod'])
 		$SectionPrdActual +=$AccountPeriodActual;
 		$SectionPrdBudget +=$AccountPeriodBudget;
 
-		if ($_POST['Detail']=='Detailed'){
+		if ($_POST['Detail']=='Detailed') {
 
-			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountPeriodActual <> 0 OR $AccountPeriodBudget <> 0 OR $AccountPeriodLY <> 0))){
+			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountPeriodActual <> 0 OR $AccountPeriodBudget <> 0 OR $AccountPeriodLY <> 0))) {
 				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode($_POST['FromPeriod']) . '&amp;ToPeriod=' . urlencode($_POST['ToPeriod']) . '&amp;Account=' . urlencode($myrow['accountcode']) . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
-				if ($Section ==1){
+				if ($Section ==1) {
 					 printf('<tr class="striped_row">
 							<td>%s</td>
 							<td>%s</td>
@@ -1040,10 +1041,10 @@ if ((!isset($_POST['FromPeriod'])
 	//end of loop
 
 
-	if ($myrow['groupname']!= $ActGrp){
-		if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
+	if ($myrow['groupname']!= $ActGrp) {
+		if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!='') {
 			while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
-				if ($_POST['Detail']=='Detailed'){
+				if ($_POST['Detail']=='Detailed') {
 					echo '<tr>
 						<td colspan="2"></td>
 						<td colspan="6"><hr /></td>
@@ -1052,7 +1053,7 @@ if ((!isset($_POST['FromPeriod'])
 				} else {
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 				}
-				if ($Section ==1){ /*Income */
+				if ($Section ==1) { /*Income */
 					printf('<tr>
 								<td colspan="2"><h4><i>%s </i></h4></td>
 								<td></td>
@@ -1088,7 +1089,7 @@ if ((!isset($_POST['FromPeriod'])
 				$Level--;
 			}//end while
 			//still need to print out the old group totals
-			if ($_POST['Detail']=='Detailed'){
+			if ($_POST['Detail']=='Detailed') {
 					echo '<tr>
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
@@ -1098,7 +1099,7 @@ if ((!isset($_POST['FromPeriod'])
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 				}
 
-			if ($Section ==1){ /*Income */
+			if ($Section ==1) { /*Income */
 				printf('<tr>
 							<td colspan="2"><h4><i>%s </i></h4></td>
 							<td></td>
@@ -1134,7 +1135,7 @@ if ((!isset($_POST['FromPeriod'])
 		}
 	}
 
-	if ($myrow['sectioninaccounts']!= $Section){
+	if ($myrow['sectioninaccounts']!= $Section) {
 
 		if ($Section==1) { /*Income*/
 
@@ -1186,7 +1187,7 @@ if ((!isset($_POST['FromPeriod'])
 					locale_number_format($SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 					locale_number_format($SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']));
 		}
-		if ($Section==2){ /*Cost of Sales - need sub total for Gross Profit*/
+		if ($Section==2) { /*Cost of Sales - need sub total for Gross Profit*/
 			echo '<tr>
 					<td colspan="2"></td>
 					<td colspan="6"><hr /></td>
@@ -1204,17 +1205,17 @@ if ((!isset($_POST['FromPeriod'])
 					locale_number_format($TotalBudgetIncome - $SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 					locale_number_format($TotalLYIncome - $SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']));
 
-			if ($TotalIncome !=0){
+			if ($TotalIncome !=0) {
 				$PrdGPPercent = 100*($TotalIncome - $SectionPrdActual)/$TotalIncome;
 			} else {
 				$PrdGPPercent =0;
 			}
-			if ($TotalBudgetIncome !=0){
+			if ($TotalBudgetIncome !=0) {
 				$BudgetGPPercent = 100*($TotalBudgetIncome - $SectionPrdBudget)/$TotalBudgetIncome;
 			} else {
 				$BudgetGPPercent =0;
 			}
-			if ($TotalLYIncome !=0){
+			if ($TotalLYIncome !=0) {
 				$LYGPPercent = 100*($TotalLYIncome - $SectionPrdLY)/$TotalLYIncome;
 			} else {
 				$LYGPPercent = 0;
@@ -1243,7 +1244,7 @@ if ((!isset($_POST['FromPeriod'])
 
 		$Section = $myrow['sectioninaccounts'];
 
-		if ($_POST['Detail']=='Detailed' and isset($Sections[$myrow['sectioninaccounts']])){
+		if ($_POST['Detail']=='Detailed' and isset($Sections[$myrow['sectioninaccounts']])) {
 			printf('<tr>
 				<td colspan="6"><h2><b>%s</b></h2></td>
 				</tr>',
@@ -1269,17 +1270,17 @@ if ((!isset($_POST['FromPeriod'])
 			locale_number_format(-$PeriodBudgetProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']),
 			locale_number_format(-$PeriodLYProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']) );
 
-	if ($TotalIncome !=0){
+	if ($TotalIncome !=0) {
 		$PrdNPPercent = 100*(-$PeriodProfitLoss)/$TotalIncome;
 	} else {
 		$PrdNPPercent =0;
 	}
-	if ($TotalBudgetIncome !=0){
+	if ($TotalBudgetIncome !=0) {
 		$BudgetNPPercent=100*(-$PeriodBudgetProfitLoss)/$TotalBudgetIncome;
 	} else {
 		$BudgetNPPercent=0;
 	}
-	if ($TotalLYIncome !=0){
+	if ($TotalLYIncome !=0) {
 		$LYNPPercent = 100*(-$PeriodLYProfitLoss)/$TotalLYIncome;
 	} else {
 		$LYNPPercent = 0;
