@@ -15,7 +15,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| Fix rounding of shrink factor in Stocks.php | Fixed | Paul Becker | 2018-11-10 | [View](https://github.com/webERP-team/webERP/commit/) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8240) |
+| Fix rounding of shrink factor in Stocks.php | Fixed | Paul Becker | 2018-11-10 | [View](https://github.com/webERP-team/webERP/commit/05405afe75175f4bb49d5f3517d949fb195df007) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8240) |
 | PDFWOPrint.php: Fix notices, reported in the forums by William Hunter | Fixed | PaulT | 2018-11-06 | [View](https://github.com/webERP-team/webERP/commit/9786f3a5c05b3be1c26827b35ca92f62485d77ee) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8233) |
 | New script to enter timeshees with the new table timesheets| Added | Phil | 2018-10-28 |  |  |
 | Updates to the manual to describe labour functionality| Added | Phil | 2018-10-20 | [View](https://github.com/webERP-team/webERP/commit/b466bb45d20d1510947bd64048fcaec3c55e6f78) |  |

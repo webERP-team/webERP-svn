@@ -431,8 +431,11 @@ foreach ($TaxCategoryName as $TaxCategoryId => $Row) {
 echo '</select></td></tr>';
 
 // Recovery or Stock GL Code input.
-echo '<tr>
-<td><input type="submit" name="UpdateTypes" style="visibility:hidden;width:1px" value="Not Seen" />';
+echo '<input type="submit" name="UpdateTypes" style="visibility:hidden;" value="Not Seen" />
+	<tr>
+		<td>
+		<label for="StockAct">';
+		
 if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
 	$Result = $PnLAccountsResult;
 	echo _('Recovery GL Code');
@@ -440,7 +443,7 @@ if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
 	$Result = $BSAccountsResult;
 	echo _('Stock GL Code');
 }
-echo ':</td>
+echo ':</label></td>
 <td><select name="StockAct">';
 
 while ($myrow = DB_fetch_array($Result)){
@@ -469,54 +472,62 @@ while ($myrow = DB_fetch_array($BSAccountsResult)) {
 echo '</select></td></tr>';
 DB_data_seek($BSAccountsResult,0);
 
-// Stock Adjustments GL Code input.
-echo '<tr>
-		<td>' . _('Stock Adjustments GL Code') . ':</td>
-		<td><select name="AdjGLAct">';
 
-while ($myrow = DB_fetch_array($PnLAccountsResult)) {
-	if (isset($_POST['AdjGLAct']) and $myrow['accountcode']==$_POST['AdjGLAct']) {
-		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
-	} else {
-		echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
-	}
+if (isset($_POST['StockType']) AND $_POST['StockType']!='L' AND $_POST['StockType']!='D') {
+	// Stock Adjustments GL Code input.
+	echo '<tr>
+			<td>' . _('Stock Adjustments GL Code') . ':</td>
+			<td><select name="AdjGLAct">';
+	
+	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
+		if (isset($_POST['AdjGLAct']) and $myrow['accountcode']==$_POST['AdjGLAct']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
+		}
+	
+	} //end while loop
+	DB_data_seek($PnLAccountsResult,0);
+	echo '</select></td></tr>';
+	
+	echo '<tr>
+			<td>' . _('Internal Stock Issues GL Code') . ':</td>
+			<td><select name="IssueGLAct">';
+	
+	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
+		if (isset($_POST['IssueGLAct']) and $myrow['accountcode']==$_POST['IssueGLAct']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
+		}
+	
+	} //end while loop
+	DB_data_seek($PnLAccountsResult,0);
+	echo '</select></td></tr>';
+	
+	echo '<tr>
+			<td>' . _('Price Variance GL Code') . ':</td>
+			<td><select name="PurchPriceVarAct">';
+	
+	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
+		if (isset($_POST['PurchPriceVarAct']) and $myrow['accountcode']==$_POST['PurchPriceVarAct']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
+		}
+	
+	} //end while loop
+	DB_data_seek($PnLAccountsResult,0);
+	
+	echo '</select></td>
+		</tr>';
+} else { //set defaults to account code =1 for dummy and labour type categories
+	echo '<input type="hidden" name="AdjGLAct" value="1" />
+			<input type="hidden" name="IssueGLAct" value="1" />
+			<input type="hidden" name="PurchPriceVarAct" value="1" />';
 
-} //end while loop
-DB_data_seek($PnLAccountsResult,0);
-echo '</select></td></tr>';
-
-echo '<tr>
-		<td>' . _('Internal Stock Issues GL Code') . ':</td>
-		<td><select name="IssueGLAct">';
-
-while ($myrow = DB_fetch_array($PnLAccountsResult)) {
-	if (isset($_POST['IssueGLAct']) and $myrow['accountcode']==$_POST['IssueGLAct']) {
-		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
-	} else {
-		echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
-	}
-
-} //end while loop
-DB_data_seek($PnLAccountsResult,0);
-echo '</select></td></tr>';
-
-echo '<tr>
-		<td>' . _('Price Variance GL Code') . ':</td>
-		<td><select name="PurchPriceVarAct">';
-
-while ($myrow = DB_fetch_array($PnLAccountsResult)) {
-	if (isset($_POST['PurchPriceVarAct']) and $myrow['accountcode']==$_POST['PurchPriceVarAct']) {
-		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
-	} else {
-		echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
-	}
-
-} //end while loop
-DB_data_seek($PnLAccountsResult,0);
-
-echo '</select></td>
-		</tr>
-		<tr>
+}
+	echo '<tr>
 			<td>';
 if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
 	echo  _('Labour Efficiency Variance GL Code');
