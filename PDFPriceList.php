@@ -1,17 +1,19 @@
 <?php
-/*	PDFPriceList.php */
-/*	Script to print a price list by inventory category */
+//	PDFPriceList.php
+//	Script to print a price list by inventory category.
 
-/*	Output column sizes:
-		* stockmaster.stockid, varchar(20), len = 20chr
-		* stockmaster.description, varchar(50), len = 50chr
-		* prices.startdate, date, len = 10chr
-		* prices.enddate, date/'No End Date', len = 12chr
-		* custbranch.brname, varchar(40), len = 40chr
-		* Gross Profit, calculated, len = 8chr
-		* prices.price, decimal(20,4), len = 20chr + 4spaces */
-/*	Please note that addTextWrap() YPos is a font-size-height further down than addText() and other functions. Use addText() instead of addTextWrap() to print left aligned elements. */
-/*	All coordinates are measured from the lower left corner of the sheet to the top left corner of the element. */
+/*
+Output column sizes:
+	* stockmaster.stockid, varchar(20), len = 20chr
+	* stockmaster.description, varchar(50), len = 50chr
+	* prices.startdate, date, len = 10chr
+	* prices.enddate, date/'No End Date', len = 12chr
+	* custbranch.brname, varchar(40), len = 40chr
+	* Gross Profit, calculated, len = 8chr
+	* prices.price, decimal(20,4), len = 20chr + 4spaces
+Please note that addTextWrap() YPos is a font-size-height further down than addText() and other functions. Use addText() instead of addTextWrap() to print left aligned elements.
+All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.
+*/
 
 // BEGIN: Functions division ---------------------------------------------------
 function PageHeader() {
@@ -475,7 +477,7 @@ If (isset($_POST['PrintPDF'])) {
 	 		'<td>',
 				'<input',(($_POST['ShowObsolete']) ? ' checked="checked"' : ''), ' id="ShowObsolete" name="ShowObsolete" type="checkbox" />', // "Checked" if ShowObsolete is TRUE.
 				'<span class="field_help_text">',
-				(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show the obsolete items') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+					_('Check this box to show the obsolete items'), // If $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
 				'</span>',
 			'</td>',
 	 	'</tr>',
@@ -486,7 +488,7 @@ If (isset($_POST['PrintPDF'])) {
 				'<input checked="checked" id="ItemOrder" name="ItemOrder" type="radio" value="Code">', _('Currency, category and code'), '<br>',
 				'<input name="ItemOrder" type="radio" value="Description">', _('Currency, category and description'), '<br>',
 				'<span class="field_help_text">',
-				(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the order of the items in the report') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+					_('Select the order of the items in the report'), // If $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
 				'</span>',
 			'</td>',
 	 	'</tr>',

@@ -1,10 +1,12 @@
 <?php
+// Stocks.php
+// Defines an item - maintenance and addition of new parts.
 
 include('includes/session.php');
 $Title = _('Item Maintenance');
-/* webERP manual links before header.php */
-$ViewTopic= 'Inventory';
+$ViewTopic = 'Inventory';
 $BookMark = 'InventoryAddingItems';
+
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -78,10 +80,11 @@ if (isset($_POST['New'])) {
 }
 
 echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
-	<br />
-	<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '
-	</p>';
+	<br />',
+	'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/inventory.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 $SupportedImgExt = array('png','jpg','jpeg');
 
@@ -920,9 +923,19 @@ echo '<div>
 if (isset($StockID) && $StockID != '' && $InputError == 0){
 	echo '<table width="100%">
 			<tr>
-				<td width="5%"><input style="background:url(css/previous.png);width:26px;height:43px;" type="submit" name="PreviousItem" value="" ' . ($hasPrev ? '' : 'disabled') . ' /></td>
-				<td width="90%"></td>
-				<td width="5%"><input style="background:url(css/next.png);width:26px;height:43px;" type="submit" name="NextItem" value="" ' . ($hasNext ? '' : 'disabled') . ' /></td>
+				<td>',
+					'<button ', ($hasPrev ? '' : 'disabled'), ' name="PreviousItem" type="submit" value="">',
+						'<img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" />',
+						/*_('Previous Item'),*/
+					'</button>', // "Previous" button.
+				'</td>',
+				'<td width="90%">&nbsp;</td>',
+				'<td>',
+					'<button ', ($hasNext ? '' : 'disabled'), ' name="NextItem" type="submit" value="">',
+						/*_('Next Item'),*/
+						'<img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.svg" />',
+					'</button>', // "Next" button.
+				'</td>
 			</tr>
 		</table>';
 }

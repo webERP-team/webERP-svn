@@ -1,32 +1,34 @@
 <?php
-/* This script displays the bank reconciliation for a selected bank account. */
+// BankReconciliation.php
+// Displays the bank reconciliation for a selected bank account.
 
 include('includes/session.php');
-$Title = _('Bank Reconciliation');;// Screen identificator.
-$ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'BankAccounts';// Anchor's id in the manual's html document.
+$Title = _('Bank Reconciliation');
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'BankAccounts';
+
 include('includes/header.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/bank.png" title="' .
-	_('Bank Reconciliation') . '" /> ' .// Icon title.
-	_('Bank Reconciliation') . '</p>';// Page title.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/bank.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 if (isset($_GET['Account'])) {
 	$_POST['BankAccount']=$_GET['Account'];
 	$_POST['ShowRec']=true;
 }
 
-if (isset($_POST['BankStatementBalance'])){
+if (isset($_POST['BankStatementBalance'])) {
 	$_POST['BankStatementBalance'] = filter_number_format($_POST['BankStatementBalance']);
 }
 
-if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format($_POST['DoExchangeDifference']))){
+if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format($_POST['DoExchangeDifference']))) {
 
-	if (!is_numeric($_POST['BankStatementBalance'])){
+	if (!is_numeric($_POST['BankStatementBalance'])) {
 		prnMsg(_('The entry in the bank statement balance is not numeric. The balance on the bank statement should be entered. The exchange difference has not been calculated and no general ledger journal has been created'),'warn');
 		echo '<br />' . $_POST['BankStatementBalance'];
 	} else {
@@ -96,36 +98,43 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 	} //end if the bank statement balance was numeric
 }
 
-echo '<table class="selection">';
+echo '<table class="selection">',
+		'<tr><td>', _('Bank Account'), ':</td>
+			<td><select name="BankAccount" tabindex="1">';
 
-$SQL = "SELECT bankaccounts.accountcode,
-				bankaccounts.bankaccountname
+$SQL = "SELECT
+			bankaccounts.accountcode,
+			bankaccounts.bankaccountname,
+			bankaccounts.currcode
 		FROM bankaccounts, bankaccountusers
 		WHERE bankaccounts.accountcode=bankaccountusers.accountcode
 			AND bankaccountusers.userid = '" . $_SESSION['UserID'] ."'
 		ORDER BY bankaccounts.bankaccountname";
-
-$ErrMsg = _('The bank accounts could not be retrieved by the SQL because');
+$ErrMsg = _('The bank accounts could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the bank accounts was');
-$AccountsResults = DB_query($SQL,$ErrMsg,$DbgMsg);
+$AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-echo '<tr><td>' . _('Bank Account') . ':</td>
-		<td><select tabindex="1" name="BankAccount">';
-
-if (DB_num_rows($AccountsResults)==0){
+if (DB_num_rows($AccountsResults)==0) {
 	echo '</select></td>
 			</tr>
-			</table>
-			<p>' . _('Bank Accounts have not yet been defined') . '. ' . _('You must first') . '<a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a>' . ' ' . _('and general ledger accounts to be affected') . '.';
-	include('includes/footer.php');
+		</table>';
+	prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
+	include ('includes/footer.php');
 	exit;
 } else {
-	while ($myrow=DB_fetch_array($AccountsResults)){
+	while ($MyRow=DB_fetch_array($AccountsResults)) {
+
+		// Lists bank accounts order by name
+		echo '<option',
+			((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : '' ),
+			' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
+
+
 		/*list the bank account names */
-		if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$myrow['accountcode']){
-			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+		if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -144,7 +153,7 @@ echo '</table>
 	<br />';
 
 
-if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
+if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])) {
 
 /*Get the balance of the bank account concerned */
 
@@ -158,8 +167,8 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	$ErrMsg = _('The bank account balance could not be returned by the SQL because');
 	$BalanceResult = DB_query($SQL,$ErrMsg);
 
-	$myrow = DB_fetch_row($BalanceResult);
-	$Balance = $myrow[0];
+	$MyRow = DB_fetch_row($BalanceResult);
+	$Balance = $MyRow[0];
 
 	/* Now need to get the currency of the account and the current table ex rate */
 	$SQL = "SELECT rate,
@@ -178,7 +187,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 			<tr class="striped_row">
 				<td colspan="6"><b>' . $CurrencyRow['bankaccountname'] . ' ' . _('Balance as at') . ' ' . Date($_SESSION['DefaultDateFormat']);
 
-	if ($_SESSION['CompanyRecord']['currencydefault']!=$CurrencyRow['currcode']){
+	if ($_SESSION['CompanyRecord']['currencydefault']!=$CurrencyRow['currcode']) {
 		echo  ' (' . $CurrencyRow['currcode'] . ' @ ' . $CurrencyRow['rate'] .')';
 	}
 	echo '</b></td>
@@ -221,7 +230,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	$j = 1;
 	$TotalUnpresentedCheques =0;
 
-	while ($myrow=DB_fetch_array($UPChequesResult)) {
+	while ($MyRow=DB_fetch_array($UPChequesResult)) {
 		printf('<tr class="striped_row">
 				<td>%s</td>
 				<td>%s</td>
@@ -230,17 +239,17 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>',
-				ConvertSQLDate($myrow['transdate']),
-				$myrow['typename'],
-				$myrow['transno'],
-				$myrow['ref'],
-				locale_number_format($myrow['amt'],$CurrencyRow['currdecimalplaces']),
-				locale_number_format($myrow['outstanding'],$CurrencyRow['currdecimalplaces']));
+				ConvertSQLDate($MyRow['transdate']),
+				$MyRow['typename'],
+				$MyRow['transno'],
+				$MyRow['ref'],
+				locale_number_format($MyRow['amt'],$CurrencyRow['currdecimalplaces']),
+				locale_number_format($MyRow['outstanding'],$CurrencyRow['currdecimalplaces']));
 
-		$TotalUnpresentedCheques +=$myrow['outstanding'];
+		$TotalUnpresentedCheques +=$MyRow['outstanding'];
 
 		$j++;
-		If ($j == 18){
+		If ($j == 18) {
 			$j=1;
 			echo $TableHeader;
 		}
@@ -290,7 +299,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	$j = 1;
 	$TotalUnclearedDeposits =0;
 
-	while ($myrow=DB_fetch_array($UPChequesResult)) {
+	while ($MyRow=DB_fetch_array($UPChequesResult)) {
 		printf('<tr class="striped_row">
 				<td>%s</td>
 				<td>%s</td>
@@ -299,17 +308,17 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>',
-				ConvertSQLDate($myrow['transdate']),
-				$myrow['typename'],
-				$myrow['transno'],
-				$myrow['ref'],
-				locale_number_format($myrow['amt'],$CurrencyRow['currdecimalplaces']),
-				locale_number_format($myrow['outstanding'],$CurrencyRow['currdecimalplaces']) );
+				ConvertSQLDate($MyRow['transdate']),
+				$MyRow['typename'],
+				$MyRow['transno'],
+				$MyRow['ref'],
+				locale_number_format($MyRow['amt'],$CurrencyRow['currdecimalplaces']),
+				locale_number_format($MyRow['outstanding'],$CurrencyRow['currdecimalplaces']) );
 
-		$TotalUnclearedDeposits +=$myrow['outstanding'];
+		$TotalUnclearedDeposits +=$MyRow['outstanding'];
 
 		$j++;
-		if ($j == 18){
+		if ($j == 18) {
 			$j=1;
 			echo $TableHeader;
 		}
@@ -331,9 +340,9 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 			<td class="number">' . locale_number_format($FXStatementBalance,$CurrencyRow['currdecimalplaces']) . '</td>
 		</tr>';
 
-	if (isset($_POST['DoExchangeDifference'])){
+	if (isset($_POST['DoExchangeDifference'])) {
 		echo '<input type="hidden" name="DoExchangeDifference" value="' . $FXStatementBalance . '" />';
-		if (!isset($_POST['BankStatementBalance'])){
+		if (!isset($_POST['BankStatementBalance'])) {
 			$_POST['BankStatementBalance'] =0;
 		}
 		echo '<tr>
@@ -345,7 +354,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 			</tr>';
 	}
 
-	if ($_SESSION['CompanyRecord']['currencydefault']!=$CurrencyRow['currcode'] AND !isset($_POST['DoExchangeDifference'])){
+	if ($_SESSION['CompanyRecord']['currencydefault']!=$CurrencyRow['currcode'] AND !isset($_POST['DoExchangeDifference'])) {
 
 		echo '<tr>
 				<td colspan="7"><hr /></td>

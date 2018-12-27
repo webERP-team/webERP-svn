@@ -511,7 +511,7 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 	/* Class selector for field help text. */
 }
 .page_help_text { /* many */
-	/* class selector for page help text. */
+	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
 	background-color:#d3d3d3;
 	border-radius:5px;
 	border:#a52a2a 1px solid;
@@ -529,7 +529,27 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 	visibility:visible;
 	width:50%; /* 80% in merge */
 	z-index:1;
-	/* Class selector for page help text. */
+	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+}
+.page_info_text {
+	background:#d3d3d3 url(images/info.svg) top left no-repeat;
+	border-radius:5px;
+	border:#a52a2a 1px solid;
+	color:#000000;
+	float:none;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+	font-weight:normal;
+	margin:0 auto;
+	padding-bottom:3px; /* 2px in merge */
+	padding-left:3px;	 /* 10px in merge */
+	padding-top:3px;/* 2px in merge */
+	position:static;
+	text-align:center;
+	visibility:visible;
+	width:50%; /* 80% in merge */
+	z-index:1;
+	/* Class selector for page info text. */
 }
 .page_title_text {
 	background:#dcdcdc;

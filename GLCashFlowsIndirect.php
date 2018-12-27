@@ -1,8 +1,8 @@
 <?php
-/* GLCashFlowsIndirect.php */
-/* Shows a statement of cash flows for the period using the indirect method. */
-/* This program is under the GNU General Public License, last version. 2016-10-08. */
-/* This creative work is under the CC BY-NC-SA, later version. 2016-10-08. */
+// GLCashFlowsIndirect.php
+// Shows a statement of cash flows for the period using the indirect method.
+// This program is under the GNU General Public License, last version. 2016-10-08.
+// This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
 
 // Notes:
 // Coding Conventions/Style: http://www.weberp.org/CodingConventions.html
@@ -36,6 +36,7 @@ include('includes/session.php');
 $Title = _('Statement of Cash Flows, Indirect Method');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLCashFlowsIndirect';
+
 include('includes/header.php');
 
 // Merges gets into posts:
@@ -824,7 +825,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	}
 	echo			'</select>',
 					'<span class="field_help_text">',
-					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the beginning of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+						_('Select the beginning of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>',
@@ -841,7 +842,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	}
 	echo			'</select>',
 					'<span class="field_help_text">',
-					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the end of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+						_('Select the end of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>';
@@ -865,7 +866,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 			 	'<td><label for="ShowBudget">', _('Show the budget for the period'), '</label></td>
 			 	<td><input',($_POST['ShowBudget'] ? ' checked="checked"' : ''), ' id="ShowBudget" name="ShowBudget" type="checkbox">', // "Checked" if ShowBudget is set AND it is TRUE.
 			 		'<span class="field_help_text">',
-					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show the budget for the period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+			 			_('Check this box to show the budget for the period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>',
@@ -874,7 +875,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 				'<td><label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label></td>
 			 	<td><input',(isset($_POST['ShowZeroBalance']) && $_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
 					'<span class="field_help_text">',
-					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show all accounts including those with zero balance') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+						_('Check this box to show all accounts including those with zero balance'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>',
@@ -883,7 +884,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 			 	'<td><label for="ShowCash">', _('Show cash and cash equivalents accounts'), '</label></td>
 			 	<td><input',($_POST['ShowCash'] ? ' checked="checked"' : ''), ' id="ShowCash" name="ShowCash" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
 					'<span class="field_help_text">',
-					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show cash and cash equivalents accounts') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+						_('Check this box to show cash and cash equivalents accounts'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>',

@@ -1,5 +1,6 @@
 <?php
-/* Shows bank accounts authorised for with balances */
+// BankAccountBalances.php
+// Shows bank accounts authorised for with balances
 
 include('includes/session.php');
 $Title = _('List of bank account balances');
@@ -19,14 +20,18 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 			<th>', _('Balance in functional currency'), '</th>
 		</tr>';
 
-$SQL = "SELECT DISTINCT bankaccounts.accountcode,
-						currcode,
-						bankaccountname
-			FROM bankaccounts
-			INNER JOIN bankaccountusers
+$SQL = "SELECT DISTINCT
+			bankaccounts.accountcode,
+			bankaccounts.bankaccountname,
+			bankaccounts.currcode
+		FROM bankaccounts
+		INNER JOIN bankaccountusers
 			ON bankaccounts.accountcode=bankaccountusers.accountcode
-			AND userid='" . $_SESSION['UserID'] . "'";
-$Result = DB_query($SQL);
+			AND userid='" . $_SESSION['UserID'] . "'
+		ORDER BY bankaccounts.accountcode";
+$ErrMsg = _('The bank accounts could not be retrieved because');
+$DbgMsg = _('The SQL used to retrieve the bank accounts was');
+$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($Result) == 0) {
 	echo _('There are no bank accounts defined that you have authority to see');

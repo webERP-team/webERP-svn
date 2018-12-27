@@ -1,10 +1,12 @@
 <?php
-/* Utility to copy authority of GL accounts from one user to another */
+// Z_GLAccountUsersCopyAuthority.php
+// Utility to copy authority of GL accounts from one user to another.
 
 include('includes/session.php');
 $Title = _('GLAccount - Users Authority Copy Authority');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_GLAccountUsersCopyAuthority';
+
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -83,16 +85,12 @@ while ($MyRow = DB_fetch_array($Result)) {
 	echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
 } //end while loop
 echo '</select></td></tr>';
-echo '</table>';
-/*echo '<input type="submit" name="ProcessCopyAuthority" value="' . _('Process Copy of Authority') . '" />
-	</div>
-	</form>';*/
-
-// Form buttons:
-echo		'<button name="ProcessCopyAuthority" type="submit" value="', _('Process Copy of Authority'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/user.png" /> ', _('Process'), '</button>', // "Process Copy of Authority" button.
+echo '</table>',
+			// Form buttons:
+			'<button name="ProcessCopyAuthority" type="submit" value="', _('Process Copy of Authority'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/tick.svg" /> ', _('Process'), '</button>', // "Process Copy of Authority" button.
 			'<button formaction="index.php?Application=Utilities" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/previous.png" /> ', _('Return'), '</button>', // "Return" button.
+				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>
 	</form>';
 

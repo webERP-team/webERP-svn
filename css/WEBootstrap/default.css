@@ -701,7 +701,22 @@ select.selecterror {
 	visibility:visible;
 	width:80%;
 	z-index:1;
-	/* Class selector for page help text. */
+	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+}
+.page_info_text {
+	background:#d3d3d3 url(images/info.svg) top left no-repeat;
+	border:#c3c3c3 solid thin;
+	color:#000000;
+	float:none;
+	font-weight:normal;
+	margin:0 auto;
+	padding:4px 10px;
+	position:static;
+	text-align:center;
+	visibility:visible;
+	width:80%;
+	z-index:1;
+	/* Class selector for page info text. */
 }
 .page_title_text {
 	color:#000000;

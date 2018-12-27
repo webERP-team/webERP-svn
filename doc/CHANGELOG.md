@@ -15,7 +15,19 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Sort the bank accounts | Changed | Rafael Chacón | 2018-12-18 | [View](https://github.com/webERP-team/webERP/commit/79d88db4ea04099473edfc7f1ddd84deb4ad500f) |   |
+| Order by bankaccountname | Changed | Rafael Chacón | 2018-12-14 | [View](https://github.com/webERP-team/webERP/commit/eb5bd54f55c4398aa9781ea9b392fd304b845f92) |   |
+| Add option to print the BOM from the entry screen | Changed | Tim Schofield | 2018-12-08 | [View](https://github.com/webERP-team/webERP/commit/cb5754b1228b93a3ae34d993b2f9e3d484aeaf0f) |   |
+| Add option to import po items | Changed | express achiever | 2018-12-06 | [View](https://github.com/webERP-team/webERP/commit/c24c5217369d9c2299b16c680d06d9bed0354a3d) |   |
+| Change field_help_text code (part 1) | Changed | Rafael Chacón | 2018-12-06 | [View](https://github.com/webERP-team/webERP/commit/5b660abb2f2360cfea500ea9cbb5dcfdd4e217be) |   |
+| Add page_info_text class | Added | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/06151046399d29d04e37f37c88aa63cc7b235d3f) |   |
+| Delete unneeded images | Removed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/f40435a7891c72e46b77af6fa2b5441a29ce16a3) |   |
+| Fix images call | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/af967fa3e6c9555693142717f6792dd4044ac516) |   |
+| Fix RTL images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/e7c875a7feb35aa5bf0a574a363a7d84b959c063) |   |
+| Fix the size of some images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/fbbd45c81dbf9708dd4bcd4e7de5c7076a9faeaa) |   |
 | Per David Shaw Alter all date and datetime fields to have valid defaults '1000-01-01' as '0000-00-00' no longer acceptable | Changed | Phil | 2018-12-01 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) |  |
+| Standardise PurchasesReport.php | Changed | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/34841abdeb195052935ae4d1d1efce708eef4ddc) |   |
+| Add SalesReport.php | Added | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/9dc2c2cf14a4ec2adca40a7923313833a4b62f1a) |   |
 | Add units column to PDFWOPrint.php | Changed | Paul Becker | 2018-11-17 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8231) |
 | Fix rounding of shrink factor in Stocks.php | Fixed | Paul Becker | 2018-11-10 | [View](https://github.com/webERP-team/webERP/commit/) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8240) |
 | PDFWOPrint.php: Fix notices, reported in the forums by William Hunter | Fixed | PaulT | 2018-11-06 | [View](https://github.com/webERP-team/webERP/commit/9786f3a5c05b3be1c26827b35ca92f62485d77ee) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8233) |
@@ -45,30 +57,30 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| Upgrade weberpchina.sql file and modify htmlspecialcharts parameter in footer.php |  | Exson Qu | 2018-05-15 | [View](http://github.com/webERP-team/webERP/commit/62a4571fb) |  |
-| Change module alias from "orders" to "Sales" to standardise in MainMenuLinksArray.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/30115ebda) |  |
-| Groups the INSERT INTO sentences in SQL upgrade script |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/7ad7340cc) |  |
-| Various improvements to manual |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/cfce65413) |  |
-| Add script description and ViewTopic to SelectPickingLists.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/62c7a5fb0) |  |
-| Add ViewTopic and BookMark to GeneratePickingList.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/88a43575f) |  |
-| Add "id" for $BookMark = 'CounterReturns' in ManualSalesOrders.html |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/a12be5b00) |  |
-| Add script description, ViewTopic and BookMark in CounterReturns.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/80243e2d1) |  |
-| Add info to General Ledger manual |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/a1c8fac82) |  |
-| Add "id" for $BookMark = 'SelectContract' in SelectContract.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/fa43031fb) |  |
-| Add "id" for $BookMark = 'SelectContract' in ManualContracts.html |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/4d75b86c5) |  |
-| Add 'Bank Account Balances' and 'Graph of Account Transactions' info to manual. Reorganise 'Inquiries and Reports' and 'Maintenance' of 'General Ledger" chapter of manual. |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/84aa988b3) |  |
-| Add script description and BookMark in BankAccountBalances.php |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/21ea3ac27) |  |
-| Add section for the "Graph of Account Transactions" script in ManualGeneralLedger.html |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/078c13a60) |  |
-| Groups "INSERT INTO `scripts`" sentences and completes empty `description` fields in SQL upgrade script |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/c649a57fb) |  |
-| Add script description, also fix $ViewTopic in GLAccountGraph.php|  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/fdfda2148) |  |
-| Update Spanish translation |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/41380a6c3) |  |
-| Add script description in PDFShipLabel.php |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/8e6513bb8) |  |
-| Add script description in PDFAck.php |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/4cd593557) |  |
-| Add script description in GeneratePickingList.php |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/4857c4a7e) |  |
-| Add script description, ViewTopic and BookMark in PickingLists.php|  | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/aff58aa7d) |  |
-| Rebuild languages files |  | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/ca7ee2360) |  |
-| Add script description, ViewTopic and BookMark in SelectPickingLists.php |  | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/1c184e09c) |  |
-| Update Spanish translation |  | Rafael Chacón | 2018-05-04 | [View](http://github.com/webERP-team/webERP/commit/511eb2e29) |  |
+| Upgrade weberpchina.sql file and modify htmlspecialcharts parameter in footer.php | Changed | Exson Qu | 2018-05-15 | [View](http://github.com/webERP-team/webERP/commit/62a4571fb) |  |
+| Change module alias from "orders" to "Sales" to standardise in MainMenuLinksArray.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/30115ebda) |  |
+| Groups the INSERT INTO sentences in SQL upgrade script | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/7ad7340cc) |  |
+| Various improvements to manual | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/cfce65413) |  |
+| Add script description and ViewTopic to SelectPickingLists.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/62c7a5fb0) |  |
+| Add ViewTopic and BookMark to GeneratePickingList.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/88a43575f) |  |
+| Add "id" for $BookMark = 'CounterReturns' in ManualSalesOrders.html | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/a12be5b00) |  |
+| Add script description, ViewTopic and BookMark in CounterReturns.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/80243e2d1) |  |
+| Add info to General Ledger manual | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/a1c8fac82) |  |
+| Add "id" for $BookMark = 'SelectContract' in SelectContract.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/fa43031fb) |  |
+| Add "id" for $BookMark = 'SelectContract' in ManualContracts.html | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/4d75b86c5) |  |
+| Add 'Bank Account Balances' and 'Graph of Account Transactions' info to manual. Reorganise 'Inquiries and Reports' and 'Maintenance' of 'General Ledger" chapter of manual. | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/84aa988b3) |  |
+| Add script description and BookMark in BankAccountBalances.php | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/21ea3ac27) |  |
+| Add section for the "Graph of Account Transactions" script in ManualGeneralLedger.html | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/078c13a60) |  |
+| Groups "INSERT INTO `scripts`" sentences and completes empty `description` fields in SQL upgrade script | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/c649a57fb) |  |
+| Add script description, also fix $ViewTopic in GLAccountGraph.php| Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/fdfda2148) |  |
+| Update Spanish translation | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/41380a6c3) |  |
+| Add script description in PDFShipLabel.php | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/8e6513bb8) |  |
+| Add script description in PDFAck.php | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/4cd593557) |  |
+| Add script description in GeneratePickingList.php | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/4857c4a7e) |  |
+| Add script description, ViewTopic and BookMark in PickingLists.php| Changed | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/aff58aa7d) |  |
+| Rebuild languages files | Changed | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/ca7ee2360) |  |
+| Add script description, ViewTopic and BookMark in SelectPickingLists.php | Changed | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/1c184e09c) |  |
+| Update Spanish translation |  Changed| Rafael Chacón | 2018-05-04 | [View](http://github.com/webERP-team/webERP/commit/511eb2e29) |  |
 | Fixed bank account and related data visible to an unauthorised user in Dashboard.php | Fixed | Paul Becker | 2018-05-02 |  | [Forum](http://www.weberp.org/forum/showthread.php?tid=8161) |
 | Fix the bug that accountgroup validation used the wrong table and field reported by Laura | Fixed | Exson Qu | 2018-04-30 | [View](https://github.com/webERP-team/webERP/commit/56b66d466e3fdd4d5d55c8e1827a3ab74d69a4b8) |  |
 | Added a utility script to fix 1c allocations in AR - a GL journal will be required for the total of debtor balances changed as a result for the control account to remain in balance Z_Fix1cAllocations.php | Added | Phil Daintree | 2018-04-28 | [View](https://github.com/webERP-team/webERP/pull/45/commits/756546887bac32f3ce5d2c357b7e79f7366c0391) |  |

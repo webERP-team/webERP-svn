@@ -101,15 +101,22 @@ if (!isset($AccountID)) {
 			<td><b>' .  _('OR') . '</b></td>';
 
 	$SQLAccountSelect="SELECT chartmaster.accountcode,
-							chartmaster.accountname
+							chartmaster.accountname,
+							chartmaster.group_
 						FROM chartmaster
 						INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
-						ORDER BY chartmaster.accountcode";
+						INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
+						ORDER BY accountgroups.sequenceintb, accountgroups.groupname, chartmaster.accountcode";
 
 	$ResultSelection=DB_query($SQLAccountSelect);
+	$OptGroup = '';
 	echo '<td><select name="GLCode">';
 	echo '<option value="">' . _('Select an Account Code') . '</option>';
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
+		if ($OptGroup != $MyRowSelection['group_']) {
+			echo '<optgroup label="' . $MyRowSelection['group_'] . '">';
+			$OptGroup = $MyRowSelection['group_'];
+		}
 		if (isset($_POST['GLCode']) and $_POST['GLCode']==$MyRowSelection['accountcode']){
 			echo '<option selected="selected" value="' . $MyRowSelection['accountcode'] . '">' . $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false) . '</option>';
 		} else {

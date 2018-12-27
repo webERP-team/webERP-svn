@@ -1,5 +1,6 @@
 <?php
-/* Maintains table bankaccountusers (Authorized users to work with a bank account in webERP) */
+// UserBankAccounts.php
+// Maintains table bankaccountusers (Authorized users to work with a bank account in webERP).
 
 include('includes/session.php');
 $Title = _('Bank Account Users');
@@ -189,8 +190,10 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 				<td>' . _('Select Bank Account') . ':</td>
 				<td><select name="SelectedBankAccount">';
 
-		$Result = DB_query("SELECT accountcode,
-									bankaccountname
+		$Result = DB_query("SELECT
+								accountcode,
+								bankaccountname,
+								currcode
 							FROM bankaccounts
 							WHERE NOT EXISTS (SELECT bankaccountusers.accountcode
 											FROM bankaccountusers
@@ -202,14 +205,11 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
 		}
 		while ($MyRow = DB_fetch_array($Result)) {
-			if (isset($_POST['SelectedBankAccount']) and $MyRow['accountcode'] == $_POST['SelectedBankAccount']) {
-				echo '<option selected="selected" value="';
-			} else {
-				echo '<option value="';
-			}
-			echo $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . $MyRow['bankaccountname'] . '</option>';
-
-		} //end while loop
+			// Lists bank accounts order by bankaccountname
+			echo '<option',
+				((isset($_POST['SelectedBankAccount']) and $MyRow['accountcode'] == $_POST['SelectedBankAccount']) ? ' selected="selected"' : '' ),
+				' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
+		}// End while loop
 
 		echo '</select>
 					</td>

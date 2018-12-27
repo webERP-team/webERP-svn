@@ -1,5 +1,6 @@
 <?php
-/* This script defines the general ledger code for bank accounts and specifies that bank transactions be created for these accounts for the purposes of reconciliation. */
+// BankAccounts.php
+// This script defines the general ledger code for bank accounts and specifies that bank transactions be created for these accounts for the purposes of reconciliation.
 
 include('includes/session.php');
 $Title = _('Bank Accounts');// Screen identificator.
@@ -36,12 +37,12 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	$i=1;
 
-	$sql="SELECT count(accountcode)
+	$SQL="SELECT count(accountcode)
 			FROM bankaccounts WHERE accountcode='".$_POST['AccountCode']."'";
-	$result=DB_query($sql);
-	$myrow=DB_fetch_row($result);
+	$result=DB_query($SQL);
+	$MyRow=DB_fetch_row($result);
 
-	if ($myrow[0]!=0 and !isset($SelectedBankAccount)) {
+	if ($MyRow[0]!=0 and !isset($SelectedBankAccount)) {
 		$InputError = 1;
 		prnMsg( _('The bank account code already exists in the database'),'error');
 		$Errors[$i] = 'AccountCode';
@@ -82,10 +83,10 @@ if (isset($_POST['submit'])) {
 
 		/*Check if there are already transactions against this account - cant allow change currency if there are*/
 
-		$sql = "SELECT banktransid FROM banktrans WHERE bankact='" . $SelectedBankAccount . "'";
-		$BankTransResult = DB_query($sql);
+		$SQL = "SELECT banktransid FROM banktrans WHERE bankact='" . $SelectedBankAccount . "'";
+		$BankTransResult = DB_query($SQL);
 		if (DB_num_rows($BankTransResult)>0) {
-			$sql = "UPDATE bankaccounts SET bankaccountname='" . $_POST['BankAccountName'] . "',
+			$SQL = "UPDATE bankaccounts SET bankaccountname='" . $_POST['BankAccountName'] . "',
 											bankaccountcode='" . $_POST['BankAccountCode'] . "',
 											bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
 											bankaddress='" . $_POST['BankAddress'] . "',
@@ -95,7 +96,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('Note that it is not possible to change the currency of the account once there are transactions against it'),'warn');
 	echo '<br />';
 		} else {
-			$sql = "UPDATE bankaccounts SET bankaccountname='" . $_POST['BankAccountName'] . "',
+			$SQL = "UPDATE bankaccounts SET bankaccountname='" . $_POST['BankAccountName'] . "',
 											bankaccountcode='" . $_POST['BankAccountCode'] . "',
 											bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
 											bankaddress='" . $_POST['BankAddress'] . "',
@@ -110,7 +111,7 @@ if (isset($_POST['submit'])) {
 
 	/*Selectedbank account is null cos no item selected on first time round so must be adding a    record must be submitting new entries in the new bank account form */
 
-		$sql = "INSERT INTO bankaccounts (accountcode,
+		$SQL = "INSERT INTO bankaccounts (accountcode,
 										bankaccountname,
 										bankaccountcode,
 										bankaccountnumber,
@@ -133,7 +134,7 @@ if (isset($_POST['submit'])) {
 	if( $InputError !=1 ) {
 		$ErrMsg = _('The bank account could not be inserted or modified because');
 		$DbgMsg = _('The SQL used to insert/modify the bank account details was');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 		prnMsg($msg,'success');
 		echo '<br />';
@@ -155,18 +156,18 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'BankTrans'
 
-	$sql= "SELECT COUNT(bankact) AS accounts FROM banktrans WHERE banktrans.bankact='" . $SelectedBankAccount . "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
-	if ($myrow['accounts']>0) {
+	$SQL= "SELECT COUNT(bankact) AS accounts FROM banktrans WHERE banktrans.bankact='" . $SelectedBankAccount . "'";
+	$result = DB_query($SQL);
+	$MyRow = DB_fetch_array($result);
+	if ($MyRow['accounts']>0) {
 		$CancelDelete = 1;
 		prnMsg(_('Cannot delete this bank account because transactions have been created using this account'),'warn');
-		echo '<br /> ' . _('There are') . ' ' . $myrow['accounts'] . ' ' . _('transactions with this bank account code');
+		echo '<br /> ' . _('There are') . ' ' . $MyRow['accounts'] . ' ' . _('transactions with this bank account code');
 
 	}
 	if (!$CancelDelete) {
-		$sql="DELETE FROM bankaccounts WHERE accountcode='" . $SelectedBankAccount . "'";
-		$result = DB_query($sql);
+		$SQL="DELETE FROM bankaccounts WHERE accountcode='" . $SelectedBankAccount . "'";
+		$result = DB_query($SQL);
 		prnMsg(_('Bank account deleted'),'success');
 	} //end if Delete bank account
 
@@ -176,21 +177,23 @@ if (isset($_POST['submit'])) {
 
 /* Always show the list of accounts */
 if (!isset($SelectedBankAccount)) {
-	$sql = "SELECT bankaccounts.accountcode,
-					bankaccounts.bankaccountcode,
-					chartmaster.accountname,
-					bankaccountname,
-					bankaccountnumber,
-					bankaddress,
-					currcode,
-					invoice,
-					importformat
-			FROM bankaccounts INNER JOIN chartmaster
-			ON bankaccounts.accountcode = chartmaster.accountcode";
-
-	$ErrMsg = _('The bank accounts set up could not be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br />' . $sql;
-	$result = DB_query($sql,$ErrMsg,$DbgMsg);
+	$SQL = "SELECT
+				bankaccounts.accountcode,
+				bankaccounts.bankaccountcode,
+				chartmaster.accountname,
+				bankaccountname,
+				bankaccountnumber,
+				bankaddress,
+				currcode,
+				invoice,
+				importformat
+			FROM bankaccounts
+			INNER JOIN chartmaster
+				ON bankaccounts.accountcode = chartmaster.accountcode
+			ORDER BY bankaccounts.accountcode";
+	$ErrMsg = _('The bank accounts could not be retrieved because');
+	$DbgMsg = _('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
+	$result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	echo '<table class="selection">
 			<tr>
@@ -204,16 +207,17 @@ if (!isset($SelectedBankAccount)) {
 				<th>' . _('Default for Invoices') . '</th>
 			</tr>';
 
-	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['invoice']==0) {
+	while ($MyRow = DB_fetch_array($result)) {
+		// Lists bank accounts order by account code
+		if ($MyRow['invoice']==0) {
 			$DefaultBankAccount=_('No');
-		} elseif ($myrow['invoice']==1) {
+		} elseif ($MyRow['invoice']==1) {
 			$DefaultBankAccount=_('Fall Back Default');
-		} elseif ($myrow['invoice']==2) {
+		} elseif ($MyRow['invoice']==2) {
 			$DefaultBankAccount=_('Currency Default');
 		}
 
-		switch ($myrow['importformat']) {
+		switch ($MyRow['importformat']) {
 			case 'MT940-ING':
 				$ImportFormat = 'ING MT940';
 				break;
@@ -236,19 +240,19 @@ if (!isset($SelectedBankAccount)) {
 				<td><a href="%s?SelectedBankAccount=%s">' . _('Edit') . '</a></td>
 				<td><a href="%s?SelectedBankAccount=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this bank account?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
-			$myrow['accountcode'],
-			$myrow['accountname'],
-			$myrow['bankaccountname'],
-			$myrow['bankaccountcode'],
-			$myrow['bankaccountnumber'],
-			$myrow['bankaddress'],
+			$MyRow['accountcode'],
+			$MyRow['accountname'],
+			$MyRow['bankaccountname'],
+			$MyRow['bankaccountcode'],
+			$MyRow['bankaccountnumber'],
+			$MyRow['bankaddress'],
 			$ImportFormat,
-			$myrow['currcode'],
+			$MyRow['currcode'],
 			$DefaultBankAccount,
 			htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
-			$myrow['accountcode'],
+			$MyRow['accountcode'],
 			htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
-			$myrow['accountcode']);
+			$MyRow['accountcode']);
 
 	}
 	//END WHILE LIST LOOP
@@ -270,7 +274,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	//editing an existing bank account  - not deleting
 
-	$sql = "SELECT accountcode,
+	$SQL = "SELECT accountcode,
 					bankaccountname,
 					bankaccountcode,
 					bankaccountnumber,
@@ -280,16 +284,16 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 			FROM bankaccounts
 			WHERE bankaccounts.accountcode='" . $SelectedBankAccount . "'";
 
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
+	$result = DB_query($SQL);
+	$MyRow = DB_fetch_array($result);
 
-	$_POST['AccountCode'] = $myrow['accountcode'];
-	$_POST['BankAccountName']  = $myrow['bankaccountname'];
-	$_POST['BankAccountCode']  = $myrow['bankaccountcode'];
-	$_POST['BankAccountNumber'] = $myrow['bankaccountnumber'];
-	$_POST['BankAddress'] = $myrow['bankaddress'];
-	$_POST['CurrCode'] = $myrow['currcode'];
-	$_POST['DefAccount'] = $myrow['invoice'];
+	$_POST['AccountCode'] = $MyRow['accountcode'];
+	$_POST['BankAccountName']  = $MyRow['bankaccountname'];
+	$_POST['BankAccountCode']  = $MyRow['bankaccountcode'];
+	$_POST['BankAccountNumber'] = $MyRow['bankaccountnumber'];
+	$_POST['BankAddress'] = $MyRow['bankaddress'];
+	$_POST['CurrCode'] = $MyRow['currcode'];
+	$_POST['DefAccount'] = $MyRow['invoice'];
 
 	echo '<input type="hidden" name="SelectedBankAccount" value="' . $SelectedBankAccount . '" />';
 	echo '<input type="hidden" name="AccountCode" value="' . $_POST['AccountCode'] . '" />';
@@ -304,19 +308,19 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 				<td>' . _('Bank Account GL Code') . ':</td>
 				<td><select tabindex="1" ' . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) .' name="AccountCode" autofocus="autofocus" >';
 
-	$sql = "SELECT accountcode,
+	$SQL = "SELECT accountcode,
 					accountname
 			FROM chartmaster LEFT JOIN accountgroups
 			ON chartmaster.group_ = accountgroups.groupname
 			WHERE accountgroups.pandl = 0
 			ORDER BY accountcode";
 
-	$result = DB_query($sql);
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['AccountCode']) and $myrow['accountcode']==$_POST['AccountCode']) {
-			echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+	$result = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($result)) {
+		if (isset($_POST['AccountCode']) and $MyRow['accountcode']==$_POST['AccountCode']) {
+			echo '<option selected="selected" value="'.$MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 		} else {
-			echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+			echo '<option value="'.$MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 		}
 
 	} //end while loop
@@ -370,18 +374,18 @@ echo '<tr>
 		<td>' . _('Currency Of Account') . ': </td>
 		<td><select tabindex="6" name="CurrCode">';
 
-if (!isset($_POST['CurrCode']) or $_POST['CurrCode']==''){
+if (!isset($_POST['CurrCode']) or $_POST['CurrCode']=='') {
 	$_POST['CurrCode'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
 $result = DB_query("SELECT currabrev,
 							currency
 					FROM currencies");
 
-while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['currabrev']==$_POST['CurrCode']) {
-		echo '<option selected="selected" value="'.$myrow['currabrev'] . '">' . $myrow['currabrev'] . '</option>';
+while ($MyRow = DB_fetch_array($result)) {
+	if ($MyRow['currabrev']==$_POST['CurrCode']) {
+		echo '<option selected="selected" value="'.$MyRow['currabrev'] . '">' . $MyRow['currabrev'] . '</option>';
 	} else {
-		echo '<option value="'.$myrow['currabrev'] . '">' . $myrow['currabrev'] . '</option>';
+		echo '<option value="'.$MyRow['currabrev'] . '">' . $MyRow['currabrev'] . '</option>';
 	}
 } //end while loop
 
@@ -392,18 +396,18 @@ echo '<tr>
 		<td>' . _('Default for Invoices') . ': </td>
 		<td><select tabindex="8" name="DefAccount">';
 
-if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']==''){
+if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']=='') {
 	$_POST['DefAccount'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
 
 if (isset($SelectedBankAccount)) {
 	$result = DB_query("SELECT invoice FROM bankaccounts where accountcode = '" . $SelectedBankAccount . "'" );
-	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['invoice']== 1) {
+	while ($MyRow = DB_fetch_array($result)) {
+		if ($MyRow['invoice']== 1) {
 			echo '<option selected="selected" value="1">' . _('Fall Back Default') . '</option>
 					<option value="2">' . _('Currency Default') . '</option>
 					<option value="0">' . _('No') . '</option>';
-		} elseif ($myrow['invoice']== 2) {
+		} elseif ($MyRow['invoice']== 2) {
 			echo '<option value="0">' . _('No') . '</option>
 					<option selected="selected" value="2">' . _('Currency Default') . '</option>
 					<option value="1">' . _('Fall Back Default') . '</option>';

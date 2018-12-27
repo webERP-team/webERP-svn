@@ -1,20 +1,20 @@
 <?php
-// PurchasesReport.php
-// Shows a report of purchases from suppliers for the range of selected dates.
-// This program is under the GNU General Public License, last version. 2016-12-18.
-// This creative work is under the CC BY-NC-SA, last version. 2016-12-18.
+// SalesReport.php
+// Shows a report of sales to customers for the range of selected dates.
+// This program is under the GNU General Public License, last version. 2018-11-10.
+// This creative work is under the CC BY-NC-SA, last version. 2018-11-10.
 
 // Notes:
 // Coding Conventions/Style: http://www.weberp.org/CodingConventions.html
 
 /*
-This script is "mirror-symmetric" to script SalesReport.php
+This script is "mirror-symmetric" to script PurchasesReport.php.
 */
 
 include('includes/session.php');
-$Title = _('Purchases from Suppliers');
-$ViewTopic = 'PurchaseOrdering';
-$BookMark = 'PurchasesReport';
+$Title = _('Sales to Customers');
+$ViewTopic = 'Sales';
+$BookMark = 'SalesReport';
 
 // BEGIN Functions division ====================================================
 // END Functions division ======================================================
@@ -36,7 +36,7 @@ if(isset($_GET['PeriodFrom'])) {// Select period from.
 if(isset($_GET['PeriodTo'])) {// Select period to.
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
-if(isset($_GET['ShowDetails'])) {// Show purchase invoices for the period.
+if(isset($_GET['ShowDetails'])) {// Show sales invoices for the period.
 	$_POST['ShowDetails'] = $_GET['ShowDetails'];
 }
 
@@ -69,7 +69,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 					'<div class="centre">',
 						'<button name="Action" type="submit" value="', _('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
 							'/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-						'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+						'<button onclick="window.location=\'index.php?Application=Sales\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 							'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 					'</div>',
 				'</td>
@@ -84,7 +84,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 	}
 	echo 		'<td><input class="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" type="text" value="', $_POST['PeriodFrom'], '" />',
 					'<span class="field_help_text">',
-						_('Select the beginning of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
+						_('Select the beginning of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the field help text.
 					'</span>',
 		 		'</td>
 			</tr>',
@@ -96,17 +96,17 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 	}
 	echo 		'<td><input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
 					'<span class="field_help_text">',
-						_('Select the end of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
+						_('Select the end of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the field help text.
 					'</span>',
 		 		'</td>
 			</tr>',
-			// Show the budget for the period:
+			// Select to show or not sales invoices:
 			'<tr>',
 			 	'<td><label for="ShowDetails">', _('Show details'), '</label></td>',
 			 	'<td>',
 				 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is TRUE, shows this input checked.
 				 	'<span class="field_help_text">',
-				 		_('Check this box to show purchase invoices'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
+				 		_('Check this box to show sales invoices'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the field help text.
 			 		'</span>',
 		 		'</td>
 			</tr>',
@@ -131,7 +131,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 			'<tr>' .
 				'<td colspan="9"><br /><b>' .
 					_('Notes') . '</b><br />' .
-					_('Original amounts in the supplier\'s currency. GL amounts in the functional currency.') .
+					_('Original amounts in the customer\'s currency. GL amounts in the functional currency.') .
 				'</td>' .
 			'</tr>' .
 		'</tfoot><tbody>';
@@ -141,55 +141,55 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 	$PeriodTo = FormatDateForSQL($_POST['PeriodTo']);
 	if($_POST['ShowDetails']) {// Parameters: PeriodFrom, PeriodTo, ShowDetails=on.
 		echo		'<th>', _('Date'), '</th>',
-					'<th>', _('Purchase Invoice'), '</th>',
+					'<th>', _('Sales Invoice'), '</th>',
 					'<th>', _('Reference'), '</th>',
 					$CommonHead;
 		// Includes $CurrencyName array with currency three-letter alphabetic code and name based on ISO 4217:
 		include('includes/CurrenciesArray.php');
-		$SupplierId = '';
-		$SupplierOvAmount = 0;
-		$SupplierOvTax = 0;
-		$SupplierGlAmount = 0;
-		$SupplierGlTax = 0;
+		$CustomerId = '';
+		$CustomerOvAmount = 0;
+		$CustomerOvTax = 0;
+		$CustomerGlAmount = 0;
+		$CustomerGlTax = 0;
 		$Sql = "SELECT
-					supptrans.supplierno,
-					suppliers.suppname,
-					suppliers.currcode,
-					supptrans.trandate,
-					supptrans.suppreference,
-					supptrans.transno,
-					supptrans.ovamount,
-					supptrans.ovgst,
-					supptrans.rate
-				FROM supptrans
-					INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
-				WHERE supptrans.trandate>='" . $PeriodFrom . "'
-					AND supptrans.trandate<='" . $PeriodTo . "'
-					AND supptrans.`type`=20
-				ORDER BY supptrans.supplierno, supptrans.trandate";
+					debtortrans.debtorno,
+					debtorsmaster.name,
+					debtorsmaster.currcode,
+					debtortrans.trandate,
+					debtortrans.reference,
+					debtortrans.transno,
+					debtortrans.ovamount,
+					debtortrans.ovgst,
+					debtortrans.rate
+				FROM debtortrans
+					INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
+				WHERE debtortrans.trandate>='" . $PeriodFrom . "'
+					AND debtortrans.trandate<='" . $PeriodTo . "'
+					AND debtortrans.type=10
+				ORDER BY debtortrans.debtorno, debtortrans.trandate";
 		$Result = DB_query($Sql);
 		foreach($Result as $MyRow) {
-			if($MyRow['supplierno'] != $SupplierId) {// If different, prints supplier totals:
-				if($SupplierId != '') {// If NOT the first line.
+			if($MyRow['debtorno'] != $CustomerId) {// If different, prints customer totals:
+				if($CustomerId != '') {// If NOT the first line.
 					echo '<tr>',
 							'<td colspan="3">&nbsp;</td>',
-							'<td class="number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-							'<td class="number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-							'<td class="number">', locale_number_format($SupplierOvAmount+$SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-							'<td class="number">', locale_number_format($SupplierGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-							'<td class="number">', locale_number_format($SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-							'<td class="number">', locale_number_format($SupplierGlAmount+$SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class="number">', locale_number_format($CustomerOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class="number">', locale_number_format($CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class="number">', locale_number_format($CustomerOvAmount+$CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class="number">', locale_number_format($CustomerGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class="number">', locale_number_format($CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class="number">', locale_number_format($CustomerGlAmount+$CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 						'</tr>';
 				}
 				echo '<tr><td colspan="9">&nbsp;</td></tr>';
-				echo '<tr><td class="text" colspan="9"><a href="', $RootPath, '/SupplierInquiry.php?SupplierID=', $MyRow['supplierno'], '">', $MyRow['supplierno'], ' - ', $MyRow['suppname'], '</a> - ', $MyRow['currcode'], ' ', $CurrencyName[$MyRow['currcode']], '</td></tr>';
-				$TotalGlAmount += $SupplierGlAmount;
-				$TotalGlTax += $SupplierGlTax;
-				$SupplierId = $MyRow['supplierno'];
-				$SupplierOvAmount = 0;
-				$SupplierOvTax = 0;
-				$SupplierGlAmount = 0;
-				$SupplierGlTax = 0;
+				echo '<tr><td class="text" colspan="9"><a href="', $RootPath, '/CustomerInquiry.php?CustomerID=', $MyRow['debtorno'], '">', $MyRow['debtorno'], ' - ', $MyRow['name'], '</a> - ', $MyRow['currcode'], ' ', $CurrencyName[$MyRow['currcode']], '</td></tr>';
+				$TotalGlAmount += $CustomerGlAmount;
+				$TotalGlTax += $CustomerGlTax;
+				$CustomerId = $MyRow['debtorno'];
+				$CustomerOvAmount = 0;
+				$CustomerOvTax = 0;
+				$CustomerGlAmount = 0;
+				$CustomerGlTax = 0;
 			}
 
 			$GlAmount = $MyRow['ovamount']/$MyRow['rate'];
@@ -197,82 +197,82 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 			echo '<tr class="striped_row">
 					<td class="centre">', $MyRow['trandate'], '</td>',
 					'<td class="number">', $MyRow['transno'], '</td>',
-					'<td class="text">', $MyRow['suppreference'], '</td>',
+					'<td class="text">', $MyRow['reference'], '</td>',
 					'<td class="number">', locale_number_format($MyRow['ovamount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 					'<td class="number">', locale_number_format($MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number"><a href="', $RootPath, '/SuppWhereAlloc.php?TransType=20&TransNo=', $MyRow['transno'], '&amp;ScriptFrom=PurchasesReport" target="_blank" title="', _('Click to view where allocated'), '">', locale_number_format($MyRow['ovamount']+$MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']), '</a></td>',
+					'<td class="number"><a href="', $RootPath, '/CustWhereAlloc.php?TransType=10&TransNo=', $MyRow['transno'], '&amp;ScriptFrom=SalesReport" target="_blank" title="', _('Click to view where allocated'), '">', locale_number_format($MyRow['ovamount']+$MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']), '</a></td>',
 					'<td class="number">', locale_number_format($GlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 					'<td class="number">',	locale_number_format($GlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number"><a href="', $RootPath, '/GLTransInquiry.php?TypeID=20&amp;TransNo=', $MyRow['transno'], '&amp;ScriptFrom=PurchasesReport" target="_blank" title="', _('Click to view the GL entries'), '">', locale_number_format($GlAmount+$GlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</a></td>', // RChacon: Should be "Click to view the General Ledger transaction" instead?
+					'<td class="number"><a href="', $RootPath, '/GLTransInquiry.php?TypeID=10&amp;TransNo=', $MyRow['transno'], '&amp;ScriptFrom=SalesReport" target="_blank" title="', _('Click to view the GL entries'), '">', locale_number_format($GlAmount+$GlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</a></td>', // RChacon: Should be "Click to view the General Ledger transaction" instead?
 				'</tr>';
-			$SupplierOvAmount += $MyRow['ovamount'];
-			$SupplierOvTax += $MyRow['ovgst'];
-			$SupplierGlAmount += $GlAmount;
-			$SupplierGlTax += $GlTax;
+			$CustomerOvAmount += $MyRow['ovamount'];
+			$CustomerOvTax += $MyRow['ovgst'];
+			$CustomerGlAmount += $GlAmount;
+			$CustomerGlTax += $GlTax;
 		}
 
-		// Prints last supplier total:
+		// Prints last customer total:
 		echo '<tr>',
 				'<td colspan="3">&nbsp;</td>',
-				'<td class="number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-				'<td class="number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-				'<td class="number">', locale_number_format($SupplierOvAmount+$SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-				'<td class="number">', locale_number_format($SupplierGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-				'<td class="number">', locale_number_format($SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-				'<td class="number">', locale_number_format($SupplierGlAmount+$SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class="number">', locale_number_format($CustomerOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class="number">', locale_number_format($CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class="number">', locale_number_format($CustomerOvAmount+$CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class="number">', locale_number_format($CustomerGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class="number">', locale_number_format($CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class="number">', locale_number_format($CustomerGlAmount+$CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 			'</tr>',
 			'<tr><td colspan="9">&nbsp;</td></tr>';
 
-		$TotalGlAmount += $SupplierGlAmount;
-		$TotalGlTax += $SupplierGlTax;
+		$TotalGlAmount += $CustomerGlAmount;
+		$TotalGlTax += $CustomerGlTax;
 
 	} else {// Parameters: PeriodFrom, PeriodTo, ShowDetails=off.
 		// RChacon: Needs to update the table_sort function to use in this table.
-		echo		'<th>', _('Supplier Code'), '</th>',
-					'<th>', _('Supplier Name'), '</th>',
-					'<th>', _('Supplier\'s Currency'), '</th>',
+		echo		'<th>', _('Customer Code'), '</th>',
+					'<th>', _('Customer Name'), '</th>',
+					'<th>', _('Customer\'s Currency'), '</th>',
 					$CommonHead;
 		$Sql = "SELECT
-					supptrans.supplierno,
-					suppliers.suppname,
-					suppliers.currcode,
-					SUM(supptrans.ovamount) AS SupplierOvAmount,
-					SUM(supptrans.ovgst) AS SupplierOvTax,
-					SUM(supptrans.ovamount/supptrans.rate) AS SupplierGlAmount,
-					SUM(supptrans.ovgst/supptrans.rate) AS SupplierGlTax
-				FROM supptrans
-					INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
-				WHERE supptrans.trandate>='" . $PeriodFrom . "'
-					AND supptrans.trandate<='" . $PeriodTo . "'
-					AND supptrans.`type`=20
+					debtortrans.debtorno,
+					debtorsmaster.name,
+					debtorsmaster.currcode,
+					SUM(debtortrans.ovamount) AS CustomerOvAmount,
+					SUM(debtortrans.ovgst) AS CustomerOvTax,
+					SUM(debtortrans.ovamount/debtortrans.rate) AS CustomerGlAmount,
+					SUM(debtortrans.ovgst/debtortrans.rate) AS CustomerGlTax
+				FROM debtortrans
+					INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
+				WHERE debtortrans.trandate>='" . $PeriodFrom . "'
+					AND debtortrans.trandate<='" . $PeriodTo . "'
+					AND debtortrans.type=10
 				GROUP BY
-					supptrans.supplierno
-				ORDER BY supptrans.supplierno, supptrans.trandate";
+					debtortrans.debtorno
+				ORDER BY debtortrans.debtorno, debtortrans.trandate";
 		$Result = DB_query($Sql);
 		foreach($Result as $MyRow) {
-			echo '<tr class="striped_row">',
-					'<td class="text">', $MyRow['supplierno'], '</td>',
-					'<td class="text"><a href="', $RootPath, '/SupplierInquiry.php?SupplierID=', $MyRow['supplierno'], '">', $MyRow['suppname'], '</a></td>',
+			echo	'<tr class="striped_row">',
+					'<td class="text">', $MyRow['debtorno'], '</td>',
+					'<td class="text"><a href="', $RootPath, '/CustomerInquiry.php?CustomerID=', $MyRow['debtorno'], '">', $MyRow['name'], '</a></td>',
 					'<td class="text">', $MyRow['currcode'], '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierOvAmount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierOvTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierOvAmount']+$MyRow['SupplierOvTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierGlAmount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierGlTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierGlAmount']+$MyRow['SupplierGlTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class="number">', locale_number_format($MyRow['CustomerOvAmount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class="number">', locale_number_format($MyRow['CustomerOvTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class="number">', locale_number_format($MyRow['CustomerOvAmount']+$MyRow['CustomerOvTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class="number">', locale_number_format($MyRow['CustomerGlAmount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class="number">', locale_number_format($MyRow['CustomerGlTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class="number">', locale_number_format($MyRow['CustomerGlAmount']+$MyRow['CustomerGlTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 				'</tr>';
-			$TotalGlAmount += $MyRow['SupplierGlAmount'];
-			$TotalGlTax += $MyRow['SupplierGlTax'];
+			$TotalGlAmount += $MyRow['CustomerGlAmount'];
+			$TotalGlTax += $MyRow['CustomerGlTax'];
 		}
 	}
-	// Prints all suppliers total:
+	// Prints all debtors total:
 	echo	'<tr>
 				<td class="text" colspan="6">&nbsp;</td>
 				<td class="number">', locale_number_format($TotalGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($TotalGlAmount+$TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
-			</tr>',
-		'</tbody></table>
+			</tr>
+		</tbody></table>
 		<br />
 		<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">
 		<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />
@@ -284,7 +284,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button name="Action" type="submit" value="New"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
-			'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+			'<button onclick="window.location=\'index.php?Application=Sales\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>';
 }

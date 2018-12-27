@@ -547,7 +547,24 @@ textarea.texterror {
 	visibility:visible;
 	width:80%;
 	z-index:1;
-	/* Class selector for page help text. */
+	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+}
+.page_info_text {
+	background:#d3d3d3 url(images/info.svg) top left no-repeat;
+	border:#a52a2a 1px solid;
+	color:#000000;
+	float:none;
+	font-weight:normal;
+	margin:0 auto;
+	padding-bottom:2px;
+	padding-left:10px;
+	padding-top:2px;
+	position:static;
+	text-align:center;
+	visibility:visible;
+	width:80%;
+	z-index:1;
+	/* Class selector for page info text. */
 }
 .page_title_text {
 	color:#000000;

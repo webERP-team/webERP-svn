@@ -1801,7 +1801,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$DefaultDeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$_SESSION['Items'.$identifier]->DeliveryDays);
 			for ($i=1;$i<=$_SESSION['QuickEntries'];$i++){
 
-		 		echo '<tr class="OddTableRow">';
+		 		echo '<tr class="striped_row">';
 		 		/* Do not display colum unless customer requires po line number by sales order line*/
 		 		if($_SESSION['Items'.$identifier]->DefaultPOLine > 0){
 					echo '<td><input type="text" name="poline_' . $i . '" size="21" maxlength="20" title="' . _('Enter the customer purchase order reference') . '" /></td>';

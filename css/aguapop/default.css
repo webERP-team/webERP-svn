@@ -510,7 +510,26 @@ li {
 	visibility:visible;
 	width:80%;
 	z-index:1;
-	/* Class selector for page help text. */
+	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+}
+.page_info_text {
+	background:#d3d3d3 url(images/info.svg) top left no-repeat;
+	border:#800000 solid 1px;
+	color:#000000;
+	float:none;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-weight:normal;
+	margin:0 auto;
+	min-height:26px;
+	padding-bottom:2px;
+	padding-left:24px;
+	padding-top:2px;
+	position:static;
+	text-align:center;
+	visibility:visible;
+	width:80%;
+	z-index:1;
+	/* Class selector for page info text. */
 }
 .page_title_text {
 	color:#000000;

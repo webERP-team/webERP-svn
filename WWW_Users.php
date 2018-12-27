@@ -1,5 +1,11 @@
 <?php
-/* Entry of users and security settings of users */
+// WWW_Users.php
+// Entry of users and security settings of users.
+
+include('includes/session.php');
+$Title = _('Users Maintenance');
+$ViewTopic = 'GettingStarted';
+$BookMark = 'UserMaintenance';
 
 if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
 	if($_POST['UserID'] == $_POST['ID']) {
@@ -7,10 +13,6 @@ if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
 	}
 }
 
-include('includes/session.php');
-$Title = _('Users Maintenance');
-$ViewTopic = 'GettingStarted';
-$BookMark = 'UserMaintenance';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -733,7 +735,7 @@ if($_POST['ShowDashboard']==0) {
 }
 echo '</select>',
 		'<span class="field_help_text">',
-		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show dashboard page after login') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+			_('Show dashboard page after login'), // If $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
 		'</span>',
 		'</td>
 	</tr>';
@@ -750,7 +752,7 @@ if($_POST['ShowPageHelp']==0) {
 }
 echo '</select>',
 		'<span class="field_help_text">',
-		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show page help when available') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+			_('Show page help when available'), // If $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
 		'</span>',
 		'</td>
 	</tr>';
@@ -767,7 +769,7 @@ if($_POST['ShowFieldHelp']==0) {
 }
 echo '</select>',
 		'<span class="field_help_text">',
-		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show field help when available') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+			_('Show field help when available'), // If $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
 		'</span>',
 		'</td>
 	</tr>';

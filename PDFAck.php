@@ -111,6 +111,7 @@ $SQL = "SELECT salesorderdetails.stkcode,
 		salesorderdetails.itemdue,
 		salesorderdetails.narrative,
 		stockmaster.taxcatid,
+		stockmaster.units,
 		salesorderdetails.narrative,
 		stockmaster.decimalplaces,
 		custitem.cust_part,
@@ -147,6 +148,7 @@ if (DB_num_rows($Result) > 0) {
 		} //end if need a new page headed up
 
 		$DisplayQty = locale_number_format($MyRow2['quantity'], $MyRow2['decimalplaces']);
+		$DisplayUOM = $MyRow2['units'];
 		$DisplayPrevDel = locale_number_format($MyRow2['qtyinvoiced'], $MyRow2['decimalplaces']);
 		//$DisplayPrice = locale_number_format($MyRow2['unitprice'],$MyRow['currdecimalplaces']);
 		$DisplayPrice = locale_number_format($MyRow2['unitprice'], 4);
@@ -186,8 +188,9 @@ if (DB_num_rows($Result) > 0) {
 		$LeftOvers = $pdf->addTextWrap($XPos + 1, $YPos, 100, $FontSize, $MyRow2['stkcode']);
 		$LeftOvers = $pdf->addTextWrap(120, $YPos, 295, $FontSize, $MyRow2['description']);
 		$LeftOvers = $pdf->addTextWrap(270, $YPos, 85, $FontSize, ConvertSQLDate($MyRow2['itemdue']), right);
-		$LeftOvers = $pdf->addTextWrap(350, $YPos, 85, $FontSize, $DisplayQty, 'right');
-		$LeftOvers = $pdf->addTextWrap(400, $YPos, 85, $FontSize, $DisplayPrice, 'right');
+		$LeftOvers = $pdf->addTextWrap(340, $YPos, 85, $FontSize, $DisplayQty, 'right');
+		$LeftOvers = $pdf->addTextWrap(420, $YPos, 85, $FontSize, $DisplayUOM, 'left');
+		$LeftOvers = $pdf->addTextWrap(420, $YPos, 85, $FontSize, $DisplayPrice, 'right');
 		$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, $DisplayTotal, 'right');
 
 		if ($MyRow2['cust_part'] > '') {
@@ -242,16 +245,16 @@ if (DB_num_rows($Result) > 0) {
 		}
 	}
 	$YPos -= ($line_height);
-	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90 - 655, $YPos, 655, $FontSize, _('Total Excluding Tax'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, _('Total Excluding Tax'), 'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, locale_number_format($AcknowledgementTotalEx, $MyRow['currdecimalplaces']), 'right');
 	$YPos -= 12;
-	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90 - 655, $YPos, 655, $FontSize, _('Tax'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, _('Tax'), 'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, locale_number_format($TaxTotal, $MyRow['currdecimalplaces']), 'right');
 	$YPos -= 12;
-	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90 - 655, $YPos, 655, $FontSize, _('Freight'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, _('Freight'), 'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, locale_number_format($MyRow['freightcost'], $MyRow['currdecimalplaces']), 'right');
 	$YPos -= 12;
-	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90 - 655, $YPos, 655, $FontSize, _('Total Including Tax and Freight'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, _('Total Including Tax and Freight'), 'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, locale_number_format($AcknowledgementTotal, $MyRow['currdecimalplaces']), 'right');
 
 	//now print T&C
