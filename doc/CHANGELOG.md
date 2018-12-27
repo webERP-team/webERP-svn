@@ -25,7 +25,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 | Fix images call | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/af967fa3e6c9555693142717f6792dd4044ac516) |   |
 | Fix RTL images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/e7c875a7feb35aa5bf0a574a363a7d84b959c063) |   |
 | Fix the size of some images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/fbbd45c81dbf9708dd4bcd4e7de5c7076a9faeaa) |   |
-| Per David Shaw Alter all date and datetime fields to have valid defaults '1000-01-01' as '0000-00-00' no longer acceptable | Changed | Phil | 2018-12-01 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) |  |
+| Per David Shaw Alter all date and datetime fields to have valid defaults '1000-01-01' as '0000-00-00' no longer acceptable | Changed | Phil | 2018-12-01 | [View](https://github.com/webERP-team/webERP/commit/8d94b89dc70b206b82281e702b89063b78189639) |  |
 | Standardise PurchasesReport.php | Changed | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/34841abdeb195052935ae4d1d1efce708eef4ddc) |   |
 | Add SalesReport.php | Added | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/9dc2c2cf14a4ec2adca40a7923313833a4b62f1a) |   |
 | Add units column to PDFWOPrint.php | Changed | Paul Becker | 2018-11-17 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8231) |

@@ -349,6 +349,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 	} else {
 		/* Now we are into posting the time to the work orders NB: only open work orders!! and only time that has not already been posted */
 		$WeekTimeResult = DB_query("SELECT timesheets.wo,
+											timesheets.workcentre,
 											employees.stockid as issueitem,
 											employees.surname,
 											employees.firstname,
@@ -366,6 +367,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 									AND workorders.closed = '0'
 									AND timesheets.status <> '2'
 									GROUP BY wo,
+										workcentre,
 										issueitem,
 										surname,
 										firstname,
@@ -442,7 +444,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 								'" . FormatDateForSQL($_POST['WeekEnding']) . "',
 								'" . $PeriodNo . "',
 								'" . $GetWIPAccountRow['wipact'] . "',
-								'" . _('WO') . ':' . $WeekTimeRow['wo'] . ' ' . $WeekTimeRow['firstname'] . ' ' . $WeekTimeRow['surname'] . ' ' . _('as') . ' ' . $WeekTimeRow['issueitem'] . ' x ' . $WeekTimeRow['totalweekhours'] . ' ' . _('hours') . ' @ ' . locale_number_format($WeekTimeRow['labourcost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+								'" . _('WO') . ':' . $WeekTimeRow['wo'] . ' ' . _('Work Centre') ': ' . $WeekTimeRow['workcentre'] . ' ' . $WeekTimeRow['firstname'] . ' ' . $WeekTimeRow['surname'] . ' ' . _('as') . ' ' . $WeekTimeRow['issueitem'] . ' x ' . $WeekTimeRow['totalweekhours'] . ' ' . _('hours') . ' @ ' . locale_number_format($WeekTimeRow['labourcost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
 								'" . ($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) . "')";
 			
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The labour cost posting to a work order GL posting could not be inserted because');
@@ -464,7 +466,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 								'" . FormatDateForSQL($_POST['WeekEnding']) . "',
 								'" . $PeriodNo . "',
 								'" . $ItemGLAccounts['stockact'] . "',
-								'" . _('WO') . ':' . $WeekTimeRow['wo'] . ' ' . $WeekTimeRow['firstname'] . ' ' . $WeekTimeRow['surname'] . ' ' . _('as') . ' ' . $WeekTimeRow['issueitem'] . ' x ' . $WeekTimeRow['totalweekhours'] . ' ' . _('hours') . ' @ ' . locale_number_format($WeekTimeRow['labourcost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+								'" . _('WO') . ':' . $WeekTimeRow['wo'] . ' ' . _('Work Centre') ': ' . $WeekTimeRow['workcentre'] . ' ' . $WeekTimeRow['firstname'] . ' ' . $WeekTimeRow['surname'] . ' ' . _('as') . ' ' . $WeekTimeRow['issueitem'] . ' x ' . $WeekTimeRow['totalweekhours'] . ' ' . _('hours') . ' @ ' . locale_number_format($WeekTimeRow['labourcost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
 								'" . -($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) . "')";
 			
 					$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The labour recovery account credit on the approval of a timesheet GL posting could not be inserted because');
