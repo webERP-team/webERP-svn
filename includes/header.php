@@ -44,13 +44,6 @@ if (isset($_SESSION['ShowPageHelp']) AND !$_SESSION['ShowPageHelp']) {
 		.page_help_text {display:none;}
 	</style>';
 }
-// If it is set the $_SESSION['ShowFieldHelp'] parameter AND it is FALSE, hides the page help text:
-if (isset($_SESSION['ShowFieldHelp']) AND !$_SESSION['ShowFieldHelp']) {
-	echo '
-	<style>
-		.field_help_text {display:none;}
-	</style>';
-}
 
 echo '
 </head>
@@ -81,11 +74,11 @@ if (isset($Title)) {
 				$_SESSION['Favourites'][$_POST['ScriptName']] = $_POST['Title'];
 			}
 		}
-	
+
 		if (isset($_POST['DelFromMenu'])) {
 			unset($_SESSION['Favourites'][$_POST['ScriptName']]);
 		}
-	
+
 		if (isset($_SESSION['Favourites']) AND count($_SESSION['Favourites'])>0) {
 			echo '<ul>';
 			foreach ($_SESSION['Favourites'] as $url=>$ttl) {

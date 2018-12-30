@@ -15,6 +15,9 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Fix show/hide field help text | Fixed | Rafael Chacón | 2018-12-28 | [View](https://github.com/webERP-team/webERP/commit/950b4891efe32e05791961e98f8b0e7a92f3ba4e) |   |
+| Improve the readability of a script | Changed | Rafael Chacón | 2018-12-27 | [View](https://github.com/webERP-team/webERP/commit/9dd0c6ca06fbbb3bd879395ec7721e79d7b5af54) |   |
+| Improve the readability of a script | Changed | Rafael Chacón | 2018-12-26 | [View](https://github.com/webERP-team/webERP/commit/9afe079de81088e1aa9b30f2bd6eed2886068a34) |   |
 | Sort the bank accounts | Changed | Rafael Chacón | 2018-12-18 | [View](https://github.com/webERP-team/webERP/commit/79d88db4ea04099473edfc7f1ddd84deb4ad500f) |   |
 | Order by bankaccountname | Changed | Rafael Chacón | 2018-12-14 | [View](https://github.com/webERP-team/webERP/commit/eb5bd54f55c4398aa9781ea9b392fd304b845f92) |   |
 | Add option to print the BOM from the entry screen | Changed | Tim Schofield | 2018-12-08 | [View](https://github.com/webERP-team/webERP/commit/cb5754b1228b93a3ae34d993b2f9e3d484aeaf0f) |   |

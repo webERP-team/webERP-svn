@@ -774,13 +774,11 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		'/images/printer.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
-
-	echo '<div class="page_help_text">',
-		_('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.'), '<br />',
-		_('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.'), '<br />',
-		_('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.'), '<br />',
-		_('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'),
-		'</div>';
+	fShowPageHelp(
+		_('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.') . '<br />' .
+		_('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.') . '<br />' .
+		_('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.') . '<br />' .
+		_('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 
 	// Shows a form to allow input of criteria for the report to generate:
 	echo '<br />',
@@ -823,10 +821,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	while($MyRow = DB_fetch_array($Periods)) {
 	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodFrom'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
-	echo			'</select>',
-					'<span class="field_help_text">',
-						_('Select the beginning of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
-					'</span>',
+	echo			'</select>', fShowFieldHelp(_('Select the beginning of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 			// Select period to:
@@ -840,10 +835,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	while($MyRow = DB_fetch_array($Periods)) {
 	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
-	echo			'</select>',
-					'<span class="field_help_text">',
-						_('Select the end of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
-					'</span>',
+	echo			'</select>', fShowFieldHelp(_('Select the end of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>';
 
@@ -865,27 +857,21 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	echo '<tr>',
 			 	'<td><label for="ShowBudget">', _('Show the budget for the period'), '</label></td>
 			 	<td><input',($_POST['ShowBudget'] ? ' checked="checked"' : ''), ' id="ShowBudget" name="ShowBudget" type="checkbox">', // "Checked" if ShowBudget is set AND it is TRUE.
-			 		'<span class="field_help_text">',
-			 			_('Check this box to show the budget for the period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
-					'</span>',
+			 		fShowFieldHelp(_('Check this box to show the budget for the period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 			// Show accounts with zero balance:
 			'<tr>',
 				'<td><label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label></td>
 			 	<td><input',(isset($_POST['ShowZeroBalance']) && $_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
-					'<span class="field_help_text">',
-						_('Check this box to show all accounts including those with zero balance'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
-					'</span>',
+			 		fShowFieldHelp(_('Check this box to show all accounts including those with zero balance')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 			// Show cash and cash equivalents accounts:
 			'<tr>',
 			 	'<td><label for="ShowCash">', _('Show cash and cash equivalents accounts'), '</label></td>
 			 	<td><input',($_POST['ShowCash'] ? ' checked="checked"' : ''), ' id="ShowCash" name="ShowCash" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
-					'<span class="field_help_text">',
-						_('Check this box to show cash and cash equivalents accounts'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
-					'</span>',
+			 		fShowFieldHelp(_('Check this box to show cash and cash equivalents accounts')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 		 '</tbody></table>';

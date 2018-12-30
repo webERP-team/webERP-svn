@@ -733,10 +733,7 @@ if($_POST['ShowDashboard']==0) {
 	echo '<option value="0">', _('No'), '</option>',
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
-echo '</select>',
-		'<span class="field_help_text">',
-			_('Show dashboard page after login'), // If $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
-		'</span>',
+echo '</select>', fShowFieldHelp(_('Show dashboard page after login')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		'</td>
 	</tr>';
 // Turn off/on page help:
@@ -750,10 +747,7 @@ if($_POST['ShowPageHelp']==0) {
 	echo '<option value="0">', _('No'), '</option>',
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
-echo '</select>',
-		'<span class="field_help_text">',
-			_('Show page help when available'), // If $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
-		'</span>',
+echo '</select>', fShowFieldHelp(_('Show page help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		'</td>
 	</tr>';
 // Turn off/on field help:
@@ -767,10 +761,7 @@ if($_POST['ShowFieldHelp']==0) {
 	echo '<option value="0">', _('No'), '</option>',
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
-echo '</select>',
-		'<span class="field_help_text">',
-			_('Show field help when available'), // If $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
-		'</span>',
+echo '</select>', fShowFieldHelp(_('Show field help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		'</td>
 	</tr>';
 

@@ -1,16 +1,17 @@
 <?php
-/* Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in */
+// UserSettings.php
+// Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in.
 
 include('includes/session.php');
 $Title = _('User Settings');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserSettings';
-include('includes/header.php');
 
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/user.png" title="',// Icon image.
-	_('User Settings'), '" /> ',// Icon title.
-	_('User Settings'), '</p>';// Page title.
+	'/images/user.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>'; // Page title.
 
 $PDFLanguages = array(
 	_('Latin Western Languages - Times'),
@@ -56,11 +57,10 @@ if(isset($_POST['Modify'])) {
 		}
 	}
 
-
 	if($InputError != 1) {
 		// no errors
 		if($UpdatePassword != 'Y') {
-			$sql = "UPDATE www_users
+			$SQL = "UPDATE www_users
 					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 						theme='" . $_POST['Theme'] . "',
 						language='" . $_POST['Language'] . "',
@@ -71,10 +71,10 @@ if(isset($_POST['Modify'])) {
 					WHERE userid = '" . $_SESSION['UserID'] . "'";
 			$ErrMsg = _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
-			$Result = DB_query($sql, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
 		} else {
-			$sql = "UPDATE www_users
+			$SQL = "UPDATE www_users
 					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 						theme='" . $_POST['Theme'] . "',
 						language='" . $_POST['Language'] . "',
@@ -86,7 +86,7 @@ if(isset($_POST['Modify'])) {
 					WHERE userid = '" . $_SESSION['UserID'] . "'";
 			$ErrMsg = _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
-			$Result = DB_query($sql, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 			prnMsg(_('The user settings have been updated'),'success');
 		}
 		// Update the session variables to reflect user changes on-the-fly:
@@ -101,9 +101,8 @@ if(isset($_POST['Modify'])) {
 	}
 }
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+	'<input name="FormID" value="', $_SESSION['FormID'], '" type="hidden" />';
 
 echo '<table class="selection">
 		<tr>
@@ -142,9 +141,7 @@ echo '<tr>
 
 $ThemeDirectories = scandir('css/');
 
-
 foreach ($ThemeDirectories as $ThemeName) {
-
 	if(is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn') {
 
 		if($_SESSION['Theme'] == $ThemeName) {
@@ -178,19 +175,19 @@ echo '</select>
 	<tr>
 		<td>', _('Email'), ':</td>';
 
-$sql = "SELECT
+$SQL = "SELECT
 			email,
 			showpagehelp,
 			showfieldhelp
 		from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
-$Result = DB_query($sql);
-$myrow = DB_fetch_array($Result);
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
 
 if(!isset($_POST['email'])) {
-	$_POST['email'] = $myrow['email'];
+	$_POST['email'] = $MyRow['email'];
 }
-$_POST['ShowPageHelp'] = $myrow['showpagehelp'];
-$_POST['ShowFieldHelp'] = $myrow['showfieldhelp'];
+$_POST['ShowPageHelp'] = $MyRow['showpagehelp'];
+$_POST['ShowFieldHelp'] = $MyRow['showfieldhelp'];
 
 echo '<td><input name="email" size="40" type="email" value="', $_POST['email'], '" /></td>
 	</tr>';
@@ -206,10 +203,7 @@ if($_POST['ShowPageHelp']==0) {
 	echo '<option value="0">', _('No'), '</option>',
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
-echo '</select>',
-		'<span class="field_help_text">',
-		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show page help when available') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
-		'</span>',
+echo '</select>', fShowFieldHelp(_('Show page help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		'</td>
 	</tr>';
 // Turn off/on field help:
@@ -223,10 +217,7 @@ if($_POST['ShowFieldHelp']==0) {
 	echo '<option value="0">', _('No'), '</option>',
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
-echo '</select>',
-		'<span class="field_help_text">',
-		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show field help when available') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
-		'</span>',
+echo '</select>', fShowFieldHelp(_('Show field help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		'</td>
 	</tr>';
 // PDF Language Support:
@@ -248,7 +239,6 @@ echo '</select></td>
 	</table>
 	<br />
 	<div class="centre"><input name="Modify" type="submit" value="', _('Modify'), '" /></div>
-  </div>
 	</form>';
 
 include('includes/footer.php');
