@@ -83,9 +83,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
 	}
 	echo 		'<td><input class="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" type="text" value="', $_POST['PeriodFrom'], '" />',
-					'<span class="field_help_text">',
-						_('Select the beginning of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the field help text.
-					'</span>',
+					fShowFieldHelp(_('Select the beginning of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 			// Select period to:
@@ -95,9 +93,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
 	}
 	echo 		'<td><input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
-					'<span class="field_help_text">',
-						_('Select the end of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the field help text.
-					'</span>',
+					fShowFieldHelp(_('Select the end of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 			// Select to show or not sales invoices:
@@ -105,9 +101,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 			 	'<td><label for="ShowDetails">', _('Show details'), '</label></td>',
 			 	'<td>',
 				 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is TRUE, shows this input checked.
-				 	'<span class="field_help_text">',
-				 		_('Check this box to show sales invoices'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the field help text.
-			 		'</span>',
+					fShowFieldHelp(_('Check this box to show sales invoices')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 		 '</tbody></table>';

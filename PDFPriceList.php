@@ -476,9 +476,7 @@ If (isset($_POST['PrintPDF'])) {
 			'<td><label for="ShowObsolete">', _('Show obsolete items'), ':</label></td>',
 	 		'<td>',
 				'<input',(($_POST['ShowObsolete']) ? ' checked="checked"' : ''), ' id="ShowObsolete" name="ShowObsolete" type="checkbox" />', // "Checked" if ShowObsolete is TRUE.
-				'<span class="field_help_text">',
-					_('Check this box to show the obsolete items'), // If $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
-				'</span>',
+					fShowFieldHelp(_('Check this box to show the obsolete items')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 			'</td>',
 	 	'</tr>',
 	// Option to select the order of the items in the report:
@@ -487,9 +485,7 @@ If (isset($_POST['PrintPDF'])) {
 	 		'<td>',
 				'<input checked="checked" id="ItemOrder" name="ItemOrder" type="radio" value="Code">', _('Currency, category and code'), '<br>',
 				'<input name="ItemOrder" type="radio" value="Description">', _('Currency, category and description'), '<br>',
-				'<span class="field_help_text">',
-					_('Select the order of the items in the report'), // If $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
-				'</span>',
+					fShowFieldHelp(_('Select the order of the items in the report')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 			'</td>',
 	 	'</tr>',
 

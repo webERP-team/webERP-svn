@@ -1,4 +1,5 @@
 <?php
+// MiscFunctions.php
 /*
  * included from includes/ConnectDB.inc
  * ******************************************  */
@@ -17,16 +18,12 @@ function reverse_escape($str) {
 }
 
 function IsEmailAddress($Email) {
-
 	$AtIndex = strrpos($Email, "@");
 	if ($AtIndex == false) {
 		return false; // No @ sign is not acceptable.
-		
 	}
-
 	if (preg_match('/\\.\\./', $Email)) {
 		return false; // > 1 consecutive dot is not allowed.
-		
 	}
 	//  Check component length limits
 	$Domain = mb_substr($Email, $AtIndex + 1);
@@ -41,7 +38,6 @@ function IsEmailAddress($Email) {
 		// domain part length exceeded
 		return false;
 	}
-
 	if ($Local[0] == '.' or $Local[$LocalLen - 1] == '.') {
 		// local part starts or ends with '.'
 		return false;
@@ -56,22 +52,19 @@ function IsEmailAddress($Email) {
 			return false;
 		}
 	}
-
 	//  Check for a DNS 'MX' or 'A' record.
 	//  Windows supported from PHP 5.3.0 on - so check.
 	$Ret = true;
 	/*  Apparentely causes some problems on some versions - perhaps bleeding edge just yet
-	if (version_compare(PHP_VERSION, '5.3.0') >= 0 OR mb_strtoupper(mb_substr(PHP_OS, 0, 3) !== 'WIN')) {
-	    $Ret = checkdnsrr( $Domain, 'MX' ) OR checkdnsrr( $Domain, 'A' );
+	if (version_compare(PHP_VERSION, '5.3.0') >= 0 or mb_strtoupper(mb_substr(PHP_OS, 0, 3) !== 'WIN')) {
+		$Ret = checkdnsrr($Domain, 'MX') or checkdnsrr($Domain, 'A');
 	}
 	*/
 	return $Ret;
 }
 
 function ContainsIllegalCharacters($CheckVariable) {
-
 	if (mb_strstr($CheckVariable, "'") or mb_strstr($CheckVariable, '+') or mb_strstr($CheckVariable, '?') or mb_strstr($CheckVariable, '.') or mb_strstr($CheckVariable, "\"") or mb_strstr($CheckVariable, '&') or mb_strstr($CheckVariable, "\\") or mb_strstr($CheckVariable, '"') or mb_strstr($CheckVariable, '>') or mb_strstr($CheckVariable, '<')) {
-
 		return true;
 	} else {
 		return false;
@@ -93,7 +86,7 @@ class XmlElement {
 
 function GetECBCurrencyRates() {
 	/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
-	 for detail of the European Central Bank rates - published daily */
+	for detail of the European Central Bank rates - published daily */
 	if (http_file_exists('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
 		$xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
 		$parser = xml_parser_create();
@@ -117,7 +110,7 @@ function GetECBCurrencyRates() {
 				}
 				if ($tag['type'] == 'open') { // push
 					$elements[$index]->children = array();
-					$stack[count($stack) ] = & $elements;
+					$stack[count($stack)] = & $elements;
 					$elements = & $elements[$index]->children;
 				}
 			}
@@ -126,7 +119,6 @@ function GetECBCurrencyRates() {
 				unset($stack[count($stack) - 1]);
 			}
 		}
-
 		$Currencies = array();
 		foreach ($elements[0]->children[2]->children[0]->children as $CurrencyDetails) {
 			$Currencies[$CurrencyDetails->attributes['currency']] = $CurrencyDetails->attributes['rate'];
@@ -162,7 +154,6 @@ function quote_oanda_currency($CurrCode) {
 		$page = file('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
 		$match = array();
 		preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
-
 		if (sizeof($match) > 0) {
 			return $match[3];
 		} else {
@@ -172,7 +163,6 @@ function quote_oanda_currency($CurrCode) {
 }
 
 function google_currency_rate($CurrCode) {
-
 	$Rate = 0;
 	$PageLines = file('http://www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
 	foreach ($PageLines as $Line) {
@@ -225,7 +215,6 @@ function LogBackTrace($dest = 0) {
 			// Either function args, or included file name(s)
 			$msg.= ' (';
 			foreach ($frame['args'] as $val) {
-
 				$typ = gettype($val);
 				switch ($typ) {
 					case 'array':
@@ -339,13 +328,12 @@ function indian_number_format($Number, $DecimalPlaces) {
 		for ($i = 0;$i < sizeof($ExplodedUnits);$i++) {
 			if ($i == 0) {
 				$FirstPart.= intval($ExplodedUnits[$i]) . ','; // creates each of the 2's group and adds a comma to the end
-				
+
 			} else {
 				$FirstPart.= $ExplodedUnits[$i] . ',';
 
 			}
 		}
-
 		return $FirstPart . $LastThreeNumbers . $DecimalValue;
 	} else {
 		return $IntegerNumber . $DecimalValue;
@@ -380,13 +368,10 @@ function GetMailList($MailGroup) {
 	$ErrMsg = _('Failed to retrieve mail lists');
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) != 0) {
-
 		//Create the string which meets the Recipients requirements
 		while ($MyRow = DB_fetch_array($Result)) {
 			$ToList[] = $MyRow['realname'] . '<' . $MyRow['email'] . '>';
-
 		}
-
 	}
 	return $ToList;
 }
@@ -460,7 +445,6 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 	// Find total number of days in next month:
 	$TotalDaysNext = cal_days_in_month(CAL_GREGORIAN, $NextMonth, $ThisYear);
 	switch ($PeriodName) {
-
 		case _('This Month'):
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $ThisMonth, 1, $ThisYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $ThisMonth, $TotalDays, $ThisYear));
@@ -541,13 +525,11 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, $TotalDaysLast, $ThisYear));
 		break;
 	}
-
 	if ($FromOrTo == 'From') {
 		$Period = GetPeriod($DateStart);
 	} else {
 		$Period = GetPeriod($DateEnd);
 	}
-
 	return $Period;
 }
 
@@ -563,6 +545,22 @@ function FYStartPeriod($PeriodNumber) {
 	}
 	$StartPeriod = GetPeriod($DateStart);
 	return $StartPeriod;
+}
+
+function fShowFieldHelp($HelpText) {
+	// Shows field help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set.
+	if ($_SESSION['ShowFieldHelp'] || !isset($_SESSION['ShowFieldHelp'])) {
+		echo '<span class="field_help_text">', $HelpText, '</span>';
+	}
+	return;
+}
+
+function fShowPageHelp($HelpText) {
+	// Shows page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set.
+	if ($_SESSION['ShowFieldHelp'] || !isset($_SESSION['ShowFieldHelp'])) {
+		echo '<div class="page_help_text">', $HelpText, '</div>';
+	}
+	return;
 }
 
 ?>
