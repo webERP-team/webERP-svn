@@ -1,11 +1,4 @@
-/***
-
-New "SilverWolf" Theme for WebERP
-
-by Hindra Joshua
-
-Based from the previous theme "SilverWolf"
-Credits to the original authors.
+/* "SilverWolf" Theme for WebERP by Hindra Joshua
 
 NOTE:
 This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
@@ -13,7 +6,10 @@ but for the obvious one it will be cleaned up.
 To optimized the rest we should examined the whole codes! That would be for
 the next project. :)
 
-***/
+Design guidelines:
+	Fonts are 10pt hight.
+	Icons are ??px x ??px size.  (24x24 ?)
+*/
 
 button img {
 	/* Describes how button image should be displayed. */
@@ -108,7 +104,7 @@ td {
 	vertical-align:top;
 }
 td.select {
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 .centre {
 	margin:0 auto 10px;
@@ -159,11 +155,11 @@ select {
 	font-size:100%;
 }
 tr.striped_row:nth-of-type(even) {
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 }
 
 tr.striped_row:nth-of-type(odd) {
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 }
 div.Message {
 	border-radius:10px;
@@ -173,15 +169,15 @@ div.Message {
 	transition:opacity 0.6s; /* 600ms to fade out */
 }
 div.Message.error {
-	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
+	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
 	border:1px solid #f5aca6;
 }
 div.Message.success {
-	background:#e9ffd9 url('images/message-success.png') no-repeat 10px 50%;
+	background:#e9ffd9 url('images/message-success.svg') no-repeat 10px 50%;
 	border:1px solid #a6ca8a;
 }
 div.Message.info {
-	background:#e3f7fc url('images/message-info.png') no-repeat 10px 50%;
+	background:#e3f7fc url('images/info.svg') no-repeat 10px 50%;
 	border:1px solid #8ed9f6;
 }
 div.Message.warn {
@@ -211,7 +207,7 @@ div.Message.warn {
 .dpTD {
 	border:0;
 	width:20px;
-	background-color:#eee;
+	background-color:#eeeeee;
 	text-align:right;
 	cursor:pointer;
 }
@@ -232,9 +228,9 @@ div.Message.warn {
 
 .table1 {
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:0px 0px 2px 2px #222 solid;
-	background:#eee;
+	background:#eeeeee;
 	margin:0 auto;
 }
 .tableheader {
@@ -342,7 +338,7 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 	list-style:none; /* hide the bullets */
 }
 #QuickMenuDiv li {
-	display:inline; /* items are inline */
+	display:inline-block;
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate
@@ -510,45 +506,37 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 	font-style:italic;
 	/* Class selector for field help text. */
 }
-.page_help_text { /* many */
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+.page_help_text {
 	background-color:#d3d3d3;
+	background-image:url(images/question.svg);
+	background-position:top left;
+	background-repeat:no-repeat;
 	border-radius:5px;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:100%;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:3px; /* 2px in merge */
 	padding-left:3px;	 /* 10px in merge */
 	padding-top:3px;/* 2px in merge */
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:50%; /* 80% in merge */
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
 	background:#d3d3d3 url(images/info.svg) top left no-repeat;
 	border-radius:5px;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:100%;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:3px; /* 2px in merge */
 	padding-left:3px;	 /* 10px in merge */
 	padding-top:3px;/* 2px in merge */
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:50%; /* 80% in merge */
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {
@@ -558,22 +546,25 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 	text-align:center;
 	/* Class selector for page title text. */
 }
-.sheet {
+.sheet {/* Uncomment this to use sheet style preview
 	background-color:#ffffff;
 	border:0;
+	box-shadow:26px 16px 8px 0 rgba(0, 0, 0, 0.5);
 	color:#000000;
 	margin:5%;
-	padding:5%;
-	/* Class selector for sheet preview. */
+	padding:5%;*/
+	/* Class selector for sheet style preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */
 
 
-/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */
+/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.php and use the following sections. */
 
 @media only screen and (max-device-width:767px) {
 	/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
+	.field_help_text {display:none;/* Hides field help text. */}
+	.page_help_text {display:none;/* Hides page help text. */}
 }
 
 @media only screen and (min-device-width:768px) and (max-device-width:991px) {

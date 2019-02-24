@@ -315,27 +315,27 @@ define('RPT_TIMESBI',_('Times Bold Italic'));
 define('RPT_TIMESI',_('Times Italic'));
 
 // General Number Definitions
-define('RPT_1',_('1'));
-define('RPT_2',_('2'));
-define('RPT_3',_('3'));
-define('RPT_4',_('4'));
-define('RPT_5',_('5'));
-define('RPT_6',_('6'));
-define('RPT_7',_('7'));
-define('RPT_8',_('8'));
-define('RPT_9',_('9'));
-define('RPT_10',_('10'));
-define('RPT_12',_('12'));
-define('RPT_14',_('14'));
-define('RPT_16',_('16'));
-define('RPT_18',_('18'));
-define('RPT_20',_('20'));
-define('RPT_24',_('24'));
-define('RPT_28',_('28'));
-define('RPT_32',_('32'));
-define('RPT_36',_('36'));
-define('RPT_40',_('40'));
-define('RPT_50',_('50'));
+define('RPT_1','1');
+define('RPT_2','2');
+define('RPT_3','3');
+define('RPT_4','4');
+define('RPT_5','5');
+define('RPT_6','6');
+define('RPT_7','7');
+define('RPT_8','8');
+define('RPT_9','9');
+define('RPT_10','10');
+define('RPT_12','12');
+define('RPT_14','14');
+define('RPT_16','16');
+define('RPT_18','18');
+define('RPT_20','20');
+define('RPT_24','24');
+define('RPT_28','28');
+define('RPT_32','32');
+define('RPT_36','36');
+define('RPT_40','40');
+define('RPT_50','50');
 
 // Color definitions
 define('RPT_BLACK',_('Black'));

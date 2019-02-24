@@ -37,8 +37,7 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 
 	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedUser will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true. These will call the same page again and allow update/input or deletion of the records*/
 
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/gl.png" title="',// Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="',// Icon image.
 		_('GL Account Authorised Users'), '" /> ',// Icon title.
 		_('GL Account Authorised Users'), '</p>';// Page title.
 	if(isset($_POST['Process'])) {
@@ -69,8 +68,7 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 		</table>';//Close Select_GL_Account table.
 	DB_free_result($Result);
 	echo	'<div class="centre noprint">',// Form buttons:
-				'<button name="Process" type="submit" value="Submit"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/gl.png" /> ', _('Accept'), '</button> '; // "Accept" button.
+				'<button name="Process" type="submit" value="Submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ', _('Accept'), '</button> '; // "Accept" button.
 
 } else {// If is set a GL account for users ($SelectedGLAccount).
 	$Result = DB_query("
@@ -79,8 +77,7 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 		WHERE accountcode='" . $SelectedGLAccount . "'");
 	$MyRow = DB_fetch_array($Result);
 	$SelectedGLAccountName = $MyRow['accountname'];
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/gl.png" title="',// Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="',// Icon image.
 		_('GL Account Authorised Users'), '" /> ',// Icon title.
 		_('Authorised Users for'), ' ', $SelectedGLAccountName, '</p>';// Page title.
 
@@ -236,13 +233,10 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 	DB_free_result($Result);
 	echo '<br>',
 		'<div class="centre noprint">', // Form buttons:
-			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
-			'<button formaction="GLAccountUsers.php?Cancel" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/gl.png" /> ', _('Select A Different GL account'), '</button>'; // "Select A Different GL account" button.
+			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+			'<button formaction="GLAccountUsers.php?Cancel" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ', _('Select A Different GL account'), '</button>'; // "Select A Different GL account" button.
 }
-echo		'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+echo		'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>
 	</form>';
 

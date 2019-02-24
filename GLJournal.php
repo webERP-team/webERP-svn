@@ -5,7 +5,6 @@ include('includes/DefineJournalClass.php');
 
 include('includes/session.php');
 $Title = _('Journal Entry');
-
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
 
@@ -14,14 +13,14 @@ include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['NewJournal'])
 	AND $_GET['NewJournal'] == 'Yes'
-	AND isset($_SESSION['JournalDetail'])){
+	AND isset($_SESSION['JournalDetail'])) {
 
 	unset($_SESSION['JournalDetail']->GLEntries);
 	unset($_SESSION['JournalDetail']);
 
 }
 
-if (!isset($_SESSION['JournalDetail'])){
+if (!isset($_SESSION['JournalDetail'])) {
 	$_SESSION['JournalDetail'] = new Journal;
 
 	/* Make an array of the defined bank accounts - better to make it now than do it each time a line is added
@@ -31,26 +30,26 @@ if (!isset($_SESSION['JournalDetail'])){
 	$SQL = "SELECT accountcode FROM bankaccounts";
 	$result = DB_query($SQL);
 	$i=0;
-	while ($Act = DB_fetch_row($result)){
+	while ($Act = DB_fetch_row($result)) {
 		$_SESSION['JournalDetail']->BankAccounts[$i]= $Act[0];
 		$i++;
 	}
 
 }
 
-if (isset($_POST['JournalProcessDate'])){
+if (isset($_POST['JournalProcessDate'])) {
 	$_SESSION['JournalDetail']->JnlDate=$_POST['JournalProcessDate'];
 
-	if (!Is_Date($_POST['JournalProcessDate'])){
+	if (!Is_Date($_POST['JournalProcessDate'])) {
 		prnMsg(_('The date entered was not valid please enter the date to process the journal in the format'). $_SESSION['DefaultDateFormat'],'warn');
 		$_POST['CommitBatch']='Do not do it the date is wrong';
 	}
 }
-if (isset($_POST['JournalType'])){
+if (isset($_POST['JournalType'])) {
 	$_SESSION['JournalDetail']->JournalType = $_POST['JournalType'];
 }
 
-if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Process Journal')){
+if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Process Journal')) {
 
  /* once the GL analysis of the journal is entered
   process all the data in the session cookie into the DB
@@ -86,7 +85,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		if ($_POST['JournalType']=='Reversing'){
+		if ($_POST['JournalType']=='Reversing') {
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
 										trandate,
@@ -130,12 +129,12 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 	include ('includes/footer.php');
 	exit;
 
-} elseif (isset($_GET['Delete'])){
+} elseif (isset($_GET['Delete'])) {
 
 	/* User hit delete the line from the journal */
 	$_SESSION['JournalDetail']->Remove_GLEntry($_GET['Delete']);
 
-} elseif (isset($_POST['Process']) AND $_POST['Process']==_('Accept')){ //user hit submit a new GL Analysis line into the journal
+} elseif (isset($_POST['Process']) AND $_POST['Process']==_('Accept')) { //user hit submit a new GL Analysis line into the journal
 	if ($_POST['GLCode']!='') {
 		$extract = explode(' - ',$_POST['GLCode']);
 		$_POST['GLCode'] = $extract[0];
@@ -145,15 +144,15 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 	} elseif ($_POST['Credit']>0) {
 		$_POST['GLAmount'] = -filter_number_format($_POST['Credit']);
 	}
-	if ($_POST['GLManualCode'] != ''){
+	if ($_POST['GLManualCode'] != '') {
 		// If a manual code was entered need to check it exists and isnt a bank account
 		$AllowThisPosting = true; //by default
-		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1){
-			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['debtorsact']){
+		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
+			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
 				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
 				$AllowThisPosting = false;
 			}
-			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' AND $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['creditorsact']){
+			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' AND $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['creditorsact']) {
 				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
 				$AllowThisPosting = false;
 			}
@@ -169,7 +168,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 				WHERE accountcode='" . $_POST['GLManualCode'] . "'";
 			$Result=DB_query($SQL);
 
-			if (DB_num_rows($Result)==0){
+			if (DB_num_rows($Result)==0) {
 				prnMsg(_('The manual GL code entered does not exist in the database') . ' - ' . _('so this GL analysis item could not be added'),'warn');
 				unset($_POST['GLManualCode']);
 			} else {
@@ -183,15 +182,15 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 		}
 	} else {
 		$AllowThisPosting =true; //by default
-		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1){
+		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1'
-				AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']){
+				AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
 
 				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
 				$AllowThisPosting = false;
 			}
 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1'
-				AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact']){
+				AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact']) {
 
 				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
 				$AllowThisPosting = false;
@@ -207,7 +206,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 			$AllowThisPosting = false;
 		}
 
-		if ($AllowThisPosting){
+		if ($AllowThisPosting) {
 			if (!isset($_POST['GLAmount'])) {
 				$_POST['GLAmount']=0;
 			}
@@ -231,7 +230,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 	unset($_POST['GLNarrative']);
 }
 
-if (isset($Cancel)){
+if (isset($Cancel)) {
 	unset($_POST['Credit']);
 	unset($_POST['Debit']);
 	unset($_POST['GLAmount']);
@@ -246,12 +245,12 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
+		<img src="'.$RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 // A new table in the first column of the main table
 
-if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
+if (!Is_Date($_SESSION['JournalDetail']->JnlDate)) {
 	// Default the date to the last day of the previous month
 	$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
 }
@@ -265,7 +264,7 @@ echo '<table>
 							<td>' . _('Type') . ':</td>
 							<td><select name="JournalType">';
 
-if ($_POST['JournalType'] == 'Reversing'){
+if ($_POST['JournalType'] == 'Reversing') {
 	echo '<option selected="selected" value = "Reversing">' . _('Reversing') . '</option>';
 	echo '<option value = "Normal">' . _('Normal') . '</option>';
 } else {
@@ -308,8 +307,8 @@ $SQL = "SELECT tagref,
 
 $result=DB_query($SQL);
 echo '<option value="0">0 - ' . _('None') . '</option>';
-while ($myrow=DB_fetch_array($result)){
-	if (isset($_POST['tag']) AND $_POST['tag']==$myrow['tagref']){
+while ($myrow=DB_fetch_array($result)) {
+	if (isset($_POST['tag']) AND $_POST['tag']==$myrow['tagref']) {
 		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
@@ -333,8 +332,8 @@ $result=DB_query($sql);
 echo '<td>
 	<select name="GLCode" onchange="return assignComboToInput(this,'.'GLManualCode'.')">
 		<option value="">' . _('Select a general ledger account code') . '</option>';
-while ($myrow=DB_fetch_array($result)){
-	if (isset($_POST['GLCode']) AND $_POST['GLCode']==$myrow['accountcode']){
+while ($myrow=DB_fetch_array($result)) {
+	if (isset($_POST['GLCode']) AND $_POST['GLCode']==$myrow['accountcode']) {
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false) . '</option>';
 	} else {
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false)  . '</option>';
@@ -443,7 +442,7 @@ echo '</table>
     </tr>
     </table>';
 
-if (abs($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
+if (abs($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0) {
 	echo '<br />
 			<br />
 			<div class="centre">

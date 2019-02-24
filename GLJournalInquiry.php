@@ -1,14 +1,14 @@
 <?php
+// GLJournalInquiry.php
 
 include ('includes/session.php');
 $Title = _('General Ledger Journal Inquiry');
-
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLJournalInquiry';
 
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath, '/css/', $Theme, '/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
@@ -105,7 +105,7 @@ if (!isset($_POST['Show'])) {
 
 		$LastJournal = 0;
 
-		while ($myrow = DB_fetch_array($result)){
+		while ($myrow = DB_fetch_array($result)) {
 
 			if ($myrow['tag']==0) {
 				$myrow['tagdescription']='None';
@@ -169,5 +169,4 @@ if (!isset($_POST['Show'])) {
 	echo '</form>';
 }
 include('includes/footer.php');
-
 ?>

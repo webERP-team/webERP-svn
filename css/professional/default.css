@@ -1,7 +1,4 @@
-/***
-"Professional" Theme for WebERP
-
-by Hindra Joshua
+/* "Professional" Theme for WebERP by Hindra Joshua
 
 *** This a very clean professional-looking theme - handsome!
 
@@ -14,7 +11,10 @@ but for the obvious one it will be cleaned up.
 To optimized the rest we should examined the whole codes! That would be for
 the next project. :)
 
-***/
+Design guidelines:
+	Fonts are 10pt hight (10pt = 13px at 96dpi ?).
+	Icons are ??px x ??px size.  (24x24 ?)
+*/
 
 button img {
 	/* Describes how button image should be displayed. */
@@ -25,7 +25,7 @@ button img {
 body {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
-	background-color:#ddd;
+	background-color:#dddddd;
 	margin:0;
 	padding:0;
 }
@@ -49,7 +49,7 @@ td {
 	vertical-align:top;
 }
 td.select {
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 .dpTbl {
 	border:solid navy 1px;
@@ -58,7 +58,7 @@ td.select {
 .dpTD {
 	border:0;
 	width:20px;
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 	text-align:right;
 	cursor:pointer;
 }
@@ -74,17 +74,17 @@ td.select {
 .dpTDHover {
 	border:0;
 	width:20px;
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 	text-align:right;
 	cursor:pointer;
 }
 
 tr.striped_row:nth-of-type(even) {
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 }
 
 tr.striped_row:nth-of-type(odd) {
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 }
 
 th { /* table heading */
@@ -123,18 +123,18 @@ div.Message {
 	padding:10px 10px 10px 36px;
 	margin:5px;
 	opacity:1;
-	transition:opacity 0.6s; /* 600ms to fade out */
+	transition:opacity 0.6s;/* 600ms to fade out */
 }
 div.Message.error {
-	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
+	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
 	border:1px solid #f5aca6;
 }
 div.Message.success {
-	background:#e9ffd9 url('images/message-success.png') no-repeat 10px 50%;
+	background:#e9ffd9 url('images/message-success.svg') no-repeat 10px 50%;
 	border:1px solid #a6ca8a;
 }
 div.Message.info {
-	background:#e3f7fc url('images/message-info.png') no-repeat 10px 50%;
+	background:#e3f7fc url('images/info.svg') no-repeat 10px 50%;
 	border:1px solid #8ed9f6;
 }
 div.Message.warn {
@@ -229,7 +229,7 @@ textarea:hover {
 /* Table type is used for UI tables type 1 */
 .table1 {
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:1px solid #222;
 	margin:0 auto;
 }
@@ -311,7 +311,7 @@ textarea.texterror {
 /*** HEADER ***/
 
 #HeaderDiv {
-	overflow:hidden; /* REQUIRED:height according to items contained */
+	overflow:hidden;/* REQUIRED:height according to items contained */
 	color:#000000;
 	padding-left:3px;
 }
@@ -321,16 +321,16 @@ textarea.texterror {
 /*** HEADER - APP INFO ***/
 
 #AppInfoDiv {
-	float:left; /* REQUIRED:to the left */
+	float:left;/* REQUIRED:to the left */
 }
 #AppInfoDiv img {
-	vertical-align:middle; /* center image and text vertically */
+	vertical-align:middle;/* center image and text vertically */
 }
 #AppInfoCompanyDiv {
-	display:table-cell; /* REQUIRED:as a cell */
+	display:table-cell;/* REQUIRED:as a cell */
 }
 #AppInfoUserDiv {
-	display:table-cell; /* REQUIRED:as a cell */
+	display:table-cell;/* REQUIRED:as a cell */
 }
 #AppInfoUserDiv a {
 	color:#000000;
@@ -345,71 +345,71 @@ textarea.texterror {
 /*** HEADER - QUICK MENU ***/
 
 #QuickMenuDiv {
-	float:right; /* to the right side */
+	float:right;
 	margin-top:3px;
 }
 #QuickMenuDiv ul {
-	list-style:none; /* hide the bullets */
+	list-style:none;/* hide the bullets */
 }
 #QuickMenuDiv li {
-	display:inline; /* items are inline */
+	display:inline-block;
+	height:19px;/* 3px+13px+3px (padding + font_size + padding) */
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate
 	 the link!!! ***HJ***/
 
 #QuickMenuDiv li a {
-	padding:3px; /* links as button */
-	border:thin outset #ddd; /* un-pressed state */
-	background:#ddd;
+	background:#dddddd;
+	border:thin outset #dddddd;/* un-pressed state */
+	padding:3px;/* links as button */
 }
 #QuickMenuDiv li a:hover {
-	padding:3px; /* links as button */
-	border:thin inset #ddd; /* pressed state */
-	text-decoration:none; /* no underline */
+	border:thin inset #dddddd;/* pressed state */
 	color:blue;
+	text-decoration:none;/* no underline */
 }
 
 /*** BODY ***/
 
 #BodyDiv {
-	clear:both; /* REQUIRED */
-	overflow:hidden; /* REQUIRED */
+	clear:both;/* REQUIRED */
+	overflow:hidden;/* REQUIRED */
 	color:#000000;
 	background:white;
 	text-align:center;
 }
 #BodyDiv table {
-	width:auto; /* automatic width */
+	width:auto;/* automatic width */
 	margin:0 auto;
 	margin-bottom:10px;
 }
 #BodyDiv table.selection {
-	background:#eee;
+	background:#eeeeee;
 	padding:5px;
-	border:thin outset #eee;
+	border:thin outset #eeeeee;
 }
 
 /*** BODY - MAIN MENU ***/
 
 #MainMenuDiv {
-	float:left; /* REQUIRED:to the left side */
-	white-space:nowrap; /* don't break text */
+	background:#dddddd;
+	float:left;/* REQUIRED:to the left side */
 	text-align:center;
+	white-space:nowrap;/* don't break text */
 	width:11%;
-	background:#ddd;
 }
 #MainMenuDiv ul {
-	list-style:none; /* REQUIRED:hide bullets */
-	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
+	list-style:none;/* REQUIRED:hide bullets */
 	margin:0;
+	padding:0;/* REQUIRED:remove extra gaps (ex-bullets) */
 }
 #MainMenuDiv li {
-	list-style:none; /* REQUIRED */
-	padding:0; /* REQUIRED */
+	list-style:none;/* REQUIRED */
+	padding:0;/* REQUIRED */
 }
 #MainMenuDiv li a { /* link as button!!! not-pressed state */
-	display:block; /* REQUIRED */
+	display:block;/* REQUIRED */
 	padding:3px;
 	border:thin outset #ddd;
 	color:blue;
@@ -430,24 +430,24 @@ textarea.texterror {
 /*** BODY - SUB MENU ***/
 
 #SubMenuDiv {
-	display:table; /* display as table, sub menu will auto adjust width */
-	width:89%; /* main menu is 10% */
+	display:table;/* display as table, sub menu will auto adjust width */
+	width:89%;/* main menu is 10% */
 	text-align:left;
 }
 #SubMenuDiv ul {
-	list-style-type:none; /* REQUIRED:hide bullets */
-	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
+	list-style-type:none;/* REQUIRED:hide bullets */
+	padding:0;/* REQUIRED:remove extra gaps (ex-bullets) */
 	margin-top:0px;
 	margin-left:3px;
 	border:thin outset #ddd;
 }
 #SubMenuDiv li {
 	/*list-style:none;*/ /* REQUIRED:hide the bullets */
-	background:#eee;
+	background:#eeeeee;
 	padding:2px;
 }
 #SubMenuDiv li img {
-	vertical-align:middle; /* verticall align icon with the text */
+	vertical-align:middle;/* vertical align icon with the text */
 }
 #SubMenuDiv .menu_group_headers {
 	background:#ddd;
@@ -468,7 +468,7 @@ textarea.texterror {
 	border:thin outset #ddd;
 }
 #InquiriesDiv body {
-	background:#eee;
+	background:#eeeeee;
 	color:red;
 	padding:2px;
 }
@@ -480,15 +480,15 @@ textarea.texterror {
 
 }
 .menu_group_item p {
-	color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent:-10px; /* this makes the bullet to appear as the li tag previously used */
-	margin:0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+	color:#00f;/* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent:-10px;/* this makes the bullet to appear as the li tag previously used */
+	margin:0 0 0 12px;/* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
 }
 
 /*** FOOTER ***/
 
 #FooterDiv {
-	clear:both; /* REQUIRED */
+	clear:both;/* REQUIRED */
 	overflow:hidden;
 	color:gray;
 }
@@ -497,13 +497,13 @@ textarea.texterror {
 	padding:3px;
 }
 #FooterLogoDiv {
-	float:right; /* right side */
+	float:right;/* right side */
 }
 #FooterVersionDiv {
-	float:left; /* left side */
+	float:left;/* left side */
 }
 #FooterTimeDiv {
-	clear:left; /* below */
+	clear:left;/* below */
 }
 #Report {
 	/* Division id for reports. */}
@@ -533,37 +533,32 @@ textarea.texterror {
 	/* Class selector for field help text. */
 }
 .page_help_text {
-	background:#d3d3d3 url(images/help.png) top left no-repeat;
+	background-color:#d3d3d3;
+	background-image:url(images/question.svg);
+	background-position:top left;
+	background-repeat:no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
-	padding-left:10px;
+	padding-left:28px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
 	background:#d3d3d3 url(images/info.svg) top left no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
 	padding-left:10px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {
@@ -577,21 +572,24 @@ textarea.texterror {
 	/* Class selector for page title text. */
 }
 .sheet {
-	background-color:#ffffff;
+	background-color:#eeeeff;
 	border:0;
+	box-shadow:26px 16px 8px 0 rgba(0, 0, 0, 0.5);
 	color:#000000;
 	margin:5%;
-	padding:5%;
-	/* Class selector for sheet preview. */
+	padding:5%;*/
+	/* Class selector for sheet style preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */
 
 
-/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */
+/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.php and use the following sections. */
 
 @media only screen and (max-device-width:767px) {
 	/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
+	.field_help_text {display:none;/* Hides field help text. */}
+	.page_help_text {display:none;/* Hides page help text. */}
 }
 
 @media only screen and (min-device-width:768px) and (max-device-width:991px) {

@@ -1,14 +1,18 @@
 <?php
+// PcExpenses.php
+// .
 
 include('includes/session.php');
-$Title = _('Maintenance Of Petty Cash Of Expenses');
-/* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PCExpenses';
+$Title = _('Maintenance Of Petty Cash Of Expenses');
 include('includes/header.php');
-echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Payment Entry'), '" alt="" />', ' ', $Title, '
-	</p>';
+
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/money_add.png" title="', // Icon image.
+	_('Payment Entry'), '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
+
 if (isset($_POST['SelectedExpense'])) {
 	$SelectedExpense = mb_strtoupper($_POST['SelectedExpense']);
 } elseif (isset($_GET['SelectedExpense'])) {
@@ -71,7 +75,7 @@ if (isset($_POST['submit'])) {
 		$CheckRow = DB_fetch_row($CheckResult);
 		if ($CheckRow[0] > 0) {
 			$InputError = 1;
-			prnMsg(_('The Expense type ') . $_POST['CodeExpense'] . _(' already exists.'), 'error');
+			prnMsg(_('The Expense type ') . $_POST['CodeExpense'] . _(' already exists'), 'error');
 		} else {
 			// Add new record on submit
 			$SQL = "INSERT INTO pcexpenses
@@ -86,7 +90,7 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['Tag'] . "',
 						'" . $_POST['TaxCategory'] . "'
 						)";
-			$Msg = _('Expense ') . ' ' . $_POST['CodeExpense'] . ' ' . _('has been created');
+			$Msg = _('Expense') . ' ' . $_POST['CodeExpense'] . ' ' . _('has been created');
 			$CheckSQL = "SELECT count(codeexpense)
 						FROM pcexpenses";
 			$Result = DB_query($CheckSQL);

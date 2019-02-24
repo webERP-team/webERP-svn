@@ -1,8 +1,8 @@
 <?php
-/* GLCashFlowsSetup.php */
-/* Classifies accounts in any of the three sections of statement of cash flows to assign each account to an activity. */
-/* This program is under the GNU General Public License, last version. 2016-10-08. */
-/* This creative work is under the CC BY-NC-SA, later version. 2016-10-08. */
+// GLCashFlowsSetup.php
+// Classifies accounts in any of the three sections of statement of cash flows to assign each account to an activity.
+// This program is under the GNU General Public License, last version. 2016-10-08.
+// This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
 
 // BEGIN: Procedure division ---------------------------------------------------
 include('includes/session.php');
@@ -143,8 +143,7 @@ switch($_POST['Action']) {
 		// No reset , nor Automatic
 }
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/maintenance.png" title="', // Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -168,16 +167,11 @@ echo '<br />',
 			<tr>
 				<td colspan="2">',
 					'<div class="centre">',
-						'<button name="Action" type="submit" value="Update"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/tick.svg" /> ', _('Update'), '</button>', // "Update" button.
-						'<button name="Action" type="submit" value="Reset"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/cross.svg" /> ', _('Reset values'), '</button>', // "Reset values" button.
-						'<button name="Action" type="submit" value="Automatic"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/next.svg" /> ', _('Automatic setup'), '</button>', // "Automatic setup" button.
-						'<button name="Action" type="submit" value="Manual"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/previous.svg" /> ', _('Manual setup'), '</button>', // "Manual setup" button.
-						'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+						'<button name="Action" type="submit" value="Update"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Update'), '</button>', // "Update" button.
+						'<button name="Action" type="submit" value="Reset"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/cross.svg" /> ', _('Reset values'), '</button>', // "Reset values" button.
+						'<button name="Action" type="submit" value="Automatic"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.svg" /> ', _('Automatic setup'), '</button>', // "Automatic setup" button.
+						'<button name="Action" type="submit" value="Manual"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" /> ', _('Manual setup'), '</button>', // "Manual setup" button.
+						'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 					'</div>',
 				'</td>
 			</tr>

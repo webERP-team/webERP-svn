@@ -31,7 +31,7 @@ $ActGrp ='';
 
 while ($myrow=DB_fetch_array($AccountsResult)) {
 
-       if ($myrow['group_']== $ActGrp){
+       if ($myrow['group_']== $ActGrp) {
               printf('<tr class="striped_row">
 					<td></td>
 	      		      <td>%s</td>

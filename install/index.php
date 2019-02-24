@@ -1,4 +1,6 @@
 <?php
+// index.php
+
 	ini_set('max_execution_time', "600");
 	session_name('weberp_installation');
 	session_start();
@@ -800,7 +802,7 @@ function Installation($DefaultLanguage)
             </div>
             <ul>
             <?php include('../includes/LanguagesArray.php'); ?>
-                <li><label for="Language"><?php echo _('Language:'); ?>&#160;</label>
+                <li><label for="Language"><?php echo _('Language').':'; ?>&#160;</label>
                 <select id="Language" name="Language">
             <?php
                 if(substr($DefaultLanguage,0,2) !='en'){//ensure that the bilingual only display when the language is not english

@@ -1,12 +1,13 @@
 <?php
-
-
 // POReport.php
 // Inquiry on Purchase Orders
+
 // If Date Type is Order, the main file is purchorderdetails
 // If Date Type is Delivery, the main file is grns
 
 include('includes/session.php');
+$ViewTopic = '';/* ?????????? */
+$BookMark = 'POReport';
 $Title = _('Purchase Order Report');
 include('includes/header.php');
 
@@ -1278,7 +1279,7 @@ function submitcsv( $PartNumber,
 		}
 		fprintf($FileHandle, '"'. _('Purchase Order Report') . '","' . $_POST['ReportType'] . ' '._('By').' '.$SortBy_Display ."\n");
 		fprintf($FileHandle, '"'. _('Date Type') . '","' . $_POST['DateType'] . '"'. "\n");
-		fprintf($FileHandle, '"'. _('Date Range') . '","' . $_POST['FromDate'] . _(' To ') .  $_POST['ToDate'] . '"'."\n");
+		fprintf($FileHandle, '"'. _('Date Range') . '","' . $_POST['FromDate'] . ' ' . _('To') . ' ' .  $_POST['ToDate'] . '"'."\n");
 		if (mb_strlen(trim($PartNumber)) > 0) {
 			fprintf($FileHandle, '"'. _('Part Number') . '","' . $_POST['PartNumberOp'] . ' ' . $_POST['PartNumber'] . '"'."\n");
 		}

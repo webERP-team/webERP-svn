@@ -61,7 +61,7 @@ echo '<td>' . _('From') . ':</td>
 	</table>
 	<br />
 	<div class="centre">
-		<input type="submit" name="ShowResults" value="' . _('Show Transactions') . '" />
+		<input type="submit" name="ShowResults" value="' . _('Show transactions') . '" />
 	</div>
 	<br />
     </div>

@@ -99,7 +99,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 		echo '<table class="selection">
 			<tr>
-				<th class="text">', _('Account #'), '</th>
+				<th class="text">', _('Account Code'), '</th>
 				<th class="text">', _('Customer Name'), '</th>
 				<th class="text">', _('Recipients'), '</th>
 			</tr>';

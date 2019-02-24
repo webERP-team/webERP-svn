@@ -1,9 +1,11 @@
 ALTER TABLE `suppliers` ADD COLUMN `defaultgl` VARCHAR(20) NOT NULL DEFAULT '1' AFTER `url`;
 ALTER TABLE `suppliers` ADD COLUMN `defaultshipper` INT(11) NOT NULL DEFAULT '0' AFTER `url`;
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_FixGLTransPeriods.php', '15', 'Fixes periods where GL transactions were not created correctly');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SalesReport.php', '2', 'Shows a report of sales to customers for the range of selected dates');
-
 ALTER TABLE `stockmaster` DROP COLUMN `appendfile`;
+
+-- Inserts new scripts:
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GLStatements.php', '8', 'Shows a set of financial statements');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SalesReport.php', '2', 'Shows a report of sales to customers for the range of selected dates');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_FixGLTransPeriods.php', '15', 'Fixes periods where GL transactions were not created correctly');
 
 -- Updates scripts description:
 UPDATE `scripts` SET `description` = 'Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used, etc.' WHERE `scripts`.`script` = 'CompanyPreferences.php';
@@ -19,7 +21,6 @@ UPDATE `scripts` SET `description` = 'Creates a report of the ad-valorem tax -GS
 
 
 INSERT INTO config VALUES ('ShortcutMenu','0');
-
 INSERT INTO config VALUES ('LastDayofWeek','0');
 
 CREATE TABLE `employees` (
@@ -124,6 +125,7 @@ ALTER TABLE supptrans CHANGE `duedate` `duedate` date NOT NULL DEFAULT '1000-01-
 ALTER TABLE tenders CHANGE `requiredbydate` `requiredbydate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00';
 ALTER TABLE workorders CHANGE `requiredby` `requiredby` date NOT NULL DEFAULT '1000-01-01';
 ALTER TABLE workorders CHANGE `startdate` `startdate` date NOT NULL DEFAULT '1000-01-01';
+
 
 -- THIS IS THE LAST SQL QUERY. Updates database version number:
 UPDATE config SET confvalue='4.15.1' WHERE confname='VersionNumber';

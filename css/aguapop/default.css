@@ -1,11 +1,8 @@
-/*
+/* "AguaPop" Theme for WebERP by Hindra Joshua. v2, 2012-08-03
 
-New "AguaPop" Theme for WebERP
-
-v2, 2012-08-03
-
-by Hindra Joshua
-
+Design guidelines:
+	Fonts are 10px hight.
+	Icons are 32px x 32px size.
 */
 
 button img {
@@ -160,15 +157,15 @@ div.Message {
 	transition:opacity 0.6s; /* 600ms to fade out */
 }
 div.Message.error {
-	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
+	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
 	border:1px solid #f5aca6;
 }
 div.Message.success {
-	background:#e9ffd9 url('images/message-success.png') no-repeat 10px 50%;
+	background:#e9ffd9 url('images/message-success.svg') no-repeat 10px 50%;
 	border:1px solid #a6ca8a;
 }
 div.Message.info {
-	background:#e3f7fc url('images/message-info.png') no-repeat 10px 50%;
+	background:#e3f7fc url('images/info.svg') no-repeat 10px 50%;
 	border:1px solid #8ed9f6;
 }
 div.Message.warn {
@@ -308,9 +305,9 @@ li {
 	list-style:none;
 	float:right;
 }
-#QuickMenuDiv ul li {
+#QuickMenuDiv li {
+	display:inline-block;
 	float:left;
-	display:inline;
 	margin:0px 3px;
 }
 
@@ -494,41 +491,36 @@ li {
 	/* Class selector for field help text. */
 }
 .page_help_text {
-	background:#d3d3d3 url(images/help.png) top left no-repeat;
+	background-color:#d3d3d3;
+	background-image:url(images/question.svg);
+	background-position:top left;
+	background-repeat:no-repeat;
 	border:#800000 solid 1px;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-weight:normal;
 	margin:0 auto;
 	min-height:26px;
 	padding-bottom:2px;
-	padding-left:24px;
+	padding-left:36px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
 	visibility:visible;
 	width:80%;
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
 	background:#d3d3d3 url(images/info.svg) top left no-repeat;
 	border:#800000 solid 1px;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-weight:normal;
 	margin:0 auto;
 	min-height:26px;
 	padding-bottom:2px;
 	padding-left:24px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
 	visibility:visible;
 	width:80%;
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {
@@ -539,22 +531,25 @@ li {
 	text-align:center;
 	/* Class selector for page title text. */
 }
-.sheet {
+.sheet {/* Uncomment this to use sheet style preview
 	background-color:#ffffff;
 	border:0;
+	box-shadow:26px 16px 8px 0 rgba(0, 0, 0, 0.5);
 	color:#000000;
 	margin:5%;
-	padding:5%;
-	/* Class selector for sheet preview. */
+	padding:5%;*/
+	/* Class selector for sheet style preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */
 
 
-/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */
+/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.php and use the following sections. */
 
 @media only screen and (max-device-width:767px) {
 	/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
+	.field_help_text {display:none;/* Hides field help text. */}
+	.page_help_text {display:none;/* Hides page help text. */}
 }
 
 @media only screen and (min-device-width:768px) and (max-device-width:991px) {

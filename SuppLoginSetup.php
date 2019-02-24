@@ -11,7 +11,7 @@ include ('includes/LanguagesArray.php');
 if (!isset($_SESSION['SupplierID'])){
 	echo '<br />
 		<br />';
-	prnMsg(_('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>','info');
+	prnMsg(_('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select a supplier') . '</a>','info');
 	include('includes/footer.php');
 	exit;
 }

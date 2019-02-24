@@ -1,4 +1,5 @@
 <?php
+// PDFWOPrint.php
 
 
 include('includes/session.php');
@@ -486,7 +487,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$pdf->write2DBarcode($StockID,'QRCODE,H',260,650,100,100,'','N');
 			$pdf->write2DBarcode($BaseURL.'/WorkOrderReceive.php?WO='.$SelectedWO.'&StockID='.$StockID,'QRCODE,H',440,650,100,100,'','N');
 			$LeftOvers = $pdf->addText($FormDesign->SignedDate->x,$Page_Height-$FormDesign->SignedDate->y,$FormDesign->SignedDate->FontSize, _('Date') . ' : ______________');
-			$LeftOvers = $pdf->addText($FormDesign->SignedBy->x,$Page_Height-$FormDesign->SignedBy->y,$FormDesign->SignedBy->FontSize, _('Signed for: ') . '____________________________________');
+			$LeftOvers = $pdf->addText($FormDesign->SignedBy->x,$Page_Height-$FormDesign->SignedBy->y,$FormDesign->SignedBy->FontSize, _('Signed for') . ': ____________________________________');
 
 			$FooterPrintedInPage= 1;
 	}

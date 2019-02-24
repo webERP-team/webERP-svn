@@ -1,10 +1,11 @@
-/*
-"Fluid Tabs" theme for webERP
-
-by Hindra Joshua
+/* "Fluid Tabs" theme for WebERP by Hindra Joshua.
 
 This is a fluid theme capable to adjust itself on small screen devices (phones, tablets, etc.)
 Beware, the contents is currently not fluid! :D
+
+Design guidelines:
+	Fonts are 10pt hight.
+	Icons are ??px x ??px size.  (24x24 ?)
 */
 
 button img {
@@ -82,7 +83,7 @@ td {
 	vertical-align:top;
 }
 td.select {
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 
 input {
@@ -120,11 +121,11 @@ textarea.texterror {
 }
 
 tr.striped_row:nth-of-type(even) {
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 }
 
 tr.striped_row:nth-of-type(odd) {
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 }
 div.Message {
 	border-radius:10px;
@@ -134,15 +135,15 @@ div.Message {
 	transition:opacity 0.6s; /* 600ms to fade out */
 }
 div.Message.error {
-	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
+	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
 	border:1px solid #f5aca6;
 }
 div.Message.success {
-	background:#e9ffd9 url('images/message-success.png') no-repeat 10px 50%;
+	background:#e9ffd9 url('images/message-success.svg') no-repeat 10px 50%;
 	border:1px solid #a6ca8a;
 }
 div.Message.info {
-	background:#e3f7fc url('images/message-info.png') no-repeat 10px 50%;
+	background:#e3f7fc url('images/info.svg') no-repeat 10px 50%;
 	border:1px solid #8ed9f6;
 }
 div.Message.warn {
@@ -190,7 +191,7 @@ div.csv {
 .dpTD {
 	border:0;
 	width:20px;
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 	text-align:right;
 cursor:pointer;
 }
@@ -204,14 +205,14 @@ cursor:pointer;
 .dpTDHover {
 	border:0;
 	width:20px;
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 	text-align:right;
 	cursor:pointer;
 }
 
 .table1 {
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:1px solid #222;
 	margin:0 auto;
 }
@@ -281,7 +282,12 @@ list-style-image:url(bullet.gif);
 
 #QuickMenuDiv {float:right;}
 #QuickMenuDiv ul {list-style:none;margin:0;padding:0;}
-#QuickMenuDiv li {display:inline;float:left;margin:2px 0;padding:0;}
+#QuickMenuDiv li {
+	display:inline-block;
+	float:left;
+	margin:2px 0;
+	padding:0;
+}
 #QuickMenuDiv li a {
 	background:#aae;
 	border:1px outset #aae;
@@ -310,7 +316,11 @@ list-style-image:url(bullet.gif);
 	height:18px;
 }
 #MainMenuDiv ul {list-style:none;padding:0;margin:0;}
-#MainMenuDiv li {display:inline;float:left;margin:2px 0;padding:0;}
+#MainMenuDiv li {
+	display:inline;
+	float:left;
+	margin:2px 0;
+	padding:0;}
 #MainMenuDiv li a {
 	background:#aae;
 	border:1px outset #aae;
@@ -404,39 +414,32 @@ list-style-image:url(bullet.gif);
 	/* Class selector for field help text. */
 }
 .page_help_text {
-	background:#d3d3d3 url(images/help.png) top left no-repeat;
+	background-color:#d3d3d3;
+	background-image:url(images/question.svg);
+	background-position:top left;
+	background-repeat:no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
-	padding-left:10px;
+	padding-left:28px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
 	background:#d3d3d3 url(images/info.svg) top left no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
 	padding-left:10px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {
@@ -445,22 +448,25 @@ list-style-image:url(bullet.gif);
 	text-align:center;
 	/* Class selector for page title text. */
 }
-.sheet {
+.sheet {/* Uncomment this to use sheet style preview
 	background-color:#ffffff;
 	border:0;
+	box-shadow:26px 16px 8px 0 rgba(0, 0, 0, 0.5);
 	color:#000000;
 	margin:5%;
-	padding:5%;
-	/* Class selector for sheet preview. */
+	padding:5%;*/
+	/* Class selector for sheet style preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */
 
 
-/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */
+/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.php and use the following sections. */
 
 @media only screen and (max-device-width:767px) {
 	/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
+	.field_help_text {display:none;/* Hides field help text. */}
+	.page_help_text {display:none;/* Hides page help text. */}
 }
 
 @media only screen and (min-device-width:768px) and (max-device-width:991px) {

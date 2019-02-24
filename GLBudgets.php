@@ -10,9 +10,9 @@ $BookMark = 'GLBudgets';
 
 include('includes/header.php');
 
-if (isset($_POST['SelectedAccount'])){
+if (isset($_POST['SelectedAccount'])) {
 	$SelectedAccount = $_POST['SelectedAccount'];
-} elseif (isset($_GET['SelectedAccount'])){
+} elseif (isset($_GET['SelectedAccount'])) {
 	$SelectedAccount = $_GET['SelectedAccount'];
 }
 
@@ -28,7 +28,7 @@ if (isset($_POST['update'])) {
 
 //If an account has not been selected then select one here.
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
+		<img src="'.$RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="selectaccount">
 	<div>
@@ -45,14 +45,14 @@ $SQL = "SELECT accountcode,
 			ORDER BY accountcode";
 
 $result=DB_query($SQL);
-if (DB_num_rows($result)==0){
+if (DB_num_rows($result)==0) {
 	echo '</select></td>
 		</tr>';
 	prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('budgets cannot be allocated until the GL accounts are set up'),'warn');
 } else {
-	while ($myrow=DB_fetch_array($result)){
+	while ($myrow=DB_fetch_array($result)) {
 		$Account = $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false);
-		if (isset($SelectedAccount) AND isset($LastCode) AND $SelectedAccount==$myrow['accountcode']){
+		if (isset($SelectedAccount) AND isset($LastCode) AND $SelectedAccount==$myrow['accountcode']) {
 			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $Account . '</option>';
 			$PrevCode=$LastCode;
 		} else {
@@ -140,13 +140,13 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 
 	if (isset($_POST['Apportion'])) {
 		for ($i=1; $i<=12; $i++) {
-			if (filter_number_format($_POST['AnnualAmountLY']) != '0' AND is_numeric(filter_number_format($_POST['AnnualAmountLY']))){
+			if (filter_number_format($_POST['AnnualAmountLY']) != '0' AND is_numeric(filter_number_format($_POST['AnnualAmountLY']))) {
 				$Budget[$CurrentYearEndPeriod+$i-24]	=round(filter_number_format( $_POST['AnnualAmountLY'])/12,0);
 			}
-			if (filter_number_format($_POST['AnnualAmountTY']) != '0' AND is_numeric(filter_number_format($_POST['AnnualAmountTY']))){
+			if (filter_number_format($_POST['AnnualAmountTY']) != '0' AND is_numeric(filter_number_format($_POST['AnnualAmountTY']))) {
 				$Budget[$CurrentYearEndPeriod+$i-12]	= round(filter_number_format($_POST['AnnualAmountTY'])/12,0);
 			}
-			if (filter_number_format($_POST['AnnualAmount']) != '0' AND is_numeric(filter_number_format($_POST['AnnualAmount']))){
+			if (filter_number_format($_POST['AnnualAmount']) != '0' AND is_numeric(filter_number_format($_POST['AnnualAmount']))) {
 				$Budget[$CurrentYearEndPeriod+$i]	= round(filter_number_format($_POST['AnnualAmount'])/12,0);
 			}
 		}
@@ -265,7 +265,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		$ErrMsg = _('Could not retrieve the ChartDetail records because');
 		$result = DB_query($sql,$ErrMsg);
 
-		while ($myrow=DB_fetch_array($result)){
+		while ($myrow=DB_fetch_array($result)) {
 
 			$CFwdBudget = $myrow['bfwdbudget'] + $myrow['budget'];
 			$sql = "UPDATE chartdetails

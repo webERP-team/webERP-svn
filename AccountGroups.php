@@ -1,5 +1,6 @@
 <?php
-/* Defines the groupings of general ledger accounts */
+/* AccountGroups.php
+Defines the groupings of general ledger accounts */
 
 include('includes/session.php');
 $Title = _('Account Groups');

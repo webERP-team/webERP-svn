@@ -1,42 +1,31 @@
 <?php
-// SalesReport.php
-// Shows a report of sales to customers for the range of selected dates.
-// This program is under the GNU General Public License, last version. 2018-11-10.
-// This creative work is under the CC BY-NC-SA, last version. 2018-11-10.
+/* SalesReport.php
+Shows a report of sales to customers for the range of selected dates.
+This program is under the GNU General Public License, last version. 2016-12-18.
+This creative work is under the CC BY-NC-SA, last version. 2016-12-18.
 
-// Notes:
-// Coding Conventions/Style: http://www.weberp.org/CodingConventions.html
-
-/*
 This script is "mirror-symmetric" to script PurchasesReport.php.
 */
 
+// BEGIN: Functions division ===================================================
+// END: Functions division =====================================================
+
+// BEGIN: Procedure division ===================================================
 include('includes/session.php');
 $Title = _('Sales to Customers');
 $ViewTopic = 'Sales';
 $BookMark = 'SalesReport';
 
-// BEGIN Functions division ====================================================
-// END Functions division ======================================================
-
-// BEGIN Data division =========================================================
-// END Data division ===========================================================
-
-// BEGIN Procedure division ====================================================
 include('includes/header.php');
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/reports.png" title="', // Icon image.
-	$Title, '" /> ', // Icon title.
-	$Title, '</p>';// Page title.
 
 // Merges gets into posts:
-if(isset($_GET['PeriodFrom'])) {// Select period from.
+if(isset($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];
 }
-if(isset($_GET['PeriodTo'])) {// Select period to.
+if(isset($_GET['PeriodTo'])) {
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
-if(isset($_GET['ShowDetails'])) {// Show sales invoices for the period.
+if(isset($_GET['ShowDetails'])) {
 	$_POST['ShowDetails'] = $_GET['ShowDetails'];
 }
 
@@ -44,70 +33,19 @@ if(isset($_GET['ShowDetails'])) {// Show sales invoices for the period.
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo'])) {
 	if(Date1GreaterThanDate2($_POST['PeriodFrom'], $_POST['PeriodTo'])) {
 		// The beginning is after the end.
-		unset($_POST['PeriodFrom']);
-		unset($_POST['PeriodTo']);
+		$_POST['NewReport'] = 'on';
 		prnMsg(_('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
 	}
 }
 
 // Main code:
-if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action']=='New') {
-	// If one or more parameters are not set or it is a new report, shows a form to allow input of criteria for the report to generate:
-	echo
-		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
-		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
-		// Input table:
-		'<table class="selection">',
-		// Content of the header and footer of the input table:
-		'<thead>
-			<tr>
-				<th colspan="2">', _('Report Parameters'), '</th>
-			</tr>
-		</thead><tfoot>
-			<tr>
-				<td colspan="2">',
-					'<div class="centre">',
-						'<button name="Action" type="submit" value="', _('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-						'<button onclick="window.location=\'index.php?Application=Sales\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-					'</div>',
-				'</td>
-			</tr>
-		</tfoot><tbody>',
-		// Content of the body of the input table:
-			// Select period from:
-			'<tr>',
-				'<td><label for="PeriodFrom">', _('Period from'), '</label></td>';
-	if(!isset($_POST['PeriodFrom'])) {
-		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
-	}
-	echo 		'<td><input class="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" type="text" value="', $_POST['PeriodFrom'], '" />',
-					fShowFieldHelp(_('Select the beginning of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
-			// Select period to:
-			'<tr>',
-				'<td><label for="PeriodTo">', _('Period to'), '</label></td>';
-	if(!isset($_POST['PeriodTo'])) {
-		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
-	}
-	echo 		'<td><input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
-					fShowFieldHelp(_('Select the end of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
-			// Select to show or not sales invoices:
-			'<tr>',
-			 	'<td><label for="ShowDetails">', _('Show details'), '</label></td>',
-			 	'<td>',
-				 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is TRUE, shows this input checked.
-					fShowFieldHelp(_('Check this box to show sales invoices')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
-		 '</tbody></table>';
-} else {
-	// If all parameters are set and valid, generates the report:
-	echo '<p>', _('Period from'), ': ', $_POST['PeriodFrom'],
+if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
+	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
+	echo '<div class="sheet">', // Division to identify the report block.
+		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" title="', // Icon image.
+		$Title, '" /> ', // Icon title.
+		$Title, '</p>', // Page title.
+		'<p>', _('Period from'), ': ', $_POST['PeriodFrom'],
 		'<br />', _('Period to'), ': ', $_POST['PeriodTo'], '</p>',
 		'<table class="selection">
 		<thead>
@@ -145,7 +83,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 		$CustomerOvTax = 0;
 		$CustomerGlAmount = 0;
 		$CustomerGlTax = 0;
-		$Sql = "SELECT
+		$SQL = "SELECT
 					debtortrans.debtorno,
 					debtorsmaster.name,
 					debtorsmaster.currcode,
@@ -161,7 +99,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 					AND debtortrans.trandate<='" . $PeriodTo . "'
 					AND debtortrans.type=10
 				ORDER BY debtortrans.debtorno, debtortrans.trandate";
-		$Result = DB_query($Sql);
+		$Result = DB_query($SQL);
 		foreach($Result as $MyRow) {
 			if($MyRow['debtorno'] != $CustomerId) {// If different, prints customer totals:
 				if($CustomerId != '') {// If NOT the first line.
@@ -226,7 +164,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 					'<th>', _('Customer Name'), '</th>',
 					'<th>', _('Customer\'s Currency'), '</th>',
 					$CommonHead;
-		$Sql = "SELECT
+		$SQL = "SELECT
 					debtortrans.debtorno,
 					debtorsmaster.name,
 					debtorsmaster.currcode,
@@ -242,7 +180,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 				GROUP BY
 					debtortrans.debtorno
 				ORDER BY debtortrans.debtorno, debtortrans.trandate";
-		$Result = DB_query($Sql);
+		$Result = DB_query($SQL);
 		foreach($Result as $MyRow) {
 			echo	'<tr class="striped_row">',
 					'<td class="text">', $MyRow['debtorno'], '</td>',
@@ -265,22 +203,78 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 				<td class="number">', locale_number_format($TotalGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($TotalGlAmount+$TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
-			</tr>
-		</tbody></table>
-		<br />
-		<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">
-		<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />
-		<input name="PeriodFrom" type="hidden" value="', $_POST['PeriodFrom'], '" />
-		<input name="PeriodTo" type="hidden" value="', $_POST['PeriodTo'], '" />
-		<input name="ShowDetails" type="hidden" value="', $_POST['ShowDetails'], '" />
-		<div class="centre noprint">', // Form buttons:
-			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
-			'<button name="Action" type="submit" value="New"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
-			'<button onclick="window.location=\'index.php?Application=Sales\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+			</tr>',
+		'</tbody></table>',
+		'</div>', // div id="Report".
+	// Shows a form to select an action after the report was shown:
+		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
+	// Resend report parameters:
+		'<input name="PeriodFrom" type="hidden" value="', $_POST['PeriodFrom'], '" />',
+		'<input name="PeriodTo" type="hidden" value="', $_POST['PeriodTo'], '" />',
+		'<input name="ShowDetails" type="hidden" value="', $_POST['ShowDetails'], '" />',
+		'<div class="centre noprint">', // Form buttons:
+			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
+			'<button onclick="window.location=\'index.php?Application=Sales\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>';
+} else {
+	// If PeriodFrom or PeriodTo are NOT set or it is a NewReport, shows a parameters input form:
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
+		$Title, '" /> ', // Icon title.
+		$Title, '</p>';// Page title.
+	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
+		_('Shows a report of sales to customers for the range of selected dates.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
+	echo // Shows a form to input the report parameters:
+		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
+	// Input table:
+		'<table class="selection">',
+	// Content of the header and footer of the input table:
+		'<thead>
+			<tr>
+				<th colspan="2">', _('Report Parameters'), '</th>
+			</tr>
+		</thead><tfoot>
+			<tr>
+				<td colspan="2">',
+					'<div class="centre">',
+						'<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
+						'<button onclick="window.location=\'index.php?Application=Sales\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+					'</div>',
+				'</td>
+			</tr>
+		</tfoot><tbody>',
+	// Content of the body of the input table:
+	// Select period from:
+			'<tr>',
+				'<td><label for="PeriodFrom">', _('Period from'), '</label></td>';
+	if(!isset($_POST['PeriodFrom'])) {
+		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
+	}
+	echo 		'<td><input class="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" type="text" value="', $_POST['PeriodFrom'], '" />',
+					fShowFieldHelp(_('Select the beginning of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+		 		'</td>
+			</tr>',
+			// Select period to:
+			'<tr>',
+				'<td><label for="PeriodTo">', _('Period to'), '</label></td>';
+	if(!isset($_POST['PeriodTo'])) {
+		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
+	}
+	echo 		'<td><input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
+					fShowFieldHelp(_('Select the end of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+		 		'</td>
+			</tr>',
+	// Select to show or not sales invoices:
+			'<tr>',
+			 	'<td><label for="ShowDetails">', _('Show details'), '</label></td>',
+			 	'<td>',
+				 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is TRUE, shows this input checked.
+					fShowFieldHelp(_('Check this box to show sales invoices')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+		 		'</td>
+			</tr>',
+		 '</tbody></table>';
 }
 echo	'</form>';
 include('includes/footer.php');

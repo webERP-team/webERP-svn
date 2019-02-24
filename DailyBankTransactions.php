@@ -81,7 +81,7 @@ if (!isset($_POST['Show'])) {
 			<td><input type="text" name="ToTransDate" class="date" required="required" maxlength="10" size="11" onchange="isDate(this, this.value, ', "'", $_SESSION['DefaultDateFormat'], "'", ')" value="', date($_SESSION['DefaultDateFormat']), '" /></td>
 		</tr>
 		<tr>
-			<td>', _('Show Transactions'), '</td>
+			<td>', _('Show transactions'), '</td>
 			<td>
 				<select name="ShowType">
 					<option value="All">', _('All'), '</option>

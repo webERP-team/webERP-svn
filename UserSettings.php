@@ -167,10 +167,9 @@ echo '</select>
 	</tr>
 	<tr>
 		<td>', _('Confirm Password'), ':</td>
-		<td><input name="PasswordCheck" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['PasswordCheck'], '" /></td>
-	</tr>
-	<tr>
-		<td align="center" colspan="2"><i>', _('If you leave the password boxes empty your password will not change'), '</i></td>
+		<td><input name="PasswordCheck" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['PasswordCheck'], '" />',
+			fShowFieldHelp(_('If you leave the password boxes empty your password will not change')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+		'</td>
 	</tr>
 	<tr>
 		<td>', _('Email'), ':</td>';

@@ -1,10 +1,12 @@
 <?php
+// FixedAssetRegister.php
+// Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
 
 include ('includes/session.php');
-$Title = _('Fixed Asset Register');
-
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetRegister';
+$Title = _('Fixed Asset Register');
+
 $csv_output = '';
 // Reports being generated in HTML, PDF and CSV/EXCEL format
 if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
@@ -98,7 +100,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 				<th>' . _('Disposal Value') . '</th>
 			</tr>';
 	}
-	$TotalCostBfwd =0;
+	$TotalCostBfwd = 0;
 	$TotalCostCfwd = 0;
 	$TotalDepnBfwd = 0;
 	$TotalDepnCfwd = 0;
@@ -311,11 +313,11 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	}
 
 	echo '<tr>
-			<th>' . _(' From Date') . '</th>
+			<th>', _('From Date'), '</th>
 			<td><input type="text" class="date" name="FromDate" required="required" title="' . _('Enter the start date to show the cost and accumulated depreciation from') . '" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 		</tr>
 		<tr>
-			<th>' . _('To Date ') . '</th>
+			<th>', _('To Date'), '</th>
 			<td><input type="text" class="date" name="ToDate" required="required" title="' . _('Enter the end date to show the cost and accumulated depreciation to') . '" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 	</table>
@@ -359,8 +361,8 @@ function PDFPageHeader (){
 
 
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos,240,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*1),240,$FontSize, _('Asset Category ').' ' . $AssetCategory );
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*2),240,$FontSize, _('Asset Location ').' ' . $_POST['AssetLocation'] );
+	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*1),240,$FontSize, _('Asset Category').' ' . $AssetCategory );
+	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*2),240,$FontSize, _('Asset Location').' ' . $_POST['AssetLocation'] );
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*3),240,$FontSize, _('Asset ID').': ' . $AssetDescription);
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*4),240,$FontSize, _('From').': ' . $_POST['FromDate']);
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*5),240,$FontSize, _('To').': ' . $_POST['ToDate']);

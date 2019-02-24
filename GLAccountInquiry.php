@@ -1,5 +1,6 @@
 <?php
-/* Shows the general ledger transactions for a specified account over a specified range of periods */
+// GLAccountInquiry.php
+// Shows the general ledger transactions for a specified account over a specified range of periods.
 
 include ('includes/session.php');
 $Title = _('General Ledger Account Inquiry');
@@ -7,8 +8,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/transactions.png" title="',// Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="',// Icon image.
 	_('General Ledger Account Inquiry'), '" /> ',// Icon title.
 	_('General Ledger Account Inquiry'), '</p>';// Page title.
 
@@ -34,11 +34,11 @@ if(isset($_GET['Show'])) {
 if(isset($SelectedPeriod)) { //If it was called from itself (in other words an inquiry was run and we wish to leave the periods selected unchanged
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
-} elseif(isset($_GET['FromPeriod'])) { //If it was called from the Trial Balance/P&L or Balance sheet
-	$FirstPeriodSelected = $_GET['FromPeriod'];
-	$LastPeriodSelected = $_GET['ToPeriod'];
-	$SelectedPeriod[0] = $_GET['FromPeriod'];
-	$SelectedPeriod[1] = $_GET['ToPeriod'];
+} elseif(isset($_GET['PeriodFrom'])) { //If it was called from the Trial Balance/P&L or Balance sheet
+	$FirstPeriodSelected = $_GET['PeriodFrom'];
+	$LastPeriodSelected = $_GET['PeriodTo'];
+	$SelectedPeriod[0] = $_GET['PeriodFrom'];
+	$SelectedPeriod[1] = $_GET['PeriodTo'];
 } else { // Otherwise just highlight the current period
 	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
@@ -319,7 +319,7 @@ if(isset($_POST['Show'])) {
 		}
 
 
-		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
+		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . urlencode($myrow['type']) . '&amp;TransNo=' . urlencode($myrow['typeno']);
 		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 		if($myrow['amount']>=0) {
 			$DebitAmount = locale_number_format($myrow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);

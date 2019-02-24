@@ -1,10 +1,11 @@
 <?php
+// PcReportTab.php
+// .
 
 include ('includes/session.php');
-$Title = _('Petty Cash Management Report');
-/* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportTab';
+$Title = _('Petty Cash Management Report');
 
 include ('includes/SQL_CommonFunctions.inc');
 
@@ -61,11 +62,11 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '</select></td>
 		</tr>
 		<tr>
-			<td>' . _('From Date :') . '</td>
+			<td>', _('From Date'), ':</td>
 			<td><input tabindex="2" class="date" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 		</tr>
 		<tr>
-			<td>' . _('To Date:')  . '</td>
+			<td>', _('To Date'), ':</td>
 			<td><input tabindex="3" class="date" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		</table>
@@ -169,7 +170,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Tab Code :'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$SelectedTabs);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+290,$YPos,70,$FontSize,_('From'). ' ');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+290,$YPos,70,$FontSize,_('From') . ' ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+340,$YPos,70,$FontSize,$_POST['FromDate']);
 
@@ -177,12 +178,12 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('User '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['usercode']);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+290,$YPos,70,$FontSize,_('To '));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+290,$YPos,70,$FontSize,_('To') . ' ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+340,$YPos,70,$FontSize,$_POST['ToDate']);
 
 	$YPos -= $line_height;
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Currency '));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Currency') . ' ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['currency']);
 

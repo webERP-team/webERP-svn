@@ -389,8 +389,8 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['LastDayOfWeek'] != $_POST['X_LastDayOfWeek']){
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_LastDayOfWeek'] . "' WHERE confname='LastDayOfWeek'";
 
-		} 
-		
+		}
+
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
 			$result = DB_Txn_Begin();
@@ -601,7 +601,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Invoice Orientation') . ':</td>
 //Default Invoice Quantity
 echo '<tr style="outline: 1px solid"><td>' . _('Invoice Quantity Default') . ':</td>
 	<td><select name="X_InvoiceQuantityDefault">
-	<option '.($_SESSION['InvoiceQuantityDefault']=='0'?'selected="selected" ':'').'value="0">' . _('0') . '</option>
+	<option '.($_SESSION['InvoiceQuantityDefault']=='0'?'selected="selected" ':'').'value="0">0</option>
 	<option '.($_SESSION['InvoiceQuantityDefault']=='1'?'selected="selected" ':'').'value="1">' . _('Outstanding') . '</option>
 	</select></td>
 	<td>' . _('This setting controls the default behaviour of invoicing. Setting to 0 defaults the invocie quantity to zero to force entry. Set to outstanding to default the invoice quantity to the balance outstanding, after previous deliveries, on the sales order') . '</td>

@@ -1,10 +1,11 @@
 <?php
+// PcAssignCashTabToTab.php
+// Assign cash from one tab to another.
 
 include('includes/session.php');
-$Title = _('Assignment of Cash from Tab to Tab');
-/* webERP manual links before header.php */
 $ViewTopic= 'PettyCash';
 $BookMark = 'CashAssignment';
+$Title = _('Assignment of Cash from Tab to Tab');
 include('includes/header.php');
 
 if (isset($_POST['SelectedTabs'])){
@@ -137,7 +138,7 @@ if (isset($_POST['submit'])) {
 					NULL,
 					'" . $_POST['Notes'] . "'
 					)";
-		$msg = _('Assignment of cash from PC Tab ') . ' ' . $SelectedTabs .  ' ' . _('to ') . $SelectedTabsTo . ' ' . _('has been created');
+		$msg = _('Assignment of cash from PC Tab ') . ' ' . $SelectedTabs . ' ' . _('to') . ' ' . $SelectedTabsTo . ' ' . _('has been created');
 	}
 
 	if ( $InputError != 1) {

@@ -15,7 +15,21 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| Fix show/hide field help text | Fixed | Rafael Chacón | 2018-12-28 | [View](https://github.com/webERP-team/webERP/commit/950b4891efe32e05791961e98f8b0e7a92f3ba4e) |   |
+| Replace texts with blanks with trimmed text | Changed | Rafael Chacón | 2019-02-21 | [View](https://github.com/webERP-team/webERP/commit/972c7c145649af2b141d0b17756a5fb1a0a7ed7e) |   |
+| Fix country name in Currencies.php | Fixed | Rafael Chacón | 2019-02-20 | [View](https://github.com/webERP-team/webERP/commit/c6f4d97d496d3ee5289e7ef577b536e50782195a) |   |
+| Fix height in #QuickMenuDiv li | Fixed | Rafael Chacón | 2019-02-20 | [View](https://github.com/webERP-team/webERP/commit/c8cb323b16105866c9d576b0d69c2969cee94962) |   |
+| Use inline-block instead of inline | Changed | Rafael Chacón | 2019-02-20 | [View](https://github.com/webERP-team/webERP/commit/23a580b16f05c6015e03aa64321d57af6878853d) |   |
+| Fix concat errors, add urlencode() | Fixed | PaulT | 2019-02-12 | [View](https://github.com/webERP-team/webERP/commit/d6b2ddb7353fcfdfa0b952a117feca83f330eaaa) |   |
+| Deletes the translation of numbers | Changed | Rafael Chacón | 2019-01-21 | [View](https://github.com/webERP-team/webERP/commit/55bc2e3275c8d6a8284f9fa9118782aa0b8a5908) |   |
+| Standardise buttons in Horizontal Analysis reports | Changed | Rafael Chacón | 2019-01-19 | [View](https://github.com/webERP-team/webERP/commit/22c62fc4129364fa7ce5efa2f1b92adeb9cc7c7f) |   |
+| Clean up purchases and sales reports code | Changed | Rafael Chacón | 2019-01-09 | [View](https://github.com/webERP-team/webERP/commit/f0c064c6abfca9d39f58abb4aac18af39a51de38) |   |
+| Standardise GL reports code | Changed | Rafael Chacón | 2019-01-09 | [View](https://github.com/webERP-team/webERP/commit/e7ceae5931c020f98ce8b89b12d4397d277c4f77) |   |
+| Clean up and standardise sheet style view | Changed | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/81f710f1c85a49dc703db8d968de3c45904bba7c) |   |
+| Clean up the CSS | Changed | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/57ce6c30a61cec38281b37f21324699ffa64e624) |   |
+| Hides help texts for extra small devices | Changed | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/8e468644ff6982cc7682480a5710a25647b38214) |   |
+| Show a set of financial statements | Added | Rafael Chacón | 2019-01-02 | [View](https://github.com/webERP-team/webERP/commit/02beefcd31ef4a848760c7ba93fe0bf36a78393e) |   |
+| Fix variable used in function fShowPageHelp | Fixed | Rafael Chacón | 2018-12-30 | [View](https://github.com/webERP-team/webERP/commit/b48c70708c5ae96c46f5162076ab03e9170ca791) |   |
+| Fix SQL in Timesheets per Tim | Fixed | Phil Daintree | 2018-12-29 | [View](https://github.com/webERP-team/webERP/commit/b0d816d88fa55c2e56e7d7a6f46987e44472a30b) |   |
 | Improve the readability of a script | Changed | Rafael Chacón | 2018-12-27 | [View](https://github.com/webERP-team/webERP/commit/9dd0c6ca06fbbb3bd879395ec7721e79d7b5af54) |   |
 | Improve the readability of a script | Changed | Rafael Chacón | 2018-12-26 | [View](https://github.com/webERP-team/webERP/commit/9afe079de81088e1aa9b30f2bd6eed2886068a34) |   |
 | Sort the bank accounts | Changed | Rafael Chacón | 2018-12-18 | [View](https://github.com/webERP-team/webERP/commit/79d88db4ea04099473edfc7f1ddd84deb4ad500f) |   |

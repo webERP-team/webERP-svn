@@ -6,7 +6,7 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/DefinePOClass.php');
 
 if (!isset($_GET['OrderNo']) AND !isset($_POST['OrderNo'])) {
-	$Title = _('Select a Purchase Order');
+	$Title = _('Select a purchase order');
 	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg(_('Select a Purchase Order Number to Print before calling this page'), 'error');

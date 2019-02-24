@@ -1,11 +1,12 @@
-/* Default theme for WebERP by . */
-/*	Design guidelines:
+/* Default theme for WebERP by ...
+
+Design guidelines:
 	Fonts are 10px hight.
 	Icons are 16px x 16px size.
 */
 
 body {
-	background-color:#ccd;
+	background-color:#ccccdd;
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
 	margin:0;
@@ -20,11 +21,11 @@ button img {
 }
 
 a {
-	color:blue;
+	color:#0000ff;
 	text-decoration:none;
 }
 a:hover {
-	color:blue;
+	color:#0000ff;
 	background-color:transparent;
 	text-decoration:underline;
 	/* Tag selector for mouse over link. */
@@ -58,7 +59,7 @@ table.selection {
 
 th {
 	background-color:#b06161;
-	color:white;
+	color:#ffffff;
 	font-weight:normal;
 }
 
@@ -98,7 +99,7 @@ td {
 }
 
 td.select {
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 
 td a img {
@@ -115,10 +116,6 @@ div.centre {
 
 input {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
-}
-
-input.number {
-	text-align:right;
 }
 
 input.image {
@@ -160,15 +157,15 @@ tr.striped_row:nth-of-type(odd) {
 	transition:opacity 0.6s; /* 600ms to fade out */
 }
 .error {
-	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
+	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
 	border:1px solid #f5aca6;
 }
 .success {
-	background:#e9ffd9 url('images/message-success.png') no-repeat 10px 50%;
+	background:#e9ffd9 url('images/message-success.svg') no-repeat 10px 50%;
 	border:1px solid #a6ca8a;
 }
 .info {
-	background:#e3f7fc url('images/message-info.png') no-repeat 10px 50%;
+	background:#e3f7fc url('images/info.svg') no-repeat 10px 50%;
 	border:1px solid #8ed9f6;
 }
 .warn {
@@ -201,7 +198,7 @@ tr.striped_row:nth-of-type(odd) {
 .dpTD {
 	border:0;
 	width:20px;
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 	text-align:right;
 	cursor:pointer;
 }
@@ -217,7 +214,7 @@ tr.striped_row:nth-of-type(odd) {
 .dpTDHover {
 	border:0;
 	width:20px;
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 	text-align:right;
 	cursor:pointer;
 }
@@ -233,7 +230,7 @@ tr.striped_row:nth-of-type(odd) {
 .tableheader {
 	font-weight:normal;
 	background-color:#800000;
-	color:white;
+	color:#ffffff;
 }
 
 .notavailable {
@@ -274,7 +271,7 @@ textarea.texterror {
 
 .OsRow {
 	background-color:#234567;
-	color:white;
+	color:#ffffff;
 }
 
 /*** CANVAS ***/
@@ -286,13 +283,13 @@ textarea.texterror {
 /*** HEADER ***/
 
 #HeaderDiv {
-	color:white;
+	color:#ffffff;
 	/*background:#588BB6;*/
 	/*overflow:hidden;*/
 }
 
 #HeaderDiv a {
-	color:white;
+	color:#ffffff;
 }
 
 #HeaderDiv a:hover {
@@ -330,8 +327,8 @@ textarea.texterror {
 }
 
 #QuickMenuDiv li {
-	display:inline;
 	border-left:thin ridge #588BB6;
+	display:inline-block;
 	padding:14px 12px;
 }
 
@@ -343,7 +340,7 @@ textarea.texterror {
 }
 
 #BodyWrapDiv {
-	background:#CCCCCC;
+	background:#cccccc;
 	padding-top:1px;
 	/*border:thin solid #ccc;*/
 	/*clear:both;*/
@@ -387,7 +384,7 @@ textarea.texterror {
 }
 
 .main_menu_selected {
-	background-color:white;
+	background-color:#ffffff;
 	padding:2px;
 }
 
@@ -414,11 +411,11 @@ textarea.texterror {
 }
 
 #SubMenuDiv a {
-	color:blue;
+	color:#0000ff;
 }
 
 #SubMenuDiv a:hover {
-	color:blue;
+	color:#0000ff;
 	text-decoration:underline;
 }
 
@@ -431,12 +428,12 @@ textarea.texterror {
 .menu_group_headers {
 	text-align:center;
 	color:#000000;
-	background:#eee;
+	background:#eeeeee;
 	border-bottom:thin solid #000000;
 }
 
 .menu_group_item {
-	background-color:white;
+	background-color:#ffffff;
 	padding:2px;
 }
 
@@ -449,7 +446,7 @@ textarea.texterror {
 #InquiriesDiv div { /* header for standard reports/forms, custom reports */
 	border-top:thin solid #000000;
 	border-bottom:thin solid #000000;
-	background:#eee;
+	background:#eeeeee;
 	color:#000000;
 	padding:2px;
 }
@@ -459,7 +456,7 @@ textarea.texterror {
 #FooterDiv {
 	clear:both;
 	overflow:hidden;
-	color:#CCCCCC;
+	color:#cccccc;
 	padding:3px 2px;
 }
 
@@ -514,39 +511,37 @@ textarea.texterror {
 	/* Class selector for field help text. */
 }
 .page_help_text {
-	background:#d3d3d3 url(images/help.png) top left no-repeat;
+	background-color:#d3d3d3;
+	background-image:url(images/question.svg);
+	background-position:2px 2px;
+	background-repeat:no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
-	padding-left:10px;
+	padding-left:20px;
+	padding-right:2px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
-	background:#d3d3d3 url(images/info.svg) top left no-repeat;
+	background-color:#d3d3d3;
+	background-image:url(images/info.svg);
+	background-position:2px 2px;
+	background-repeat:no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
-	padding-left:10px;
+	padding-left:20px;
+	padding-right:2px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {
@@ -559,19 +554,22 @@ textarea.texterror {
 .sheet {
 	background-color:#ffffff;
 	border:0;
+	box-shadow:26px 16px 8px 0 rgba(0, 0, 0, 0.5);
 	color:#000000;
 	margin:5%;
 	padding:5%;
-	/* Class selector for sheet preview. */
+	/* Class selector for sheet style preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */
 
 
-/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */
+/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.php and use the following sections. */
 
 @media only screen and (max-device-width:767px) {
 	/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
+	.field_help_text {display:none;/* Hides field help text. */}
+	.page_help_text {display:none;/* Hides page help text. */}
 }
 
 @media only screen and (min-device-width:768px) and (max-device-width:991px) {

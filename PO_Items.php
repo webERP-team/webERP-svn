@@ -1,4 +1,6 @@
 <?php
+// PO_Items.php
+// Entry of a purchase order items - allows entry of items with lookup of currency cost from Purchasing Data previously entered also allows entry of nominal items against a general ledger code if the AP is integrated to the GL.
 
 
 include('includes/DefinePOClass.php');
@@ -711,12 +713,12 @@ if (isset($_POST['UploadFile'])) {
 				$ItemCode = $FileRow[0];
 				$Quantity = $FileRow[1];
 				$AlreadyOnThisOrder = 0;
-	
+
 				if ($_SESSION['PO_AllowSameItemMultipleTimes'] ==false){
 					if (count($_SESSION['PO'.$identifier]->LineItems)!=0){
-	
+
 						foreach ($_SESSION['PO'.$identifier]->LineItems AS $OrderItem) {
-	
+
 						/* do a loop round the items on the order to see that the item is not already on this order */
 							if (($OrderItem->StockID == $ItemCode) AND ($OrderItem->Deleted==false)) {
 								$AlreadyOnThisOrder = 1;
@@ -744,7 +746,7 @@ if (isset($_POST['UploadFile'])) {
 					$ItemResult = DB_query($sql,$ErrMsg,$DbgMsg);
 					if (DB_num_rows($ItemResult)==1){
 						$ItemRow = DB_fetch_array($ItemResult);
-	
+
 						$sql = "SELECT price,
 									conversionfactor,
 									supplierdescription,
@@ -763,13 +765,13 @@ if (isset($_POST['UploadFile'])) {
 										purchdata.suppliers_partno,
 										purchdata.leadtime
 								ORDER BY latesteffectivefrom DESC";
-	
+
 						$ErrMsg = _('The purchasing data for') . ' ' . $ItemCode . ' ' . _('could not be retrieved because');
 						$DbgMsg = _('The SQL used to retrieve the purchasing data but failed was');
 						$PurchDataResult = DB_query($sql,$ErrMsg,$DbgMsg);
 						if (DB_num_rows($PurchDataResult)>0){ //the purchasing data is set up
 							$PurchRow = DB_fetch_array($PurchDataResult);
-	
+
 							/* Now to get the applicable discounts */
 							$sql = "SELECT discountpercent,
 											discountamount
@@ -778,7 +780,7 @@ if (isset($_POST['UploadFile'])) {
 									AND effectivefrom <='" . Date('Y-m-d') . "'
 									AND effectiveto >='" . Date('Y-m-d') . "'
 									AND stockid = '". $ItemCode . "'";
-	
+
 							$ItemDiscountPercent = 0;
 							$ItemDiscountAmount = 0;
 							$ErrMsg = _('Could not retrieve the supplier discounts applicable to the item');
@@ -820,7 +822,7 @@ if (isset($_POST['UploadFile'])) {
 							$LeadTime=1;
 							$DeliveryDate = $_SESSION['PO'.$identifier]->DeliveryDate;
 						}
-	
+
 						$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 																$ItemCode,
 																0, /*Serialised */
@@ -873,7 +875,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	if (isset($_SESSION['PO'.$identifier]->OrderNo)) {
 		echo  ' ' . _('Purchase Order') .' '. $_SESSION['PO'.$identifier]->OrderNo ;
 	}
-	echo '<br /><b>' . _(' Order Summary') . '</b></p>';
+	echo '<br /><b>', _('Order Summary'), '</b></p>';
 	echo '<table cellpadding="2" class="selection">
 		<thead>
 			<tr>
@@ -934,9 +936,10 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	$DisplayTotal = locale_number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 	echo '</tbody>
 		<tfoot>
-			<tr>
-				<td colspan="9" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>
-						<td class="number"><b>' . $DisplayTotal . '</b></td>
+			<tr>',
+/*				'<td colspan="9" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>',*/
+				'<td class="number" colspan="9">', _('Total Excluding Tax'), '</td>',
+				'<td class="number"><b>', $DisplayTotal, '</b></td>
 			</tr>
 		</tfoot>
 		</table>

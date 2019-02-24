@@ -1,5 +1,5 @@
 <?php
-
+// GLAccountCSV.php
 
 
 include ('includes/session.php');
@@ -11,13 +11,13 @@ $BookMark = 'GLAccountCSV';
 include('includes/header.php');
 include('includes/GLPostings.inc');
 
-if (isset($_POST['Period'])){
+if (isset($_POST['Period'])) {
 	$SelectedPeriod = $_POST['Period'];
-} elseif (isset($_GET['Period'])){
+} elseif (isset($_GET['Period'])) {
 	$SelectedPeriod = $_GET['Period'];
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath, '/css/', $Theme, '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
 
 echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
@@ -40,8 +40,8 @@ $sql = "SELECT chartmaster.accountcode,
 		ORDER BY chartmaster.accountcode";
 $AccountsResult = DB_query($sql);
 $i=0;
-while ($myrow=DB_fetch_array($AccountsResult)){
-	if(isset($_POST['Account'][$i]) AND $myrow['accountcode'] == $_POST['Account'][$i]){
+while ($myrow=DB_fetch_array($AccountsResult)) {
+	if(isset($_POST['Account'][$i]) AND $myrow['accountcode'] == $_POST['Account'][$i]) {
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 		$i++;
 	} else {
@@ -56,8 +56,8 @@ $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC"
 $Periods = DB_query($sql);
 $id=0;
 
-while ($myrow=DB_fetch_array($Periods)){
-	if (isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
+while ($myrow=DB_fetch_array($Periods)) {
+	if (isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]) {
 		echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 		$id++;
 	} else {
@@ -76,8 +76,8 @@ $SQL = "SELECT tagref,
 
 $result=DB_query($SQL);
 echo '<option value="0">0 - ' . _('All tags') . '</option>';
-while ($myrow=DB_fetch_array($result)){
-	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
+while ($myrow=DB_fetch_array($result)) {
+	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']) {
 	   echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	} else {
 	   echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
@@ -93,20 +93,20 @@ echo '</table><br />
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
-if (isset($_POST['MakeCSV'])){
+if (isset($_POST['MakeCSV'])) {
 
-	if (!isset($SelectedPeriod)){
+	if (!isset($SelectedPeriod)) {
 		prnMsg(_('A period or range of periods must be selected from the list box'),'info');
 		include('includes/footer.php');
 		exit;
 	}
-	if (!isset($_POST['Account'])){
+	if (!isset($_POST['Account'])) {
 		prnMsg(_('An account or range of accounts must be selected from the list box'),'info');
 		include('includes/footer.php');
 		exit;
 	}
 
-	if (!file_exists($_SESSION['reports_dir'])){
+	if (!file_exists($_SESSION['reports_dir'])) {
 		$Result = mkdir('./' . $_SESSION['reports_dir']);
 	}
 
@@ -114,13 +114,13 @@ if (isset($_POST['MakeCSV'])){
 
 	$fp = fopen($FileName,'w');
 
-	if ($fp==FALSE){
+	if ($fp==FALSE) {
 		prnMsg(_('Could not open or create the file under') . ' ' . $FileName,'error');
 		include('includes/footer.php');
 		exit;
 	}
 
-	foreach ($_POST['Account'] as $SelectedAccount){
+	foreach ($_POST['Account'] as $SelectedAccount) {
 		/*Is the account a balance sheet or a profit and loss account */
 		$SQL = "SELECT chartmaster.accountname,
 								accountgroups.pandl
@@ -130,7 +130,7 @@ if (isset($_POST['MakeCSV'])){
 		$result = DB_query($SQL);
 		$AccountDetailRow = DB_fetch_row($result);
 		$AccountName = $AccountDetailRow[1];
-		if ($AccountDetailRow[1]==1){
+		if ($AccountDetailRow[1]==1) {
 			$PandLAccount = True;
 		}else{
 			$PandLAccount = False; /*its a balance sheet account */
@@ -194,7 +194,7 @@ if (isset($_POST['MakeCSV'])){
 			$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 			$RunningTotal =$ChartDetailRow['bfwd'];
-			if ($RunningTotal < 0 ){
+			if ($RunningTotal < 0 ) {
 				fwrite($fp,$SelectedAccount . ', '  .$FirstPeriodSelected . ', ' . _('Brought Forward Balance') . ',,,,' . -$RunningTotal . "\n");
 			} else {
 				fwrite($fp,$SelectedAccount . ', '  .$FirstPeriodSelected . ', ' . _('Brought Forward Balance') . ',,,' . $RunningTotal . "\n");
@@ -205,8 +205,8 @@ if (isset($_POST['MakeCSV'])){
 
 		while ($myrow=DB_fetch_array($TransResult)) {
 
-			if ($myrow['periodno']!=$PeriodNo){
-				if ($PeriodNo!=-9999){ //ie its not the first time around
+			if ($myrow['periodno']!=$PeriodNo) {
+				if ($PeriodNo!=-9999) { //ie its not the first time around
 					/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
 					$sql = "SELECT bfwd,
 									actual,
@@ -236,27 +236,27 @@ if (isset($_POST['MakeCSV'])){
 			$tagsql="SELECT tagdescription FROM tags WHERE tagref='".$myrow['tag'] . "'";
 			$tagresult=DB_query($tagsql);
 			$tagrow = DB_fetch_array($tagresult);
-			if ($myrow['amount']<0){
+			if ($myrow['amount']<0) {
 				fwrite($fp, $SelectedAccount . ',' . $myrow['periodno'] . ', ' . $myrow['typename'] . ',' . $myrow['typeno'] . ',' . $FormatedTranDate . ',,' . -$myrow['amount'] . ',' . $myrow['narrative'] . ',' . $tagrow['tagdescription']. "\n");
 			} else {
 				fwrite($fp, $SelectedAccount . ',' . $myrow['periodno'] . ', ' . $myrow['typename'] . ',' . $myrow['typeno'] . ',' . $FormatedTranDate . ',' . $myrow['amount'] . ',,' . $myrow['narrative'] . ',' . $tagrow['tagdescription']. "\n");
 			}
 		} //end loop around GLtrans
-		if ($PeriodTotal <>0){
-			if ($PeriodTotal < 0){
+		if ($PeriodTotal <>0) {
+			if ($PeriodTotal < 0) {
 				fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,,' . -$PeriodTotal. "\n");
 			} else {
 				fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,' . $PeriodTotal. "\n");
 			}
 		}
-		if ($PandLAccount==True){
-			if ($RunningTotal < 0){
+		if ($PandLAccount==True) {
+			if ($RunningTotal < 0) {
 				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Total Period Movement') . ',,,,' . -$RunningTotal . "\n");
 			} else {
 				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Total Period Movement') . ',,,' . $RunningTotal . "\n");
 			}
 		} else { /*its a balance sheet account*/
-			if ($RunningTotal < 0){
+			if ($RunningTotal < 0) {
 				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Balance C/Fwd') . ',,,,' . -$RunningTotal . "\n");
 			} else {
 				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Balance C/Fwd') . ',,,' . $RunningTotal . "\n");

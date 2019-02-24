@@ -1,4 +1,5 @@
 <?php
+// CustomerTransInquiry.php
 
 include('includes/session.php');
 $Title = _('Customer Transactions Inquiry');
@@ -54,7 +55,7 @@ echo '<td>' . _('From') . ':</td>
 	</table>
 	<br />
 	<div class="centre">
-		<input name="ShowResults" tabindex="4" type="submit" value="' . _('Show Transactions') . '" />
+		<input name="ShowResults" tabindex="4" type="submit" value="' . _('Show transactions') . '" />
 	</div>
     </div>
 	</form>';
