@@ -95,6 +95,10 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	if  ($_POST['TransType']!='All')  {
 		$sql .= " AND type = " . $_POST['TransType'];
 	}
+	if($_POST['SupplierNo'] != "")
+	{
+		$sql .= " AND supptrans.supplierno LIKE '%".$_POST['SupplierNo']."%'";
+	}
 	$sql .=  " ORDER BY id";
 
    $TransResult = DB_query($sql);
