@@ -236,7 +236,8 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 											deliverydate,
 											qtyrecd,
 											supplierid,
-											stdcostunit)
+											stdcostunit,
+											completed)
 									VALUES ('" . $GRN . "',
 										'" . $OrderLine->PODetailRec . "',
 										'" . $OrderLine->StockID . "',
@@ -244,7 +245,8 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 										'" . FormatDateForSQL($DeliveryDate) . "',
 										'" . $OrderLine->ReceiveQty . "',
 										'" . $_SESSION['PO'.$identifier]->SupplierID . "',
-										'" . $CurrentStandardCost . "')";
+										'" . $CurrentStandardCost . "',
+										'1')";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('A GRN record could not be inserted') . '. ' . _('This receipt of goods has not been processed because');
 					$DbgMsg =  _('The following SQL to insert the GRN record was used');
