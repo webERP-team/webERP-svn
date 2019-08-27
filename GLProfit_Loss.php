@@ -137,13 +137,13 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 				</td>
 			</tr>
 			<tr>
-				<td>', _('Select Period'), ':</td>
+				<td>', _('Select Period'), '</td>
 				<td>', ReportPeriodList($_POST['Period'], array('l', 't')), fShowFieldHelp(_('Select a period instead of using the beginning and end of the reporting period.')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 				'</td>
 			</tr>';
 
 	echo '<tr>
-			<td>' . _('Detail Or Summary').':</td>
+			<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
 			<td><select name="ShowDetail">
 					<option value="Summary">' . _('Summary') . '</option>
 					<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>

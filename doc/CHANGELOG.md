@@ -15,6 +15,27 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+
+## [v4.15.1] - 2019-06-16
+
+| Description | Type | Author | Date | Details | Ref |
+|:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| index.php: Properly check return from database before showing report links | Fixed | Tim Schofield | 2019-06-09 | [View](https://github.com/webERP-team/webERP/commit/44f680c34d76e2ae794e678335e5310ebad37aad) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8345) |
+| GLTransInquiry.php: Fix to previous commit - ovdiscount is not a field in supptrans table, only debtotrans | Fixed | Tim Schofield | 2019-05-25 | [View](https://github.com/webERP-team/webERP/commit/71db91d6f4fd67b65025a713c3d5c30ab99e59a3) |   |
+| Credit_Invoice.php: Enable the shipping to be reduced to zero in case where the original invoice included a value for shipping costs. (reported in the forums by HDeriauFF) | Changed | Tim Schofield | 2019-05-04 | [View](https://github.com/webERP-team/webERP/commit/20f24e86d43d90bf584e6c205e548bffab287711) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8339&pid=15697#pid15697) |
+| CustomerAllocations.php: Allow user to perform allocation on receipts with amount zero but discount is non zero | Changed | express achiever | 2019-04-18 | [View](https://github.com/webERP-team/webERP/commit/c3498d37f2da76238cc9113f61ff9992c6be9956) |   |
+| BOMs.php: Incorporate selection box to either show all levels of a BOM or just the top level | Changed | Tim Schofield | 2019-04-14 | [View](https://github.com/webERP-team/webERP/commit/faa70d7c68bfb5b761e504e2a2c2efeae5f3014c) |   |
+| Include the branch name in the inquiry (with standardized code updates) | Added/Changed | Tim Schofield/HDeriauFF | 2019-04-14 | [View](https://github.com/webERP-team/webERP/commit/14ccc08f8cdd4063f0971c891af6b877adb4101a) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8325) |
+| New GL journal templating system | Added | Tim Schofield | 2019-04-05 | [View](https://github.com/webERP-team/webERP/commit/621416105ff9ffe92f7e30a33687f81c224f5b82) |   |
+| Fix gettext calls and standardize code | Fixed | Paul Becker | 2019-04-05 | [View](https://github.com/webERP-team/webERP/commit/b902c3eba66cb265e81dcedc8fc9574e0915e6a2) |   |
+| SupplierTransInquiry.php: Fix sql search by supplier id condition | Fixed | express achiever | 2019-03-26 | [View](https://github.com/webERP-team/webERP/commit/1074421d4aa01dfea24462b83b1ae735d3165a70) |   |
+| GLTransInquiry.php: Fix where discount is entered at payment but not included in the report line item calculation | Fixed | express achiever | 2019-03-24 | [View](https://github.com/webERP-team/webERP/commit/dd1895f74dab21ac30222bc11ee6379d6316a48e) |   |
+| StockStatus.php: Table formatting issue | Fixed | express achiever | 2019-03-24 | [View](https://github.com/webERP-team/webERP/commit/0e982f34da72806e8d556126c6be7eeeaee364cc) |   |
+| French translation: Minor translation update | Changed | Rafael Chacón | 2019-03-21 | [View](https://github.com/webERP-team/webERP/commit/6b2fb4da40620147048502192de144e8d7e198af) |   |
+| Standardize code: To various files | Changed | Rafael Chacón | 2019-03-18 | [View](https://github.com/webERP-team/webERP/commit/1119ec935d2cf0783ea52f8514f8275e5ed2b1bd) |   |
+| Code updates: To various files | Changed | Rafael Chacón | 2019-03-18 | [View](https://github.com/webERP-team/webERP/commit/a632a84b6bf483f06fcb2e50f434bde1b4ab8c67) |   |
+| GLStatements.php: Script updates before upload | Changed | Rafael Chacón | 2019-03-14 | [View](https://github.com/webERP-team/webERP/commit/b872bec3de867e2227315f4346a5e8c5972ad99a) |   |
+| Rebuild language files and a few minor code changes | Changed | Rafael Chacón | 2019-02-24 | [View](https://github.com/webERP-team/webERP/commit/df22cd372c468f5e27646bde37d601e17e1f4240) |   |
 | Replace texts with blanks with trimmed text | Changed | Rafael Chacón | 2019-02-21 | [View](https://github.com/webERP-team/webERP/commit/972c7c145649af2b141d0b17756a5fb1a0a7ed7e) |   |
 | Fix country name in Currencies.php | Fixed | Rafael Chacón | 2019-02-20 | [View](https://github.com/webERP-team/webERP/commit/c6f4d97d496d3ee5289e7ef577b536e50782195a) |   |
 | Fix height in #QuickMenuDiv li | Fixed | Rafael Chacón | 2019-02-20 | [View](https://github.com/webERP-team/webERP/commit/c8cb323b16105866c9d576b0d69c2969cee94962) |   |
@@ -373,7 +394,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 | Add meta viewport for initial-scale=1 for working css in small devices. |  | RChacon | 2017-06-21 |  |  |
 
 
-[Unreleased]: https://github.com/webERP-team/webERP/compare/v4.15...HEAD
+[Unreleased]: https://github.com/webERP-team/webERP/compare/v4.15.1...HEAD
+[v4.15.1]: https://github.com/webERP-team/webERP/compare/v4.15...v4.15.1
 [v4.15]: https://github.com/webERP-team/webERP/compare/v4.14.1...v4.15
 [v4.14.1]: https://github.com/webERP-team/webERP/compare/v4.14...v4.14.1
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html

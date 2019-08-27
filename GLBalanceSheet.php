@@ -82,7 +82,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	echo '</select></td>
 		</tr>',
 		'<tr>
-			<td><label for="ShowDetail">', _('Detail Or Summary'), ':</label></td>
+			<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
 			<td><select name="ShowDetail" required="required" title="', _('Selecting Summary will show on the totals at the account group level'), '" >';
 	if($_POST['ShowDetail'] == 'Summary') {
 		echo	'<option selected="selected" value="Summary">', _('Summary'), '</option>

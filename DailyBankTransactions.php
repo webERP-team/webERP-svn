@@ -1,7 +1,6 @@
 <?php
 // DailyBankTransactions.php
 // Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen.
-
 include ('includes/session.php');
 $Title = _('Bank Transactions Inquiry');
 $ViewTopic = 'GeneralLedger';
@@ -40,13 +39,10 @@ if (!isset($_POST['Show'])) {
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
 	$AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/bank.png" title="', // Icon image.
-		$Title, '" /> ', // Icon title.
-		$Title, '</p>',// Page title.
-		'<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">',
-		'<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />',
-		'<table>
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/bank.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>', // Page title.
+	'<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">', '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />', '<table>
 			<tr>
 				<td>', _('Bank Account'), ':</td>
 				<td><select name="BankAccount">';
@@ -64,9 +60,7 @@ if (!isset($_POST['Show'])) {
 			if (!isset($_POST['BankAccount']) and $MyRow['currcode'] == $_SESSION['CompanyRecord']['currencydefault']) {
 				$_POST['BankAccount'] = $MyRow['accountcode'];
 			}
-			echo '<option',
-				((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : '' ),
-				' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
+			echo '<option', ((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : ''), ' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 		}
 		echo '</select>
 				</td>
@@ -155,7 +149,7 @@ if (!isset($_POST['Show'])) {
 		echo '<table>
 				<thead>
 					<tr>
-						<th>' . ('Date') . '</th>
+						<th>' . _('Date') . '</th>
 						<th>' . _('Transaction type') . '</th>
 						<th>' . _('Number') . '</th>
 						<th>' . _('Type') . '</th>

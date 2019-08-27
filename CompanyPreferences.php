@@ -1,10 +1,11 @@
 <?php
-/* Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used etc. */
+// CompanyPreferences.php
+// Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used etc.
 
 include('includes/session.php');
-$Title = _('Company Preferences');
 $ViewTopic= 'CreatingNewSystem';
 $BookMark = 'CompanyParameters';
+$Title = _('Company Preferences');
 include('includes/header.php');
 
 if (isset($Errors)) {
@@ -213,12 +214,12 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Telephone Number') . ':</td>
-		<td><input '.(in_array('Telephone',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="10" type="tel" name="Telephone" required="required" title="' . _('Enter the main telephone number of the company registered office. This will appear on invoices and statements.') . '" size="26" maxlength="25" value="' . $_POST['Telephone'] . '" /></td>
+		<td><input ', (in_array('Telephone',$Errors) ?  'class="inputerror"' : '' ), ' maxlength="25" name="Telephone" required="required" size="26" tabindex="10" type="tel" title="', _('Enter the main telephone number of the company registered office. This will appear on invoices and statements.'), '" value="', $_POST['Telephone'], '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Facsimile Number') . ':</td>
-		<td><input '.(in_array('Fax',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="11" type="text" name="Fax" size="26" maxlength="25" value="' . $_POST['Fax'] . '" /></td>
+		<td><input ', (in_array('Fax',$Errors) ?  'class="inputerror"' : '' ), ' maxlength="25" name="Fax" size="26" tabindex="11" type="tel" value="', $_POST['Fax'], '" /></td>
 	</tr>';
 
 echo '<tr>

@@ -114,7 +114,7 @@ if ((! isset($_POST['PeriodFrom'])
 				</td>
 			</tr>
 			<tr>
-				<td>', _('Select Period'), ':</td>',
+				<td>', _('Select Period'), '</td>',
 				'<td>', ReportPeriodList($_POST['Period'], array('l', 't')), fShowFieldHelp(_('Select a period instead of using the beginning and end of the reporting period.')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 				'</td>
 			</tr>',

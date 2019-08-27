@@ -201,6 +201,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		} else {
 			$Available = $myrow['quantity'] - $DemandQty;
 		}
+
+		echo '<tr class="striped_row">';
 		if ($myrow['canupd']==1) {
 			echo '<td>' . $myrow['locationname'] . '</td>
 				<td><input type="text" name="BinLocation' . $myrow['loccode'] . '" value="' . $myrow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
@@ -209,8 +211,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 				<td> ' . $myrow['bin'] . '</td>';
 		}
 
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
+		printf('<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>

@@ -100,7 +100,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	echo '<tr>
-			<td>', _('Select Period'), ':</td>
+			<td>', _('Select Period'), '</td>
 			<td>', ReportPeriodList($_POST['Period'], array('l', 't')), '</td>
 		</tr>';
 

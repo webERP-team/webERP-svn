@@ -1,18 +1,20 @@
 <?php
-/* Steve Kitchen */
-/* Up front menu for language file maintenance */
+//	Z_poAdmin.php
+//	Allows for a gettext language po file to be administered
+/*	Steve Kitchen
+	Up front menu for language file maintenance */
 
 //$PageSecurity = 15;
 
 include ('includes/session.php');
-$Title = _('UTILITY PAGE') . ' ' . _('that helps maintain language files');// _('Maintain Language Files')
-$ViewTopic = 'SpecialUtilities';// Filename in ManualContents.php's TOC.
-$BookMark = 'Z_poAdmin';// Anchor's id in the manual's html document.
+$ViewTopic = 'SpecialUtilities';
+$BookMark = 'Z_poAdmin';
+$Title = _('Maintain Language Files');
 include('includes/header.php');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title="' .
-		_('Maintain Language Files') . '" />' . ' ' .
-		_('Maintain Language Files') . '</p>';
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 /* Check if we have gettext - we're useless without it... */
 

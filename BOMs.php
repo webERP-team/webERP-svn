@@ -29,7 +29,9 @@ function display_children($Parent, $Level, &$BOMTree) {
 				// call this function again to display this
 				// child's children
 				++$i;
-				display_children($MyRow['component'], $Level + 1, $BOMTree);
+				if (isset($_POST['ShowAllLevels']) and $_POST['ShowAllLevels'] == 'Yes') {
+					display_children($MyRow['component'], $Level + 1, $BOMTree);
+				}
 			} else {
 				prnMsg(_('The component and the parent is the same'), 'error');
 				echo $MyRow['component'], '<br/>';
@@ -153,7 +155,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 				<td class="noprint">', ConvertSQLDate($MyRow['effectiveto']), '</td>
 				<td class="noprint">', $AutoIssue, '</td>
 				<td class="number noprint">', $QuantityOnHand, '</td>
-				<td class="noprint"><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($Parent), '&SelectedComponent=', urlencode($MyRow['component']), '&Location=', urlencode($MyRow['loccode']), '&WorkCentre=', urlencode($MyRow['workcentrecode']), '&Edit=Yes">', _('Edit'), '</a></td>';
+				<td class="noprint"><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($Parent), '&SelectedComponent=', urlencode($MyRow['component']), '&Location=', urlencode($MyRow['loccode']), '&WorkCentre=', urlencode($MyRow['workcentrecode']), '&ShowAllLevels=', $_POST['ShowAllLevels'], '&Edit=Yes">', _('Edit'), '</a></td>';
 
 		if ($MyRow['mbflag'] == 'B' or $MyRow['mbflag'] == 'K' or $MyRow['mbflag'] == 'D') {
 			echo '<td class="noprint">
@@ -161,12 +163,12 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 				</td>';
 		} else {
 			echo '<td class="noprint">
-					<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($MyRow['component']), '">' . _('Drill Down') . '</a>
+					<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($MyRow['component']), '&ShowAllLevels=', $_POST['ShowAllLevels'], '">' . _('Drill Down') . '</a>
 				</td>';
 		}
 
 		echo '<td class="noprint">
-				<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedParent=', urlencode($Parent), '&SelectedComponent=', urlencode($MyRow['component']), '&delete=1&ReSelect=', urlencode($UltimateParent), '&Location=', urlencode($MyRow['loccode']), '&WorkCentre=', urlencode($MyRow['workcentrecode']), '" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from this bill of materials?') . '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+				<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedParent=', urlencode($Parent), '&SelectedComponent=', urlencode($MyRow['component']), '&delete=1&ReSelect=', urlencode($UltimateParent), '&Location=', urlencode($MyRow['loccode']), '&WorkCentre=', urlencode($MyRow['workcentrecode']), '&ShowAllLevels=', $_POST['ShowAllLevels'], '" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from this bill of materials?') . '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
 				</tr><tr><td colspan="11" style="text-indent:', $TextIndent, ';">', $MyRow['remark'], '</td>
 			 </tr>';
 
@@ -178,6 +180,15 @@ if (isset($_GET['SelectedParent'])) {
 	$SelectedParent = $_GET['SelectedParent'];
 } else if (isset($_POST['SelectedParent'])) {
 	$SelectedParent = $_POST['SelectedParent'];
+}
+
+if (isset($_GET['ShowAllLevels'])) {
+	$_POST['ShowAllLevels'] = $_GET['ShowAllLevels'];
+}
+
+// Default behaviour is to show all levels
+if (!isset($_POST['ShowAllLevels'])) {
+	$_POST['ShowAllLevels'] = 'Yes';
 }
 
 if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['Previous'])) {
@@ -425,6 +436,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 			</tr>';
 	}
 
+	echo '<input type="hidden" name="ShowAllLevels" value="', $_POST['ShowAllLevels'], '" />';
 	echo '<input type="hidden" name="SelectedParent" value="', $SelectedParent, '" />';
 	echo '<input type="hidden" name="SelectedComponent" value="', $SelectedComponent, '" />';
 
@@ -1073,8 +1085,22 @@ if (!isset($SelectedParent)) {
 			<tr>
 				<td>', _('Enter extract of the Stock Code'), '</td>
 				<td><input type="text" autofocus="autofocus" name="StockCode" size="15" maxlength="18" /></td>
-			</tr>
-		</table>';
+			</tr>';
+	echo '<tr>
+			<td><label for="ShowAllLevels">', _('Show all levels'), '</label></td>
+			<td><select name="ShowAllLevels">';
+	if (isset($_POST['ShowAllLevels']) and $_POST['ShowAllLevels'] == 'Yes') {
+		echo '<option selected="selected" value="Yes">', _('Yes'), '</option>';
+		echo '<option value="No">', _('No'), '</option>';
+	} else {
+		echo '<option value="Yes">', _('Yes'), '</option>';
+		echo '<option selected="selected" value="No">', _('No'), '</option>';
+	}
+
+	echo '</select>
+		</td>
+	</tr>';
+	echo '</table>';
 	echo '<div class="centre">
 			<input type="submit" name="Search" value="', _('Search Now'), '" />
 		</div>';

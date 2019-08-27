@@ -1,6 +1,9 @@
 <?php
-// Currencies.php
-// Defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here.
+//	Currencies.php
+//	Defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here.
+/*
+	The country field is unneeded because the country_code is included inside the currency_code (firsts two letters).
+*/
 
 include('includes/session.php');
 $ViewTopic = 'Setup';
@@ -8,9 +11,9 @@ $BookMark = 'Currencies';
 $Title = _('Currencies Maintenance');
 include('includes/header.php');
 
-include('includes/CountriesArray.php');// To get the country name from the country code.
-include('includes/CurrenciesArray.php');// To get the currency name from the currency code.
-include('includes/SQL_CommonFunctions.inc');
+include_once('includes/CountriesArray.php');// To get the country name from the country code.
+include_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
+include_once('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['SelectedCurrency'])) {
 	$SelectedCurrency = $_GET['SelectedCurrency'];
@@ -307,9 +310,9 @@ or deletion of the records*/
 	echo '<table class="selection">';
 	echo '<tr>
 			<th>&nbsp;</th>
+			<th>' . _('Country') . '</th>
 			<th>' . _('ISO4217 Code') . '</th>
 			<th>' . _('Currency Name') . '</th>
-			<th>' . _('Country') . '</th>
 			<th>' . _('Hundredths Name') . '</th>
 			<th>' . _('Decimal Places') . '</th>
 			<th>' . _('Show in webSHOP')  . '</th>
@@ -346,9 +349,9 @@ or deletion of the records*/
 
 		if ($MyRow['currabrev']!=$FunctionalCurrency) {
 			echo '	<td><img alt="" src="', $ImageFile, '" /></td>
+					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
 					<td>', $MyRow['currabrev'], '</td>
 					<td>', $CurrencyName[$MyRow['currabrev']], '</td>
-					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
 					<td>', $MyRow['hundredsname'], '</td>
 					<td class="number">', locale_number_format($MyRow['decimalplaces'], 0), '</td>
 					<td class="centre">', $ShowInWebText, '</td>
@@ -361,9 +364,9 @@ or deletion of the records*/
 				</tr>';
 		} else {
 			echo '	<td><img alt="" src="', $ImageFile, '" /></td>
+					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
 					<td>', $MyRow['currabrev'], '</td>
 					<td>', $CurrencyName[$MyRow['currabrev']], '</td>
-					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
 					<td>', $MyRow['hundredsname'], '</td>
 					<td class="number">', locale_number_format($MyRow['decimalplaces'], 0), '</td>
 					<td class="centre">', $ShowInWebText, '</td>
@@ -395,19 +398,19 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedCurrency) AND $SelectedCurrency!='') {
 		//editing an existing currency
 
-		$sql = "SELECT	currabrev,
-						country,
-						hundredsname,
-						decimalplaces,
-						rate,
-						webcart
+		$SQL = "SELECT
+					currabrev,
+					country,
+					hundredsname,
+					decimalplaces,
+					rate,
+					webcart
 				FROM currencies
 				WHERE currabrev='" . $SelectedCurrency . "'";
 
 		$ErrMsg = _('An error occurred in retrieving the currency information');;
-		$result = DB_query($sql, $ErrMsg);
-
-		$MyRow = DB_fetch_array($result);
+		$Result = DB_query($SQL, $ErrMsg);
+		$MyRow = DB_fetch_array($Result);
 
 		$_POST['Abbreviation'] = $MyRow['currabrev'];
 		$_POST['Country']  = $MyRow['country'];

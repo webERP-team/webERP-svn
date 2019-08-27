@@ -83,9 +83,9 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
 		'<table class="selection">', // Content of the header and footer of the input table:
-		'<thead>
+/*		'<thead>
 			<tr><th colspan="2">', _('Report Parameters'), '</th></tr>',
-		'</thead>',
+		'</thead>',*/
 		'<tfoot>
 			<tr>
 				<td colspan="2">',
@@ -173,16 +173,18 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 	}
 
 	echo	'<tr>
-				<td>', _('Select Period'), ':</td>
+				<td>', _('Select Period'), '</td>
 				<td>', ReportPeriodList($_POST['Period'], array('l', 't')), '</td>
 			</tr>',
 	// Show all accounts instead a summary:
 			'<tr>
-				<td>', _('Detail or summary'), ':</td>
-				<td><select name="ShowDetail" required="required" title="', _('Selecting Summary will show on the totals at the account group level'), '" >
+				<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
+				<td><select name="ShowDetail" required="required">
 					<option value="Summary">', _('Summary'), '</option>
 					<option selected="selected" value="Detailed">', _('All Accounts'), '</option>
-					</select></td>
+					</select>',
+			 		fShowFieldHelp(_('Selecting Summary will show on the totals at the account group level')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+		 		'</td>
 			</tr>',
 	// Show accounts with zero balance:
 			'<tr>

@@ -1,5 +1,6 @@
 <?php
-/* Script to rebuild sales analysis records from stock movements*/
+// Z_RebuildSalesAnalysis.php
+// Script to rebuild sales analysis records from stock movements
 $PageSecurity = 15;
 include ('includes/session.php');
 $Title = _('Rebuild sales analysis Records');
@@ -62,7 +63,3 @@ prnMsg(_('The sales analsysis data has been recreated based on current stock mas
 
 include('includes/footer.php');
 ?>
-
-?>
-?>
-

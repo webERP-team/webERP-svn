@@ -532,7 +532,7 @@ if (isset($_POST['AllocTrans'])) {
 			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE (debtortrans.type=12 OR debtortrans.type=11)
 			AND debtortrans.settled=0
-			AND debtortrans.ovamount<0";
+			AND (debtortrans.ovamount<0 OR debtortrans.ovdiscount<0)";
 
 	if ($_SESSION['SalesmanLogin'] != '') {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
@@ -572,7 +572,7 @@ if (isset($_POST['AllocTrans'])) {
 						FROM debtortrans
 						WHERE (type=12 OR type=11)
 						AND debtorno='" . $myrow['debtorno'] . "'
-						AND ovamount<0";
+						AND (ovamount<0 OR ovdiscount<0)";
 			$BalResult = DB_query($BalSQL);
 			$BalRow = DB_fetch_array($BalResult);
 			$Balance = $BalRow['total'];

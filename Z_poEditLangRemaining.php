@@ -1,4 +1,6 @@
 <?php
+// Z_poEditLangRemaining.php
+// Edit Remaining Strings For This Language.
 
 /* Steve Kitchen */
 
@@ -7,15 +9,14 @@
 //$PageSecurity = 15;
 
 include ('includes/session.php');
-
-$Title = _('Edit Remaining Items');// _('Edit Remaining Strings For This Language')
 $ViewTopic = "SpecialUtilities";
-$BookMark = "Z_poEditLangRemaining";// Anchor's id in the manual's html document.
+$BookMark = "Z_poEditLangRemaining";
+$Title = _('Edit Remaining Strings For This Language');
 include('includes/header.php');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title="' .
-		_('Edit Remaining Strings For This Language') . '" />' . ' ' .
-		_('Edit Remaining Strings For This Language') . '</p>';
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 

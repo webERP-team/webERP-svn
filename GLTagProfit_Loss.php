@@ -109,7 +109,7 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 	}
 
 	echo '<tr>
-			<td>', _('Select Period'), ':</td>
+			<td>', _('Select Period'), '</td>
 			<td>', ReportPeriodList($_POST['Period'], array('l', 't')), '</td>
 		</tr>';
 
@@ -136,7 +136,7 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 // End select tag
 
 	echo '<tr>
-			<td>' . _('Detail Or Summary').':</td>
+			<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
 			<td><select name="Detail">
 				<option selected="selected" value="Summary">' . _('Summary') . '</option>
 				<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>

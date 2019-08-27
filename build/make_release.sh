@@ -7,7 +7,11 @@ MYSQL_PWD=a;
 
 cd $BASE_DIR;
 
-xgettext --no-wrap --from-code=utf-8 --language=PHP -o locale/en_GB.utf8/LC_MESSAGES/messages.pot *php includes/*.php includes/*.inc reportwriter/*.php reportwriter/*.inc reportwriter/forms/*.html reportwriter/admin/*.php reportwriter/admin/*.inc reportwriter/admin/forms/*.html api/*.php install/*.php ../webSHOP/*.php ../webSHOP/includes/*.php
+# xgettext: Extracts translatable strings from given input file paths
+
+xgettext --no-wrap --from-code=utf-8 -L php -o locale/en_GB.utf8/LC_MESSAGES/messages.pot *.php api/*.php includes/*.inc includes/*.php install/*.php reportwriter/*.inc reportwriter/*.php reportwriter/admin/*.inc reportwriter/admin/*.php reportwriter/admin/forms/*.html reportwriter/forms/*.html reportwriter/languages/en_US/*.php ../webSHOP/*.php ../webSHOP/includes/*.php
+
+# msgmerge: Merges two Uniforum style .po files together
 
 msgmerge -U -N --backup=off --no-wrap locale/ar_EG.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/ar_SY.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
@@ -45,6 +49,7 @@ msgmerge -U -N --backup=off --no-wrap locale/zh_CN.utf8/LC_MESSAGES/messages.po 
 msgmerge -U -N --backup=off --no-wrap locale/zh_HK.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/zh_TW.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 
+# msgfmt: Generates a binary message catalog from a textual translation description
 
 msgfmt -o locale/ar_EG.utf8/LC_MESSAGES/messages.mo locale/ar_EG.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/ar_SY.utf8/LC_MESSAGES/messages.mo locale/ar_SY.utf8/LC_MESSAGES/messages.po

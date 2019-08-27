@@ -62,133 +62,23 @@ $MenuItems['stock']['Reports']['URL'] = array('/StockSerialItemResearch.php', '/
 $MenuItems['stock']['Maintenance']['Caption'] = array(_('Add A New Item'), _('Select An Item'), _('Review Translated Descriptions'), _('Sales Category Maintenance'), _('Brands Maintenance'), _('Add or Update Prices Based On Costs'), _('View or Update Prices Based On Costs'), _('Reorder Level By Category/Location'));
 $MenuItems['stock']['Maintenance']['URL'] = array('/Stocks.php', '/SelectProduct.php', '/RevisionTranslations.php', '/SalesCategories.php', '/Manufacturers.php', '/PricesBasedOnMarkUp.php', '/PricesByCost.php', '/ReorderLevelLocation.php');
 
-$MenuItems['manuf']['Transactions']['Caption'] = array(
-	_('Work Order Entry'),
-	_('Select A Work Order'),
-	_('QA Samples and Test Results'),
-	_('Timesheet Entry'));
-$MenuItems['manuf']['Transactions']['URL'] = array(
-	'/WorkOrderEntry.php',
-	'/SelectWorkOrder.php',
-	'/SelectQASamples.php',
-	'/Timesheets.php');
+$MenuItems['manuf']['Transactions']['Caption'] = array(_('Work Order Entry'), _('Select A Work Order'), _('QA Samples and Test Results'), _('Timesheet Entry'));
+$MenuItems['manuf']['Transactions']['URL'] = array('/WorkOrderEntry.php', '/SelectWorkOrder.php', '/SelectQASamples.php', '/Timesheets.php');
 
-$MenuItems['manuf']['Reports']['Caption'] = array(
-	_('Select A Work Order'),
-	_('Costed Bill Of Material Inquiry'),
-	_('Where Used Inquiry'),
-	_('Bill Of Material Listing'),
-	_('Indented Bill Of Material Listing'),
-	_('List Components Required'),
-	_('List Materials Not Used Anywhere'),
-	_('Indented Where Used Listing'),
-	_('WO Items ready to produce'),
-	_('MRP'),
-	_('MRP Shortages'),
-	_('MRP Suggested Purchase Orders'),
-	_('MRP Suggested Work Orders'),
-	_('MRP Reschedules Required'),
-	_('Print Product Specification'),
-	_('Print Certificate of Analysis'),
-	_('Historical QA Test Results'),
-	_('Multiple Work Orders Total Cost Inquiry'));
-$MenuItems['manuf']['Reports']['URL'] = array(
-	'/SelectWorkOrder.php',
-	'/BOMInquiry.php',
-	'/WhereUsedInquiry.php',
-	'/BOMListing.php',
-	'/BOMIndented.php',
-	'/BOMExtendedQty.php',
-	'/MaterialsNotUsed.php',
-	'/BOMIndentedReverse.php',
-	'/WOCanBeProducedNow.php',
-	'/MRPReport.php',
-	'/MRPShortages.php',
-	'/MRPPlannedPurchaseOrders.php',
-	'/MRPPlannedWorkOrders.php',
-	'/MRPReschedules.php',
-	'/PDFProdSpec.php',
-	'/PDFCOA.php',
-	'/HistoricalTestResults.php',
-	'/CollectiveWorkOrderCost.php');
+$MenuItems['manuf']['Reports']['Caption'] = array(_('Select A Work Order'), _('Costed Bill Of Material Inquiry'), _('Where Used Inquiry'), _('Bill Of Material Listing'), _('Indented Bill Of Material Listing'), _('List Components Required'), _('List Materials Not Used Anywhere'), _('Indented Where Used Listing'), _('WO Items ready to produce'), _('MRP'), _('MRP Shortages'), _('MRP Suggested Purchase Orders'), _('MRP Suggested Work Orders'), _('MRP Reschedules Required'), _('Print Product Specification'), _('Print Certificate of Analysis'), _('Historical QA Test Results'), _('Multiple Work Orders Total Cost Inquiry'));
+$MenuItems['manuf']['Reports']['URL'] = array('/SelectWorkOrder.php', '/BOMInquiry.php', '/WhereUsedInquiry.php', '/BOMListing.php', '/BOMIndented.php', '/BOMExtendedQty.php', '/MaterialsNotUsed.php', '/BOMIndentedReverse.php', '/WOCanBeProducedNow.php', '/MRPReport.php', '/MRPShortages.php', '/MRPPlannedPurchaseOrders.php', '/MRPPlannedWorkOrders.php', '/MRPReschedules.php', '/PDFProdSpec.php', '/PDFCOA.php', '/HistoricalTestResults.php', '/CollectiveWorkOrderCost.php');
 
-$MenuItems['manuf']['Maintenance']['Caption'] = array(
-	_('Work Centre'),
-	_('Bills Of Material'),
-	_('Copy a Bill Of Materials Between Items'),
-	_('Master Schedule'),
-	_('Auto Create Master Schedule'),
-	_('MRP Calculation'),
-	_('Quality Tests Maintenance'),
-	_('Product Specifications'),
-	_('Employees'));
-$MenuItems['manuf']['Maintenance']['URL'] = array(
-	'/WorkCentres.php',
-	'/BOMs.php',
-	'/CopyBOM.php',
-	'/MRPDemands.php',
-	'/MRPCreateDemands.php',
-	'/MRP.php',
-	'/QATests.php',
-	'/ProductSpecs.php',
-	'/Employees.php');
+$MenuItems['manuf']['Maintenance']['Caption'] = array(_('Work Centre'), _('Bills Of Material'), _('Copy a Bill Of Materials Between Items'), _('Master Schedule'), _('Auto Create Master Schedule'), _('MRP Calculation'), _('Quality Tests Maintenance'), _('Product Specifications'), _('Employees'));
+$MenuItems['manuf']['Maintenance']['URL'] = array('/WorkCentres.php', '/BOMs.php', '/CopyBOM.php', '/MRPDemands.php', '/MRPCreateDemands.php', '/MRP.php', '/QATests.php', '/ProductSpecs.php', '/Employees.php');
 
-$MenuItems['GL']['Transactions']['Caption'] = array(
-	_('Bank Account Payments Entry'),
-	_('Bank Account Receipts Entry'),
-	_('Import Bank Transactions'),
-	_('Bank Account Payments Matching'),
-	_('Bank Account Receipts Matching'),
-	_('Journal Entry'));
-$MenuItems['GL']['Transactions']['URL'] = array(
-	'/Payments.php?NewPayment=Yes',
-	'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=GL',
-	'/ImportBankTrans.php',
-	'/BankMatching.php?Type=Payments',
-	'/BankMatching.php?Type=Receipts',
-	'/GLJournal.php?NewJournal=Yes');
+$MenuItems['GL']['Transactions']['Caption'] = array(_('Bank Account Payments Entry'), _('Bank Account Receipts Entry'), _('Import Bank Transactions'), _('Bank Account Payments Matching'), _('Bank Account Receipts Matching'), _('Journal Entry'));
+$MenuItems['GL']['Transactions']['URL'] = array('/Payments.php?NewPayment=Yes', '/CustomerReceipt.php?NewReceipt=Yes&amp;Type=GL', '/ImportBankTrans.php', '/BankMatching.php?Type=Payments', '/BankMatching.php?Type=Receipts', '/GLJournal.php?NewJournal=Yes');
 
-$MenuItems['GL']['Reports']['Caption'] = array(
-	_('Bank Account Balances'),
-	_('Bank Account Reconciliation Statement'),
-	_('Cheque Payments Listing'),
-	_('Daily Bank Transactions'),
-	_('Account Inquiry'),
-	_('Graph of Account Transactions'),
-	_('Account Listing'),
-	_('Account Listing to CSV File'),
-	_('General Ledger Journal Inquiry'),
-	_('Trial Balance'),
-	_('Balance Sheet'),
-	_('Profit and Loss Statement'),
-	_('Statement of Cash Flows'),
-	_('Financial Statements'),
-	_('Horizontal Analysis of Statement of Financial Position'),
-	_('Horizontal Analysis of Statement of Comprehensive Income'),
-	_('Tag Reports'),
-	_('Tax Reports'));
-$MenuItems['GL']['Reports']['URL'] = array(
-	'/BankAccountBalances.php',
-	'/BankReconciliation.php',
-	'/PDFChequeListing.php',
-	'/DailyBankTransactions.php',
-	'/SelectGLAccount.php',
-	'/GLAccountGraph.php',
-	'/GLAccountReport.php',
-	'/GLAccountCSV.php',
-	'/GLJournalInquiry.php',
-	'/GLTrialBalance.php',
-	'/GLBalanceSheet.php',
-	'/GLProfit_Loss.php',
-	'/GLCashFlowsIndirect.php',
-	'/GLStatements.php',
-	'/AnalysisHorizontalPosition.php',
-	'/AnalysisHorizontalIncome.php',
-	'/GLTagProfit_Loss.php',
-	'/Tax.php');
+$MenuItems['GL']['Reports']['Caption'] = array(_('Bank Account Balances'), _('Bank Account Reconciliation Statement'), _('Cheque Payments Listing'), _('Daily Bank Transactions'), _('Account Inquiry'), _('Graph of Account Transactions'), _('Account Listing'), _('Account Listing to CSV File'), _('General Ledger Journal Inquiry'), _('Trial Balance'), _('Balance Sheet'), _('Profit and Loss Statement'), _('Statement of Cash Flows'), _('Financial Statements'), _('Horizontal Analysis of Statement of Financial Position'), _('Horizontal Analysis of Statement of Comprehensive Income'), _('Tag Reports'), _('Tax Reports'));
+$MenuItems['GL']['Reports']['URL'] = array('/BankAccountBalances.php', '/BankReconciliation.php', '/PDFChequeListing.php', '/DailyBankTransactions.php', '/SelectGLAccount.php', '/GLAccountGraph.php', '/GLAccountReport.php', '/GLAccountCSV.php', '/GLJournalInquiry.php', '/GLTrialBalance.php', '/GLBalanceSheet.php', '/GLProfit_Loss.php', '/GLCashFlowsIndirect.php', '/GLStatements.php', '/AnalysisHorizontalPosition.php', '/AnalysisHorizontalIncome.php', '/GLTagProfit_Loss.php', '/Tax.php');
 
-$MenuItems['GL']['Maintenance']['Caption'] = array(_('Account Sections'), _('Account Groups'), _('GL Accounts'), _('GL Account Authorised Users'), _('User Authorised GL Accounts'), _('GL Budgets'), _('GL Tags'), _('Bank Accounts'), _('Bank Account Authorised Users'), _('User Authorised Bank Accounts'));
-$MenuItems['GL']['Maintenance']['URL'] = array('/AccountSections.php', '/AccountGroups.php', '/GLAccounts.php', '/GLAccountUsers.php', '/UserGLAccounts.php', '/GLBudgets.php', '/GLTags.php', '/BankAccounts.php', '/BankAccountUsers.php', '/UserBankAccounts.php');
+$MenuItems['GL']['Maintenance']['Caption'] = array(_('Account Sections'), _('Account Groups'), _('GL Accounts'), _('GL Account Authorised Users'), _('User Authorised GL Accounts'), _('GL Budgets'), _('GL Tags'), _('Bank Accounts'), _('Bank Account Authorised Users'), _('User Authorised Bank Accounts'), _('Maintain Journal Templates'));
+$MenuItems['GL']['Maintenance']['URL'] = array('/AccountSections.php', '/AccountGroups.php', '/GLAccounts.php', '/GLAccountUsers.php', '/UserGLAccounts.php', '/GLBudgets.php', '/GLTags.php', '/BankAccounts.php', '/BankAccountUsers.php', '/UserBankAccounts.php', '/GLJournalTemplates.php');
 
 $MenuItems['FA']['Transactions']['Caption'] = array(_('Add a new Asset'), _('Select an Asset'), _('Change Asset Location'), _('Depreciation Journal'));
 $MenuItems['FA']['Transactions']['URL'] = array('/FixedAssetItems.php', '/SelectAsset.php', '/FixedAssetTransfer.php', '/FixedAssetDepreciation.php');

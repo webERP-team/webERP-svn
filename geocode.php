@@ -1,4 +1,5 @@
 <?php
+// geocode.php
 
 //$PageSecurity = 3;
 $Title = _('Geocode Generate');

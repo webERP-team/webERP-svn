@@ -8,16 +8,19 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SalesRe
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_FixGLTransPeriods.php', '15', 'Fixes periods where GL transactions were not created correctly');
 
 -- Updates scripts description:
-UPDATE `scripts` SET `description` = 'Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used, etc.' WHERE `scripts`.`script` = 'CompanyPreferences.php';
-UPDATE `scripts` SET `description` = 'Sets the main system configuration parameters' WHERE `scripts`.`script` = 'SystemParameters.php';
+UPDATE `scripts` SET `description` = 'Add a New Language to the System' WHERE `scripts`.`script` = 'Z_poAddLanguage.php';
 UPDATE `scripts` SET `description` = 'Adds or removes security roles by a system administrator' WHERE `scripts`.`script` = 'WWW_Access.php';
 UPDATE `scripts` SET `description` = 'Changes the security token of a script' WHERE `scripts`.`script` = 'PageSecurity.php';
-UPDATE `scripts` SET `description` = 'Sets the configuration for geocoding of customers and suppliers' WHERE `scripts`.`script` = 'GeocodeSetup.php';
-UPDATE `scripts` SET `description` = 'Customizes the form layout without requiring the use of scripting or technical development' WHERE `scripts`.`script` = 'FormDesigner.php';
-UPDATE `scripts` SET `description` = 'Sets the SMTP server' WHERE `scripts`.`script` = 'SMTPServer.php';
 UPDATE `scripts` SET `description` = 'Creates a report of the ad-valorem tax -GST/VAT- for the period selected from accounts payable and accounts receivable data' WHERE `scripts`.`script` = 'Tax.php';
-
-
+UPDATE `scripts` SET `description` = 'Customizes the form layout without requiring the use of scripting or technical development' WHERE `scripts`.`script` = 'FormDesigner.php';
+UPDATE `scripts` SET `description` = 'Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used, etc.' WHERE `scripts`.`script` = 'CompanyPreferences.php';
+UPDATE `scripts` SET `description` = 'Edit a Language File Header' WHERE `scripts`.`script` = 'Z_poEditLangHeader.php';
+UPDATE `scripts` SET `description` = 'Edit a Language File Module' WHERE `scripts`.`script` = 'Z_poEditLangModule.php';
+UPDATE `scripts` SET `description` = 'Edit Remaining Strings For This Language' WHERE `scripts`.`script` = 'Z_poEditLangRemaining.php';
+UPDATE `scripts` SET `description` = 'Rebuild the System Default Language File' WHERE `scripts`.`script` = 'Z_poRebuildDefault.php';
+UPDATE `scripts` SET `description` = 'Sets the configuration for geocoding of customers and suppliers' WHERE `scripts`.`script` = 'GeocodeSetup.php';
+UPDATE `scripts` SET `description` = 'Sets the main system configuration parameters' WHERE `scripts`.`script` = 'SystemParameters.php';
+UPDATE `scripts` SET `description` = 'Sets the SMTP server' WHERE `scripts`.`script` = 'SMTPServer.php';
 
 
 INSERT INTO config VALUES ('ShortcutMenu','0');
@@ -126,6 +129,24 @@ ALTER TABLE tenders CHANGE `requiredbydate` `requiredbydate` datetime NOT NULL D
 ALTER TABLE workorders CHANGE `requiredby` `requiredby` date NOT NULL DEFAULT '1000-01-01';
 ALTER TABLE workorders CHANGE `startdate` `startdate` date NOT NULL DEFAULT '1000-01-01';
 
+CREATE TABLE `jnltmplheader` (
+  `templateid` INT(11) NOT NULL DEFAULT 0,
+  `templatedescription` VARCHAR(50) NOT NULL DEFAULT '',
+  `journaltype` INT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`templateid`)
+);
+
+CREATE TABLE `jnltmpldetails` (
+  `linenumber` INT(11) NOT NULL DEFAULT 0,
+  `templateid` INT(11) NOT NULL DEFAULT 0,
+  `tags` VARCHAR(50) NOT NULL DEFAULT '0',
+  `accountcode` VARCHAR(20) NOT NULL DEFAULT '1',
+  `amount` DOUBLE NOT NULL DEFAULT 0,
+  `narrative` VARCHAR(200) NOT NULL DEFAULT '',
+  PRIMARY KEY (`templateid`, `linenumber`)
+);
+INSERT INTO  `systypes` (`typeid` ,`typename` ,`typeno`) VALUES ('4',  'Journal Template Number',  '0');
+INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description` ) VALUES ('GLJournalTemplates.php', '15', 'Maintain Journal templates');
 
 -- THIS IS THE LAST SQL QUERY. Updates database version number:
 UPDATE config SET confvalue='4.15.1' WHERE confname='VersionNumber';

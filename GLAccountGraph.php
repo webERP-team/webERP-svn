@@ -158,7 +158,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('Select Period') . ':</td>
+			<td>', _('Select Period'), '</td>
 			<td>' . ReportPeriodList($_POST['Period']) . '</td>
 		</tr>';
 
