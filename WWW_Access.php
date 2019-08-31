@@ -11,6 +11,11 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	_('Access Permissions Maintenance') . '" /> ' .// Icon title.
 	_('Access Permissions Maintenance') . '</p>';// Page title.
 
+if($AllowDemoMode) {
+	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
+	exit;
+}
+
 if(isset($_GET['SelectedRole'])) {
 	$SelectedRole = $_GET['SelectedRole'];
 } elseif (isset($_POST['SelectedRole'])) {

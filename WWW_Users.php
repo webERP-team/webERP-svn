@@ -21,6 +21,10 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '</p>';// Page title.
 echo '<br />';// Extra line after page_title_text.
 
+if($AllowDemoMode) {
+	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
+	exit;
+} 
 $ModuleList = array(
 	_('Sales'),
 	_('Receivables'),
