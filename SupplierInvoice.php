@@ -213,7 +213,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 
 					$SQL = "UPDATE purchorderdetails SET quantityrecd = quantityrecd + '" . $OrderLine->ReceiveQty . "',
 														stdcostunit='" . $_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost . "',
-														completed='" . $_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->Completed . "'
+														completed='1'
 												WHERE podetailitem = '" . $OrderLine->PODetailRec . "'";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase order detail record could not be updated with the quantity received because');

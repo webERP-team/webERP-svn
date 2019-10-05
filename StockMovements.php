@@ -107,7 +107,7 @@ $SQL = "SELECT stockmoves.stockid,
 			ON stockmoves.type=systypes.typeid
 		INNER JOIN stockmaster
 			ON stockmoves.stockid=stockmaster.stockid
-		INNER JOIN custbranch
+		LEFT JOIN custbranch
 			ON stockmoves.debtorno=custbranch.debtorno
 			AND stockmoves.branchcode = custbranch.branchcode
 		WHERE  stockmoves.loccode='" . $_POST['StockLocation'] . "'

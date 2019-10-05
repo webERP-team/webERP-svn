@@ -397,7 +397,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 	$Discount = 0;
 	$AlreadyWarnedAboutCredit = false;
 	$i=1;
-	while ($i<=$_SESSION['QuickEntries']
+	while ($i<=max($_SESSION['QuickEntries'], $_POST['TotalQuickEntryRows'])
 			AND isset($_POST['part_' . $i])
 			AND $_POST['part_' . $i]!='') {
 
@@ -936,12 +936,28 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ) { /*only show order lin
 	echo '</select></td>
 		</tr>';
 
+	if (!isset($_POST['CashReceived'])) {
+		$_POST['CashReceived'] =0;
+	}
+	echo '<tr>
+			<td>' . _('Cash Received') . ':</td>
+			<td><input type="text" class="number" id="CashReceived" name="CashReceived" required="required"  maxlength="12" size="12" value="' . $_POST['CashReceived'] . '" onkeyup="CalculateChangeDue();" /></td>
+		</tr>';
+
 	if (!isset($_POST['AmountPaid'])) {
 		$_POST['AmountPaid'] =0;
 	}
 	echo '<tr>
 			<td>' . _('Amount Paid') . ':</td>
-			<td><input type="text" class="number" name="AmountPaid" required="required"  title="' . _('Enter the amount paid by the customer, this must equal the amount of the sale') . '" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
+			<td><input type="text" class="number" id="AmountPaid" name="AmountPaid" required="required"  title="' . _('Enter the amount paid by the customer, this must equal the amount of the sale') . '" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" readonly /></td>
+		</tr>';
+
+	if (!isset($_POST['ChangeDue'])) {
+		$_POST['ChangeDue'] =0;
+	}
+	echo '<tr>
+			<td>' . _('Change') . ':</td>
+			<td><input type="text" class="number" id="ChangeDue" name="ChangeDue" maxlength="12" size="12" value="' . $_POST['ChangeDue'] . '" readonly /></td>
 		</tr>';
 
 	echo '</table>'; //end the sub table in the second column of master table
@@ -2345,8 +2361,34 @@ if (!isset($_POST['ProcessSale'])) {
             echo '<input type="hidden" name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '" />';
             echo '<input type="hidden" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" />';
             echo '<input type="hidden" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" />';
-        }
-		echo '<table border="1">
+		}
+
+		$SQL = "SELECT stockid
+				FROM stockmaster
+				WHERE controlled = 0";
+		$ErrMsg = _('Could not fetch items list because');
+		$DbgMsg = _('The sql that was used to fetch items list was ');
+		$ItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$ItemCount = DB_num_rows($ItemsResult);
+
+		if ($ItemCount==0)
+		{
+			prnMsg( _('There are no available item(s) retrieved from the database'),'warn');
+		}
+		else if(!isset($_SESSION['ItemList']) || $ItemCount != count($_SESSION['ItemList']))
+		{
+			unset($_SESSION['ItemList']);
+
+			$_SESSION['ItemList'] = array();
+			while($myrow=DB_fetch_array($ItemsResult))
+			{
+				$_SESSION['ItemList'][] = $myrow['stockid'];
+			}
+		}
+
+		echo '<input type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13 || event.which == 13) AddQuickEntry(this);" onchange="AddQuickEntry(this);" placeholder="Item Code";  /><br><br>';
+
+		echo '<table id="QuickEntryTable" border="1">
 				<tr>
 					<th>' . _('Item Code') . '</th>
 					<th>' . _('Quantity') . '</th>
@@ -2363,6 +2405,7 @@ if (!isset($_POST['ProcessSale'])) {
 	 	echo '</table>
 				<br />
 				<div class="centre">
+					<input type="hidden" id="TotalQuickEntryRows" name="TotalQuickEntryRows" value="' .$_SESSION['QuickEntries'] . '" />
 					<input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
 					<input type="submit" name="PartSearch" value="' . _('Search Parts') . '" />
 				</div>
@@ -2374,5 +2417,21 @@ if (!isset($_POST['ProcessSale'])) {
 	}
 	echo '</form>';
 }
+echo '<script src="', $RootPath, 'javscripts/CounterSalesFunctions.js"></script>';
+?>
+<script defer="defer">
+	CounterSales.SetItemList(<?php echo json_encode($_SESSION['ItemList']); ?>);
+	CounterSales.SetQuickEntryTableId('QuickEntryTable');
+	CounterSales.SetRowCounter(<?php echo empty($i) ? 0 : $i; ?>);
+	CounterSales.SetDefaultDeliveryDate(<?php echo empty($DefaultDeliveryDate) ? '""' : $DefaultDeliveryDate; ?>);
+	CounterSales.SetTotalQuickEntryRowsId('TotalQuickEntryRows');
+
+	CounterSales.SetTotalDue(<?php echo round($_SESSION['Items'.$identifier]->total + filter_number_format($_POST['TaxTotal']) + filter_number_format($RoundingAdjustment), $_SESSION['Items'.$identifier]->CurrDecimalPlaces) ?>);
+	CounterSales.SetDecimal(<?php echo $_SESSION['Items'.$identifier]->CurrDecimalPlaces; ?>);
+	CounterSales.SetCashReceivedId('CashReceived');
+	CounterSales.SetAmountPaidId('AmountPaid');
+	CounterSales.SetChangeDueId('ChangeDue');
+</script>
+<?php
 include('includes/footer.php');
 ?>
