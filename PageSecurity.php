@@ -11,12 +11,7 @@ if ($AllowDemoMode) {
 	exit;
 }
 
-if($AllowDemoMode) {
-	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
-	exit;
-}
-
-if (isset($_POST['Update']) AND $AlloDemoMode!= true) {
+if (isset($_POST['Update'])) {
 	foreach ($_POST as $ScriptName => $PageSecurityValue) {
 		if ($ScriptName != 'Update' and $ScriptName != 'FormID') {
 			$ScriptName = mb_substr($ScriptName, 0, mb_strlen($ScriptName) - 4) . '.php';
