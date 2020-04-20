@@ -104,7 +104,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								prd,
 								reference,
 								qty,
-								newqoh)
+								newqoh,
+								standardcost)
 						VALUES ('" . $myrow['stockid'] . "',
 							17,
 							'" . $AdjustmentNumber . "',
@@ -114,7 +115,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 							'" . $PeriodNo . "',
 							'" . _('Inventory Check') . "',
 							'" . $StockQtyDifference . "',
-							'" . ($QtyOnHandPrior + $StockQtyDifference) . "'
+							'" . ($QtyOnHandPrior + $StockQtyDifference) . "',
+							'" . $myrow['standardcost'] . "'
 						)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');

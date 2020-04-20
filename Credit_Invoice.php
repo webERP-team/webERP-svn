@@ -538,12 +538,14 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 	/*Do some rounding */
 
+	$_SESSION['CreditItems' . $identifier]->FreightCost = round($_SESSION['CreditItems' . $identifier]->FreightCost, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces);
 	$_SESSION['CreditItems' . $identifier]->total = round($_SESSION['CreditItems' . $identifier]->total, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces);
 	$TaxTotal = round($TaxTotal, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces);
 
 	$Allocate_amount = 0;
 	$Settled = 0;
 	$SettledInvoice = 0;
+	$MyRow[0] = round($MyRow[0], $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces);
 	if ($MyRow[0] > 0) { /*the invoice is not already fully allocated */
 
 		if ($MyRow[0] > ($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)) {

@@ -75,7 +75,7 @@
 			$LocationList[$i]=$myrow[0];
 			$i++;
 		}
-		return $LocationList;
+		return array(0, $LocationList);
 	}
 
 /* This function takes as a parameter a stock location id
@@ -92,7 +92,7 @@
 		}
 		$sql = "SELECT * FROM locations WHERE loccode='".$location."'";
 		$result = DB_query($sql);
-		return DB_fetch_array($result);
+		return array(0, DB_fetch_array($result));
 	}
 
 /* Inserts a Location in webERP.

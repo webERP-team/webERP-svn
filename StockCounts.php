@@ -6,7 +6,7 @@ $Title = _('Stock Check Sheets Entry');
 
 include('includes/header.php');
 
-echo '<form name="EnterCountsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<form name="EnterCountsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -31,6 +31,33 @@ if ($_GET['Action']=='View'){
 	echo '<td>' . _('Entering Counts')  . '</td><td> <a href="' . $RootPath . '/StockCounts.php?&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
 }
 echo '</tr></table><br />';
+
+$FieldHeadings = array(
+	'StockCode',       	//  0 'STOCKCODE',
+	'QtyCounted',	 	//  1 'QTYCOUNTED',
+	'Reference'      	//  2 'REFERENCE'
+);
+
+if (isset($_GET['gettemplate'])) //download an import template
+{
+
+	// clean up any previous outputs
+	ob_clean();
+
+	header("Content-Type: application/force-download");
+	header("Content-Type: application/octet-stream");
+	header("Content-Type: application/download");
+
+	// disposition / encoding on response body
+	header("Content-Disposition: attachment; filename=ImportTemplate.csv");
+	header("Content-Transfer-Encoding: binary");
+
+	echo '"' . implode('","',$FieldHeadings) . '"';
+
+	// exit cleanly to prevent any unwanted outputs
+	exit;
+}
+
 if ($_GET['Action'] == 'Enter'){
 
 	if (isset($_POST['EnterCounts'])){
@@ -88,6 +115,125 @@ if ($_GET['Action'] == 'Enter'){
 		prnMsg($Added . _(' Stock Counts Entered'), 'success' );
 		unset($_POST['EnterCounts']);
 	} // end of if enter counts button hit
+	else if(isset($_FILES['userfile']) and $_FILES['userfile']['name'])
+	{
+		//initialize
+		$FieldTarget = count($FieldHeadings);
+		$InputError = 0;
+
+		//check file info
+		$FileName = $_FILES['userfile']['name'];
+		$TempName  = $_FILES['userfile']['tmp_name'];
+		$FileSize = $_FILES['userfile']['size'];
+
+		//get file handle
+		$FileHandle = fopen($TempName, 'r');
+
+		//get the header row
+		$headRow = fgetcsv($FileHandle, 10000, ",",'"');  // Modified to handle " "" " enclosed csv - useful if you need to include commas in your text descriptions
+
+		//check for correct number of fields
+		if ( count($headRow) != count($FieldHeadings) ) {
+			prnMsg (_('File contains '. count($headRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+			fclose($FileHandle);
+			include('includes/footer.php');
+			exit;
+		}
+
+		//test header row field name and sequence
+		$head = 0;
+		foreach ($headRow as $headField) {
+			if ( mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head]) ) {
+				prnMsg (_('File contains incorrect headers '. mb_strtoupper($headField). ' != '. mb_strtoupper($FieldHeadings[$head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $headings
+				fclose($FileHandle);
+				include('includes/footer.php');
+				exit;
+			}
+			$head++;
+		}
+
+		//start database transaction
+		DB_Txn_Begin();
+
+		//loop through file rows
+		$row = 1;
+		while ( ($myrow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
+
+			//check for correct number of fields
+			$fieldCount = count($myrow);
+			if ($fieldCount != $FieldTarget){
+				prnMsg (_($FieldTarget. ' fields required, '. $fieldCount. ' fields received'),'error');
+				fclose($FileHandle);
+				include('includes/footer.php');
+				exit;
+			}
+
+			// cleanup the data (csv files often import with empty strings and such)
+			$StockID = mb_strtoupper($myrow[0]);
+			foreach ($myrow as &$value) {
+				$value = trim($value);
+			}
+
+			//first off check if the item is in freeze
+			$sql = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $StockID . "'";
+			$result = DB_query($sql);
+			if (DB_num_rows($result)==0){
+				$InputError = 1;
+				prnMsg( _('Stock item "'. $StockID. '" is not a part code that has been added to the stock check file'),'warn');
+			}
+
+			//next validate inputs are sensible
+			if (mb_strlen($myrow[2]) >20) {
+				$InputError = 1;
+				prnMsg(_('The reference field must be 20 characters or less long'),'error');
+			}
+			else if (!is_numeric($myrow[1])) {
+				$InputError = 1;
+				prnMsg (_('The quantity counted must be numeric') ,'error');
+			}
+			else if ($myrow[1] < 0) {
+				$InputError = 1;
+				prnMsg(_('The quantity counted must be zero or a positive number'),'error');
+			}
+
+			if ($InputError !=1){
+
+				//attempt to insert the stock item
+				$sql = "INSERT INTO stockcounts (stockid,
+									loccode,
+									qtycounted,
+									reference)
+								VALUES ('" . $myrow[0] . "',
+									'" . $_POST['Location'] . "',
+									'" . $myrow[1] . "',
+									'" . $myrow[2] . "')";
+
+				$ErrMsg = _('The stock count line number') . ' ' . $row . ' ' . _('could not be entered because');
+				$DbgMsg = _('The SQL that was used to add the item failed was');
+				$EnterResult = DB_query($sql,$ErrMsg,$DbgMsg,true);
+
+				if (DB_error_no() != 0) {
+					$InputError = 1;
+					prnMsg(_($EnterResult),'error');
+				}
+			}
+
+			if ($InputError == 1) { //this row failed so exit loop
+				break;
+			}
+			$row++;
+		}
+
+		if ($InputError == 1) { //exited loop with errors so rollback
+			prnMsg(_('Failed on row '. $row. '. Batch import has been rolled back.'),'error');
+			DB_Txn_Rollback();
+		} else { //all good so commit data transaction
+			DB_Txn_Commit();
+			prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed. All transactions committed to the database.'),'success');
+		}
+
+		fclose($FileHandle);
+	} // end of if import file button hit
 
 	$CatsResult = DB_query("SELECT DISTINCT stockcategory.categoryid,
 								categorydescription
@@ -127,6 +273,19 @@ if ($_GET['Action'] == 'Enter'){
 			}
 		}
 		echo '</select></th></tr>';
+
+		echo '<tr>
+				<td></td><td>OR</td>
+			</tr>
+			<tr>
+				<th colspan="3">
+					<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+					' . _('Upload file') . ': <input name="userfile" type="file" />
+					<input type="submit" value="' . _('Send File') . '" />
+				</th>
+				<td><a href="StockCounts.php?gettemplate=1">Get Import Template</a></td>
+			</tr>
+			<tr><td></td></tr>';
 
 		if (isset($_POST['EnterByCat'])){
 

@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-16 23:13-0400\n"
+"POT-Creation-Date: 2019-08-27 20:11-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: AccountGroups.php:6 includes/MainMenuLinksArray.php:80
@@ -44611,7 +44611,7 @@ msgid "Iranian rial"
 msgstr ""
 
 #: includes/CurrenciesArray.php:78
-msgid "Icelandic króna"
+msgid "Icelandic krona"
 msgstr ""
 
 #: includes/CurrenciesArray.php:79
@@ -44763,7 +44763,7 @@ msgid "Nigerian naira"
 msgstr ""
 
 #: includes/CurrenciesArray.php:116
-msgid "Nicaraguan córdoba"
+msgid "Nicaraguan cordoba"
 msgstr ""
 
 #: includes/CurrenciesArray.php:117
@@ -44803,11 +44803,11 @@ msgid "Pakistani rupee"
 msgstr ""
 
 #: includes/CurrenciesArray.php:126
-msgid "Polish złoty"
+msgid "Polish zloty"
 msgstr ""
 
 #: includes/CurrenciesArray.php:127
-msgid "Paraguayan guaraní"
+msgid "Paraguayan guarani"
 msgstr ""
 
 #: includes/CurrenciesArray.php:128
@@ -44875,7 +44875,7 @@ msgid "South Sudanese pound"
 msgstr ""
 
 #: includes/CurrenciesArray.php:144
-msgid "São Tomé and Príncipe dobra"
+msgid "Sao Tome and Principe dobra"
 msgstr ""
 
 #: includes/CurrenciesArray.php:145
@@ -44903,7 +44903,7 @@ msgid "Tunisian dinar"
 msgstr ""
 
 #: includes/CurrenciesArray.php:151
-msgid "Tongan paʻanga"
+msgid "Tongan pa'anga"
 msgstr ""
 
 #: includes/CurrenciesArray.php:152
@@ -44955,7 +44955,7 @@ msgid "Uzbekistan som"
 msgstr ""
 
 #: includes/CurrenciesArray.php:164
-msgid "Venezuelan bolívar fuerte"
+msgid "Venezuelan bolivar fuerte"
 msgstr ""
 
 #: includes/CurrenciesArray.php:165
@@ -45385,24 +45385,24 @@ msgstr ""
 msgid "version"
 msgstr ""
 
-#: includes/GetConfig.php:7 ../webSHOP/includes/session.php:70
+#: includes/GetConfig.php:7 ../webSHOP/includes/session.php:69
 msgid "Could not get the configuration parameters from the database because"
 msgstr ""
 
-#: includes/GetConfig.php:79 ../webSHOP/includes/session.php:112
+#: includes/GetConfig.php:79 ../webSHOP/includes/session.php:111
 msgid "An error occurred accessing the database to retrieve the company information"
 msgstr ""
 
-#: includes/GetConfig.php:84 ../webSHOP/includes/session.php:117
+#: includes/GetConfig.php:84 ../webSHOP/includes/session.php:116
 msgid "The company record has not yet been set up"
 msgstr ""
 
-#: includes/GetConfig.php:84 ../webSHOP/includes/session.php:117
+#: includes/GetConfig.php:84 ../webSHOP/includes/session.php:116
 msgid "From the system setup tab select company maintenance to enter the company information and system preferences"
 msgstr ""
 
 #: includes/GetConfig.php:84 ../webSHOP/includes/GetCustomerDetails.php:53
-#: ../webSHOP/includes/session.php:117
+#: ../webSHOP/includes/session.php:116
 msgid "CRITICAL PROBLEM"
 msgstr ""
 
@@ -46395,11 +46395,11 @@ msgstr ""
 msgid "Security Permissions Problem"
 msgstr ""
 
-#: includes/session.php:311 ../webSHOP/includes/session.php:173
+#: includes/session.php:311 ../webSHOP/includes/session.php:172
 msgid "Error in form verification"
 msgstr ""
 
-#: includes/session.php:313 ../webSHOP/includes/session.php:177
+#: includes/session.php:313 ../webSHOP/includes/session.php:176
 msgid "This form was not submitted with a correct ID"
 msgstr ""
 
@@ -48882,14 +48882,14 @@ msgstr ""
 msgid "The SQL that failed to insert the Paypal transaction fee for the commission account credit was"
 msgstr ""
 
-#: ../webSHOP/includes/session.php:157
+#: ../webSHOP/includes/session.php:156
 msgid "Pay Pal"
 msgstr ""
 
-#: ../webSHOP/includes/session.php:160
+#: ../webSHOP/includes/session.php:159
 msgid "Credit Card"
 msgstr ""
 
-#: ../webSHOP/includes/session.php:163
+#: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr ""

@@ -198,7 +198,8 @@ if(isset($_POST['ProcessTransfer'])) {
 				}
 
 				// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
-				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='')) {
+				if(($_SESSION['Transfer']->StockLocationFromAccount !='' OR $_SESSION['Transfer']->StockLocationToAccount !='') AND
+					($_SESSION['Transfer']->StockLocationFromAccount != $_SESSION['Transfer']->StockLocationToAccount)) {
 					// Get the account code:
 					if($_SESSION['Transfer']->StockLocationFromAccount !='') {
 						$AccountCode = $_SESSION['Transfer']->StockLocationFromAccount;
@@ -351,7 +352,8 @@ if(isset($_POST['ProcessTransfer'])) {
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				// Insert incoming inventory GL transaction if any of the locations has a GL account code:
-				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='')) {
+				if(($_SESSION['Transfer']->StockLocationFromAccount !='' OR $_SESSION['Transfer']->StockLocationToAccount !='') AND
+					($_SESSION['Transfer']->StockLocationFromAccount != $_SESSION['Transfer']->StockLocationToAccount)) {
 					// Get the account code:
 					if($_SESSION['Transfer']->StockLocationToAccount !='') {
 						$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;

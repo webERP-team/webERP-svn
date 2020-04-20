@@ -547,10 +547,7 @@ display:table-cell;
 	/* Class selector for field help text. */
 }
 .page_help_text {
-	background-color:#d3d3d3;
-	background-image:url(images/question.svg);
-	background-position:top left;
-	background-repeat:no-repeat;
+	background:#d3d3d3 url(images/question.svg) top left no-repeat;
 	border:#A52A2A 1px solid;
 	box-shadow:3px 3px 4px;
 	color:#000000;

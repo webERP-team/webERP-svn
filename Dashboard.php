@@ -1,17 +1,15 @@
 <?php
 /* Display outstanding debtors, creditors, etc */
 
-include('includes/session.php');
+include ('includes/session.php');
 $Title = _('Dashboard');
-$ViewTopic = 'GeneralLedger';// RChacon: You should be in this topic ?
+$ViewTopic = 'GeneralLedger'; // RChacon: You should be in this topic ?
 $BookMark = 'Dashboard';
-include('includes/header.php');
+include ('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/gl.png" title="',// Icon image.
-	$Title, '" /> ',// Icon title.
-	$Title, '</p>';// Page title.
-
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
+$Title, '" /> ', // Icon title.
+$Title, '</p>'; // Page title.
 $Sql = "SELECT pagesecurity
 		FROM scripts
 		WHERE scripts.script = 'AgedDebtors.php'";
@@ -48,7 +46,7 @@ $Security1Result = DB_query($Sql, $ErrMsg, $DbgMsg);
 $MyUserRow = DB_fetch_array($Security1Result);
 $OrderSecurity = $MyUserRow['pagesecurity'];
 
-if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($DebtorSecurity)) {
+if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($DebtorSecurity)) {
 	echo '<br />
 		<h2>', _('Overdue Customer Balances'), '</h2>
 		<table class="selection">
@@ -71,16 +69,15 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 	$TotDue = 0;
 	$TotOD1 = 0;
 	$TotOD2 = 0;
-	$CurrDecimalPlaces = 2;//By default.
-
-	if(!isset($_POST['Salesman'])) {
+	$CurrDecimalPlaces = 2; //By default.
+	if (!isset($_POST['Salesman'])) {
 		$_POST['Salesman'] = '';
 	}
-	if($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] != '') {
 		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
 	}
-	if(trim($_POST['Salesman']) != '') {
-		$SalesLimit = " AND debtorsmaster.debtorno IN (SELECT DISTINCT debtorno FROM custbranch WHERE salesman = '".$_POST['Salesman']."') ";
+	if (trim($_POST['Salesman']) != '') {
+		$SalesLimit = " AND custbranch.salesman = '" . $_POST['Salesman'] . "' ";
 	} else {
 		$SalesLimit = '';
 	}
@@ -132,11 +129,14 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 					paymentterms,
 					holdreasons,
 					currencies,
-					debtortrans
+					debtortrans,
+					custbranch
 				WHERE debtorsmaster.paymentterms = paymentterms.termsindicator
 					AND debtorsmaster.currcode = currencies.currabrev
 					AND debtorsmaster.holdreason = holdreasons.reasoncode
 					AND debtorsmaster.debtorno = debtortrans.debtorno
+					AND custbranch.debtorno=debtorsmaster.debtorno
+					AND custbranch.branchcode=debtortrans.branchcode
 					" . $SalesLimit . "
 				GROUP BY debtorsmaster.debtorno,
 					debtorsmaster.name,
@@ -151,38 +151,43 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 					ROUND(ABS(SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)),currencies.decimalplaces) > 0";
 	$CustomerResult = DB_query($Sql, '', '', False, False); /*dont trap errors handled below*/
 
-	if(DB_error_no() != 0) {
-		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
+	if (DB_error_no() != 0) {
+		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if($debug==1) {
+		if ($debug == 1) {
 			echo '<br />', $Sql;
 		}
-		include('includes/footer.php');
+		include ('includes/footer.php');
 		exit;
 	}
 
-	while($AgedAnalysis = DB_fetch_array($CustomerResult)) {
+	while ($AgedAnalysis = DB_fetch_array($CustomerResult)) {
 		$CurrDecimalPlaces = $AgedAnalysis['decimalplaces'];
-		$DisplayDue = locale_number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$CurrDecimalPlaces);
-		$DisplayCurrent = locale_number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$CurrDecimalPlaces);
-		$DisplayBalance = locale_number_format($AgedAnalysis['balance'],$CurrDecimalPlaces);
-		$DisplayOverdue1 = locale_number_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],$CurrDecimalPlaces);
-		$DisplayOverdue2 = locale_number_format($AgedAnalysis['overdue2'],$CurrDecimalPlaces);
-		if($DisplayDue <> 0 OR $DisplayOverdue1 <> 0 OR $DisplayOverdue2 <> 0) {
-			$TotBal += $AgedAnalysis['balance'];
-			$TotCurr += ($AgedAnalysis['balance']-$AgedAnalysis['due']);
-			$TotDue += ($AgedAnalysis['due']-$AgedAnalysis['overdue1']);
-			$TotOD1 += ($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2']);
-			$TotOD2 += $AgedAnalysis['overdue2'];
+		$DisplayDue = locale_number_format($AgedAnalysis['due'] - $AgedAnalysis['overdue1'], $CurrDecimalPlaces);
+		$DisplayCurrent = locale_number_format($AgedAnalysis['balance'] - $AgedAnalysis['due'], $CurrDecimalPlaces);
+		$DisplayBalance = locale_number_format($AgedAnalysis['balance'], $CurrDecimalPlaces);
+		$DisplayOverdue1 = locale_number_format($AgedAnalysis['overdue1'] - $AgedAnalysis['overdue2'], $CurrDecimalPlaces);
+		$DisplayOverdue2 = locale_number_format($AgedAnalysis['overdue2'], $CurrDecimalPlaces);
+		if ($DisplayDue <> 0 or $DisplayOverdue1 <> 0 or $DisplayOverdue2 <> 0) {
+			$TotBal+= $AgedAnalysis['balance'];
+			$TotCurr+= ($AgedAnalysis['balance'] - $AgedAnalysis['due']);
+			$TotDue+= ($AgedAnalysis['due'] - $AgedAnalysis['overdue1']);
+			$TotOD1+= ($AgedAnalysis['overdue1'] - $AgedAnalysis['overdue2']);
+			$TotOD2+= $AgedAnalysis['overdue2'];
 			echo '<tr class="striped_row">
-					<td class="text" colspan="4"><a href="CustomerInquiry.php?CustomerID=', $AgedAnalysis['debtorno'],'"><b>',
-						$AgedAnalysis['debtorno'], ' - ', $AgedAnalysis['name'], '</b></a></td>
+					<td class="text" colspan="4"><a href="CustomerInquiry.php?CustomerID=', $AgedAnalysis['debtorno'], '"><b>', $AgedAnalysis['debtorno'], ' - ', $AgedAnalysis['name'], '</b></a></td>
 					<td class="number"><b>', $DisplayBalance, '</b></td>
 					<td class="number"><b>', $DisplayCurrent, '</b></td>
 					<td class="number" style="color:orange;"><b>', $DisplayDue, '</b></td>
 					<td class="number" style="color:red;"><b>', $DisplayOverdue1, '</b></td>
 					<td class="number" style="color:red;"><b>', $DisplayOverdue2, '</b></td>
 				</tr>';
+
+			if ($_SESSION['SalesmanLogin'] != '') {
+				$SalesLimit = " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+			} else {
+				$SalesLimit = '';
+			}
 
 			$Sql = "SELECT systypes.typename,
 						debtortrans.transno,
@@ -221,42 +226,42 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 				   FROM debtorsmaster,
 						paymentterms,
 						debtortrans,
-						systypes
+						systypes,
+						custbranch
 				   WHERE systypes.typeid = debtortrans.type
 						AND debtorsmaster.paymentterms = paymentterms.termsindicator
 						AND debtorsmaster.debtorno = debtortrans.debtorno
 						AND debtortrans.debtorno = '" . $AgedAnalysis['debtorno'] . "'
 						AND ABS(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)>0.004
+						AND custbranch.debtorno=debtorsmaster.debtorno
+						AND custbranch.branchcode=debtortrans.branchcode
+						" . $SalesLimit . "
 					ORDER BY debtortrans.trandate";
 
-			if($_SESSION['SalesmanLogin'] != '') {
-				$Sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
-			}
-
-			$DetailResult = DB_query($Sql,'','',False,False);
-			if(DB_error_no() !=0) {
-				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg(),'error');
+			$DetailResult = DB_query($Sql, '', '', False, False);
+			if (DB_error_no() != 0) {
+				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
 				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-				if($debug==1) {
+				if ($debug == 1) {
 					echo '<br />' . _('The SQL that failed was') . '<br />' . $Sql;
 				}
-				include('includes/footer.php');
+				include ('includes/footer.php');
 				exit;
 			}
 
-			while($DetailTrans = DB_fetch_array($DetailResult)) {
+			while ($DetailTrans = DB_fetch_array($DetailResult)) {
 				$DisplayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 				$DisplayBalance = locale_number_format($DetailTrans['balance'], $CurrDecimalPlaces);
-				$DisplayCurrent = locale_number_format($DetailTrans['balance']-$DetailTrans['due'], $CurrDecimalPlaces);
-				$DisplayDue = locale_number_format($DetailTrans['due']-$DetailTrans['overdue1'], $CurrDecimalPlaces);
-				$DisplayOverdue1 = locale_number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'], $CurrDecimalPlaces);
+				$DisplayCurrent = locale_number_format($DetailTrans['balance'] - $DetailTrans['due'], $CurrDecimalPlaces);
+				$DisplayDue = locale_number_format($DetailTrans['due'] - $DetailTrans['overdue1'], $CurrDecimalPlaces);
+				$DisplayOverdue1 = locale_number_format($DetailTrans['overdue1'] - $DetailTrans['overdue2'], $CurrDecimalPlaces);
 				$DisplayOverdue2 = locale_number_format($DetailTrans['overdue2'], $CurrDecimalPlaces);
 
 				$DisplayDueDate = CalcDueDate($DisplayTranDate, $DetailTrans['dayinfollowingmonth'], $DetailTrans['daysbeforedue']);
 
 				echo '<tr class="striped_row">
-						<td class="centre">', _($DetailTrans['typename']), '</td>',// Should it be left (text field) ?
-						'<td class="number">', $DetailTrans['transno'], '</td>
+						<td class="centre">', _($DetailTrans['typename']), '</td>', // Should it be left (text field) ?
+				'<td class="number">', $DetailTrans['transno'], '</td>
 						<td class="centre">', $DisplayTranDate, '</td>
 						<td class="centre">', $DisplayDueDate, '</td>
 						<td class="number">', $DisplayBalance, '</td>
@@ -266,9 +271,10 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 						<td class="number" style="color:red;">', $DisplayOverdue2, '</td>
 					</tr>';
 			} //end while there are detail transactions to show
+			
 		} //has Due now or overdue
+		
 	} //end customer aged analysis while loop
-
 	// Print totals of 'Overdue Customer Balances':
 	echo '<tr class="striped_row">
 			<td class="text"><b>', _('Totals'), '</b></td>
@@ -283,8 +289,7 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 		</tr>
 		</tbody></table>';
 } //DebtorSecurity
-
-if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PayeeSecurity)) {
+if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PayeeSecurity)) {
 	echo '<br />
 		<h2>', _('Supplier Invoices Due within 1 Month'), '</h2>
 		<table class="selection">
@@ -321,7 +326,7 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 			ORDER BY suppliers.supplierid";
 	$SuppliersResult = DB_query($Sql);
 
-	while($SuppliersToPay = DB_fetch_array($SuppliersResult)) {
+	while ($SuppliersToPay = DB_fetch_array($SuppliersResult)) {
 
 		$CurrDecimalPlaces = $SuppliersToPay['currdecimalplaces'];
 
@@ -345,29 +350,29 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 				INNER JOIN systypes ON systypes.typeid = supptrans.type
 				WHERE supptrans.supplierno = '" . $SuppliersToPay['supplierid'] . "'
 					AND supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
-					AND supptrans.duedate <='" . Date('Y-m-d', mktime(0,0,0, Date('n'),Date('j')+30,date('Y'))) . "'
+					AND supptrans.duedate <='" . Date('Y-m-d', mktime(0, 0, 0, Date('n'), Date('j') + 30, date('Y'))) . "'
 					AND supptrans.hold = 0
 				ORDER BY supptrans.supplierno,
 					supptrans.type,
 					supptrans.transno";
 
-		$TransResult = DB_query($Sql,'','',false,false);
-		if(DB_error_no() !=0) {
-			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(),'error');
+		$TransResult = DB_query($Sql, '', '', false, false);
+		if (DB_error_no() != 0) {
+			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if($debug==1) {
+			if ($debug == 1) {
 				echo '<br />' . _('The SQL that failed was') . ' ' . $Sql;
 			}
-			include('includes/footer.php');
+			include ('includes/footer.php');
 			exit;
 		}
 
 		unset($Allocs);
 		$Allocs = array();
-		$AllocCounter =0;
+		$AllocCounter = 0;
 
-		while($DetailTrans = DB_fetch_array($TransResult)) {
-			if($DetailTrans['supplierid'] != $SupplierID) { /*Need to head up for a new suppliers details */
+		while ($DetailTrans = DB_fetch_array($TransResult)) {
+			if ($DetailTrans['supplierid'] != $SupplierID) { /*Need to head up for a new suppliers details */
 				$SupplierID = $DetailTrans['supplierid'];
 				$SupplierName = $DetailTrans['suppname'];
 				//$AccumBalance = 0;
@@ -378,12 +383,12 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 			}
 
 			$DisplayFormat = '';
-			if((time()-(60*60*24)) > strtotime($DetailTrans['duedate'])) {
+			if ((time() - (60 * 60 * 24)) > strtotime($DetailTrans['duedate'])) {
 				$DisplayFormat = ' style="color:red;"';
 			}
 			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
-			$AccumBalance += $DetailTrans['balance'];
-			if($DetailTrans['type'] == 20) {// If Purchase Invoice:
+			$AccumBalance+= $DetailTrans['balance'];
+			if ($DetailTrans['type'] == 20) { // If Purchase Invoice:
 				echo '<tr class="striped_row">
 						<td class="centre">', _($DetailTrans['typename']), '</td>
 						<td class="centre">', $DislayTranDate, '</td>
@@ -391,7 +396,7 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 						<td class="number"', $DisplayFormat, '>', locale_number_format($DetailTrans['balance'], $CurrDecimalPlaces), '</td>
 						<td class="centre"', $DisplayFormat, '>', ConvertSQLDate($DetailTrans['duedate']), '</td>
 					</tr>';
-			} else {// If NOT Purchase Invoice (Creditors Payment):
+			} else { // If NOT Purchase Invoice (Creditors Payment):
 				echo '<tr class="striped_row">
 						<td class="centre">', _($DetailTrans['typename']), '</td>
 						<td class="centre">', $DislayTranDate, '</td>
@@ -412,10 +417,9 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 		</tr>
 		</tbody>
 		</table>';
-}  //PayeeSecurity
-
-if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($CashSecurity)) {
-	include('includes/GLPostings.inc');
+} //PayeeSecurity
+if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($CashSecurity)) {
+	include ('includes/GLPostings.inc');
 	echo '<br />
 		<h2>', _('Bank and Credit Card Balances'), '</h2>
 		<table class="selection">
@@ -430,7 +434,7 @@ if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($Ca
 
 	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
-	$SelectedPeriod=$LastPeriodSelected;
+	$SelectedPeriod = $LastPeriodSelected;
 
 	$Sql = "SELECT bankaccounts.accountcode,
                     bankaccounts.bankaccountcode,
@@ -441,26 +445,26 @@ if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($Ca
             ON bankaccounts.accountcode = chartmaster.accountcode
             INNER JOIN bankaccountusers
             ON bankaccounts.accountcode=bankaccountusers.accountcode
-            AND userid='" . $_SESSION['UserID'] . "'"; 
+            AND userid='" . $_SESSION['UserID'] . "'";
 
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br />' . $Sql;
-	$result1 = DB_query($Sql,$ErrMsg,$DbgMsg);
+	$Result1 = DB_query($Sql, $ErrMsg, $DbgMsg);
 
-	while($myrow = DB_fetch_array($result1)) {
+	while ($MyRow = DB_fetch_array($Result1)) {
 		/*Is the account a balance sheet or a profit and loss account */
-		$result = DB_query("SELECT pandl
+		$Result = DB_query("SELECT pandl
 						FROM accountgroups
 						INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-						WHERE chartmaster.accountcode='" . $myrow['accountcode'] ."'");
-		$PandLRow = DB_fetch_row($result);
-		if($PandLRow[0]==1) {
+						WHERE chartmaster.accountcode='" . $MyRow['accountcode'] . "'");
+		$PandLRow = DB_fetch_row($Result);
+		if ($PandLRow[0] == 1) {
 			$PandLAccount = True;
 		} else {
 			$PandLAccount = False; /*its a balance sheet account */
 		}
 
-		$Sql= "SELECT counterindex,
+		$Sql = "SELECT counterindex,
 						type,
 						typename,
 						gltrans.typeno,
@@ -474,76 +478,74 @@ if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($Ca
 					ON systypes.typeid=gltrans.type
 					LEFT JOIN tags
 					ON gltrans.tag = tags.tagref
-					WHERE gltrans.account = '" . $myrow['accountcode'] . "'
+					WHERE gltrans.account = '" . $MyRow['accountcode'] . "'
 					AND posted=1
 					AND periodno>='" . $FirstPeriodSelected . "'
 					AND periodno<='" . $LastPeriodSelected . "'
 					ORDER BY periodno, gltrans.trandate, counterindex";
-		$TransResult = DB_query($Sql,$ErrMsg);
-		if($PandLAccount==True) {
+		$TransResult = DB_query($Sql, $ErrMsg);
+		if ($PandLAccount == True) {
 			$RunningTotal = 0;
-		} else {// added to fix bug with Brought Forward Balance always being zero
+		} else { // added to fix bug with Brought Forward Balance always being zero
 			$Sql = "SELECT bfwd,
 						actual,
 						period
 					FROM chartdetails
-					WHERE chartdetails.accountcode='" . $myrow['accountcode'] . "'
+					WHERE chartdetails.accountcode='" . $MyRow['accountcode'] . "'
 					AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
-			$ErrMsg = _('The chart details for account') . ' ' . $myrow['accountcode'] . ' ' . _('could not be retrieved');
-			$ChartDetailsResult = DB_query($Sql,$ErrMsg);
+			$ErrMsg = _('The chart details for account') . ' ' . $MyRow['accountcode'] . ' ' . _('could not be retrieved');
+			$ChartDetailsResult = DB_query($Sql, $ErrMsg);
 			$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 			$RunningTotal = $ChartDetailRow['bfwd'];
 		}
 		$PeriodTotal = 0;
-		$PeriodNo = -9999;
-		while($myrow2=DB_fetch_array($TransResult)) {
-			if($myrow2['periodno']!=$PeriodNo) {
-				if($PeriodNo!=-9999) { //ie its not the first time around
+		$PeriodNo = - 9999;
+		while ($MyRow2 = DB_fetch_array($TransResult)) {
+			if ($MyRow2['periodno'] != $PeriodNo) {
+				if ($PeriodNo != - 9999) { //ie its not the first time around
 					/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
 
 					$Sql = "SELECT bfwd,
 							actual,
 							period
 						FROM chartdetails
-						WHERE chartdetails.accountcode='" . $myrow['accountcode'] . "'
+						WHERE chartdetails.accountcode='" . $MyRow['accountcode'] . "'
 						AND chartdetails.period='" . $PeriodNo . "'";
-					$ErrMsg = _('The chart details for account') . ' ' . $myrow['accountcode'] . ' ' . _('could not be retrieved');
-					$ChartDetailsResult = DB_query($Sql,$ErrMsg);
+					$ErrMsg = _('The chart details for account') . ' ' . $MyRow['accountcode'] . ' ' . _('could not be retrieved');
+					$ChartDetailsResult = DB_query($Sql, $ErrMsg);
 					$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
-					if($PeriodTotal < 0 ) { //its a credit balance b/fwd
-						if($PandLAccount==True) {
+					if ($PeriodTotal < 0) { //its a credit balance b/fwd
+						if ($PandLAccount == True) {
 							$RunningTotal = 0;
 						}
 					} else { //its a debit balance b/fwd
-						if($PandLAccount==True) {
+						if ($PandLAccount == True) {
 							$RunningTotal = 0;
 						}
 					}
 				}
-				$PeriodNo = $myrow2['periodno'];
+				$PeriodNo = $MyRow2['periodno'];
 				$PeriodTotal = 0;
 			}
-			$RunningTotal += $myrow2['amount'];
-			$PeriodTotal += $myrow2['amount'];
+			$RunningTotal+= $MyRow2['amount'];
+			$PeriodTotal+= $MyRow2['amount'];
 		}
-		$DisplayBalance=locale_number_format(($RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplayBalance = locale_number_format(($RunningTotal), $_SESSION['CompanyRecord']['decimalplaces']);
 		echo '<tr class="striped_row">
-				<td class="text">', $myrow['accountcode'], ' - ', $myrow['accountname'], '</td>
-				<td class="text">', $myrow['bankaccountname'], '</td>
+				<td class="text">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</td>
+				<td class="text">', $MyRow['bankaccountname'], '</td>
 				<td class="number">', $DisplayBalance, '</td>
 			</tr>';
 	} //each bank account
 	echo '</tbody>
 		</table>';
 } //CashSecurity
-
-if(in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($OrderSecurity)) {
+if (in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($OrderSecurity)) {
 	echo '<br />
 		<h2>', _('Outstanding Orders'), '</h2>
 		<table class="selection">
-		<thead>',
-			'<tr>
+		<thead>', '<tr>
 				<th>', _('View Order'), '</th>
 				<th>', _('Customer'), '</th>
 				<th>', _('Branch'), '</th>
@@ -586,18 +588,18 @@ if(in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($O
 						salesorders.printedpackingslip
 					ORDER BY salesorders.orddate DESC, salesorders.orderno";
 	$ErrMsg = _('No orders or quotations were returned by the SQL because');
-	$SalesOrdersResult = DB_query($Sql,$ErrMsg);
+	$SalesOrdersResult = DB_query($Sql, $ErrMsg);
 
 	/*show a table of the orders returned by the SQL */
-	if(DB_num_rows($SalesOrdersResult)>0) {
+	if (DB_num_rows($SalesOrdersResult) > 0) {
 		$OrdersTotal = 0;
 		$FontColor = '';
 
-		while($MyRow=DB_fetch_array($SalesOrdersResult)) {
+		while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 			$OrderDate = ConvertSQLDate($MyRow['orddate']);
 			$FormatedDelDate = ConvertSQLDate($MyRow['deliverydate']);
-			$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
-			if(DateDiff(Date($_SESSION['DefaultDateFormat']), $OrderDate, 'd') > 5) {
+			$FormatedOrderValue = locale_number_format($MyRow['ordervalue'], $_SESSION['CompanyRecord']['decimalplaces']);
+			if (DateDiff(Date($_SESSION['DefaultDateFormat']), $OrderDate, 'd') > 5) {
 				$FontColor = ' style="color:green; font-weight:bold"';
 			}
 
@@ -609,18 +611,16 @@ if(in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($O
 					<td class="centre"', $FontColor, '>', $OrderDate, '</td>
 					<td class="centre"', $FontColor, '>', $FormatedDelDate, '</td>
 					<td class="text"', $FontColor, '>', html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8'), '</td>
-					<td class="number"', $FontColor , '>', $FormatedOrderValue, '</td>
+					<td class="number"', $FontColor, '>', $FormatedOrderValue, '</td>
 				</tr>';
-			$OrdersTotal += $MyRow['ordervalue'];
-		}// END while($MyRow=DB_fetch_array($SalesOrdersResult))
-
-		echo	'<tr>
+			$OrdersTotal+= $MyRow['ordervalue'];
+		} // END while($MyRow=DB_fetch_array($SalesOrdersResult))
+		echo '<tr>
 					<td class="number" colspan="7"><b>', _('Total Order(s) Value in'), ' ', $_SESSION['CompanyRecord']['currencydefault'], ' :</b></td>
-					<td class="number"><b>', locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</b></td>
+					<td class="number"><b>', locale_number_format($OrdersTotal, $_SESSION['CompanyRecord']['decimalplaces']), '</b></td>
 				</tr>';
 	} //rows > 0
-
 	echo '</tbody></table>';
 } //OrderSecurity
-include('includes/footer.php');
+include ('includes/footer.php');
 ?>
