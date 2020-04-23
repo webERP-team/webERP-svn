@@ -1,9 +1,9 @@
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.15  Distrib 10.0.38-MariaDB, for debian-linux-gnu (i686)
+-- MySQL dump 10.16  Distrib 10.1.44-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	10.0.38-MariaDB-0ubuntu0.16.04.1
+-- Server version	10.1.44-MariaDB-0ubuntu0.18.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -391,7 +391,8 @@ CREATE TABLE `contracts` (
   KEY `WO` (`wo`),
   KEY `loccode` (`loccode`),
   KEY `DebtorNo` (`debtorno`,`branchcode`),
-  CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`debtorno`, `branchcode`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
+  KEY `contracts_ibfk_1` (`branchcode`,`debtorno`),
+  CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`),
   CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
   CONSTRAINT `contracts_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -702,28 +703,6 @@ CREATE TABLE `debtortypenotes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `deliverynotes`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `deliverynotes` (
-  `deliverynotenumber` int(11) NOT NULL,
-  `deliverynotelineno` tinyint(4) NOT NULL,
-  `salesorderno` int(11) NOT NULL,
-  `salesorderlineno` int(11) NOT NULL,
-  `qtydelivered` double NOT NULL DEFAULT '0',
-  `printed` tinyint(4) NOT NULL DEFAULT '0',
-  `invoiced` tinyint(4) NOT NULL DEFAULT '0',
-  `deliverydate` date NOT NULL DEFAULT '1000-01-01',
-  PRIMARY KEY (`deliverynotenumber`,`deliverynotelineno`),
-  KEY `deliverynotes_ibfk_2` (`salesorderno`,`salesorderlineno`),
-  CONSTRAINT `deliverynotes_ibfk_1` FOREIGN KEY (`salesorderno`) REFERENCES `salesorders` (`orderno`),
-  CONSTRAINT `deliverynotes_ibfk_2` FOREIGN KEY (`salesorderno`, `salesorderlineno`) REFERENCES `salesorderdetails` (`orderno`, `orderlineno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `departments`
 --
 
@@ -854,19 +833,18 @@ CREATE TABLE `emailsettings` (
 CREATE TABLE `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `surname` varchar(20) NOT NULL,
-  `firstname` varchar(20) NOT NULL,
-  `stockid` varchar(20) NOT NULL COMMENT 'FK with stockmaster',
-  `manager` int(11) DEFAULT NULL COMMENT 'an employee also in this table',
+  `firstname` varchar(30) NOT NULL,
+  `stockid` varchar(20) NOT NULL COMMENT 'FK with stockmaster - ',
+  `manager` int(11) DEFAULT NULL,
   `normalhours` double NOT NULL DEFAULT '40',
-  `userid` varchar(20) NOT NULL DEFAULT '' COMMENT 'loose FK with www-users will have some employees who are not users',
+  `userid` varchar(20) NOT NULL,
   `email` varchar(55) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `surname` (`surname`),
   KEY `firstname` (`firstname`),
   KEY `stockid` (`stockid`),
   KEY `manager` (`manager`),
-  KEY `userid` (`userid`),
-  CONSTRAINT `stk_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
+  KEY `userid` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1530,8 +1508,9 @@ CREATE TABLE `orderdeliverydifferenceslog` (
   KEY `DebtorNo` (`debtorno`,`branch`),
   KEY `Can_or_BO` (`can_or_bo`),
   KEY `OrderNo` (`orderno`),
+  KEY `orderdeliverydifferenceslog_ibfk_2` (`branch`,`debtorno`),
   CONSTRAINT `orderdeliverydifferenceslog_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `orderdeliverydifferenceslog_ibfk_2` FOREIGN KEY (`debtorno`, `branch`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
+  CONSTRAINT `orderdeliverydifferenceslog_ibfk_2` FOREIGN KEY (`branch`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`),
   CONSTRAINT `orderdeliverydifferenceslog_ibfk_3` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`orderno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -3458,7 +3437,7 @@ CREATE TABLE `timesheets` (
   `day5` double NOT NULL DEFAULT '0',
   `day6` double NOT NULL DEFAULT '0',
   `day7` double NOT NULL DEFAULT '0',
-  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0=entered 1=submitted 2=approved',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `workcentre` (`workcentre`),
   KEY `employees` (`employeeid`),
@@ -3629,12 +3608,12 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-16 23:14:16
--- MySQL dump 10.15  Distrib 10.0.38-MariaDB, for debian-linux-gnu (i686)
+-- Dump completed on 2020-04-21 11:36:32
+-- MySQL dump 10.16  Distrib 10.1.44-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	10.0.38-MariaDB-0ubuntu0.16.04.1
+-- Server version	10.1.44-MariaDB-0ubuntu0.18.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
@@ -6598,42 +6577,42 @@ INSERT INTO `salesglpostings` VALUES (3,'AN','ZPAYT','7230','7230','AN');
 -- Dumping data for table `systypes`
 --
 
-INSERT INTO `systypes` VALUES (0,'Journal - GL',0);
-INSERT INTO `systypes` VALUES (1,'Payment - GL',0);
-INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
+INSERT INTO `systypes` VALUES (0,'Journal - GL',8);
+INSERT INTO `systypes` VALUES (1,'Payment - GL',7);
+INSERT INTO `systypes` VALUES (2,'Receipt - GL',1);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (4,'Journal Template Number',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',0);
-INSERT INTO `systypes` VALUES (11,'Credit Note',0);
-INSERT INTO `systypes` VALUES (12,'Receipt',0);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',2);
+INSERT INTO `systypes` VALUES (11,'Credit Note',1);
+INSERT INTO `systypes` VALUES (12,'Receipt',5);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
-INSERT INTO `systypes` VALUES (16,'Location Transfer',0);
-INSERT INTO `systypes` VALUES (17,'Stock Adjustment',0);
-INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
+INSERT INTO `systypes` VALUES (16,'Location Transfer',28);
+INSERT INTO `systypes` VALUES (17,'Stock Adjustment',28);
+INSERT INTO `systypes` VALUES (18,'Purchase Order',37);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',0);
-INSERT INTO `systypes` VALUES (21,'Debit Note',0);
-INSERT INTO `systypes` VALUES (22,'Creditors Payment',0);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',45);
+INSERT INTO `systypes` VALUES (21,'Debit Note',8);
+INSERT INTO `systypes` VALUES (22,'Creditors Payment',11);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',0);
-INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
-INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
-INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
-INSERT INTO `systypes` VALUES (30,'Sales Order',0);
-INSERT INTO `systypes` VALUES (31,'Shipment Close',0);
-INSERT INTO `systypes` VALUES (32,'Contract Close',0);
-INSERT INTO `systypes` VALUES (35,'Cost Update',0);
-INSERT INTO `systypes` VALUES (36,'Exchange Difference',0);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',59);
+INSERT INTO `systypes` VALUES (26,'Work Order Receipt',8);
+INSERT INTO `systypes` VALUES (28,'Work Order Issue',17);
+INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
+INSERT INTO `systypes` VALUES (30,'Sales Order',12);
+INSERT INTO `systypes` VALUES (31,'Shipment Close',28);
+INSERT INTO `systypes` VALUES (32,'Contract Close',6);
+INSERT INTO `systypes` VALUES (35,'Cost Update',26);
+INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
 INSERT INTO `systypes` VALUES (37,'Tenders',0);
-INSERT INTO `systypes` VALUES (38,'Stock Requests',0);
-INSERT INTO `systypes` VALUES (40,'Work Order',0);
-INSERT INTO `systypes` VALUES (41,'Asset Addition',0);
-INSERT INTO `systypes` VALUES (42,'Asset Category Change',0);
-INSERT INTO `systypes` VALUES (43,'Delete w/down asset',0);
-INSERT INTO `systypes` VALUES (44,'Depreciation',0);
-INSERT INTO `systypes` VALUES (49,'Import Fixed Assets',0);
+INSERT INTO `systypes` VALUES (38,'Stock Requests',2);
+INSERT INTO `systypes` VALUES (40,'Work Order',37);
+INSERT INTO `systypes` VALUES (41,'Asset Addition',1);
+INSERT INTO `systypes` VALUES (42,'Asset Category Change',1);
+INSERT INTO `systypes` VALUES (43,'Delete w/down asset',1);
+INSERT INTO `systypes` VALUES (44,'Depreciation',1);
+INSERT INTO `systypes` VALUES (49,'Import Fixed Assets',1);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
-INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
+INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',21);
 INSERT INTO `systypes` VALUES (600,'Auto Supplier Number',0);
 
 --
@@ -6693,7 +6672,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$ylhVMrIsvAGXJUZw19E02.kRCMBmR4zXEr7v6N9pVDkk.VDk/gc1G','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2019-06-09 21:13:48','','A4','1,1,1,1,1,1,1,1,1,1,1',0,1,1,0,50,'professional','en_US.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2018-10-28 21:38:56','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'xenos','en_GB.utf8',0,0);
 INSERT INTO `www_users` VALUES ('WEB0000021','$2y$10$aTt/treAhiVVd0mPw1Ums.GcOxBtX/3cIsD1RL//0iT3QUYjvIDlS','Phil Daintree','WEB0000021','','','1234564','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000021','A4','1,0,0,0,0,0,0,0,0,0,0',0,1,1,0,30,'','en_GB.utf8',0,0);
 
 --
@@ -6889,7 +6868,7 @@ INSERT INTO `config` VALUES ('InventoryManagerEmail','test@company.com');
 INSERT INTO `config` VALUES ('InvoicePortraitFormat','0');
 INSERT INTO `config` VALUES ('InvoiceQuantityDefault','1');
 INSERT INTO `config` VALUES ('ItemDescriptionLanguages',',fr_FR.utf8,');
-INSERT INTO `config` VALUES ('LastDayofWeek','0');
+INSERT INTO `config` VALUES ('LastDayOfWeek','0');
 INSERT INTO `config` VALUES ('LogPath','');
 INSERT INTO `config` VALUES ('LogSeverity','0');
 INSERT INTO `config` VALUES ('MaxImageSize','300');
@@ -6920,7 +6899,7 @@ INSERT INTO `config` VALUES ('RadioBeaconStockLocation','BL');
 INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
 INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
-INSERT INTO `config` VALUES ('reports_dir','companies/weberpdemo/reports');
+INSERT INTO `config` VALUES ('reports_dir','companies/weberpdemo/EDI_Incoming_Orders');
 INSERT INTO `config` VALUES ('RequirePickingNote','0');
 INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
 INSERT INTO `config` VALUES ('ShopAboutUs','This web-shop software has been developed by Logic Works Ltd for webERP. For support contact Phil Daintree by rn<a href=\\\"mailto:support@logicworks.co.nz\\\">email</a>rn');
@@ -6970,7 +6949,7 @@ INSERT INTO `config` VALUES ('SmtpSetting','0');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
-INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2019-06-09');
+INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
 INSERT INTO `config` VALUES ('VersionNumber','4.15.1');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','0');
 INSERT INTO `config` VALUES ('WikiApp','DokuWiki');
@@ -7072,7 +7051,7 @@ INSERT INTO `scripts` VALUES ('EDISendInvoices.php',15,'Processes invoiced EDI c
 INSERT INTO `scripts` VALUES ('EmailConfirmation.php',2,'');
 INSERT INTO `scripts` VALUES ('EmailCustStatements.php',2,'Email Customer Statements');
 INSERT INTO `scripts` VALUES ('EmailCustTrans.php',2,'Emails selected invoice or credit to the customer');
-INSERT INTO `scripts` VALUES ('Employees.php',20,'Employees requiring time-sheets maintenance and entry ');
+INSERT INTO `scripts` VALUES ('Employees.php',10,'Employees requiring time-sheets maintenance and entry ');
 INSERT INTO `scripts` VALUES ('ExchangeRateTrend.php',2,'Shows the trend in exchange rates as retrieved from ECB');
 INSERT INTO `scripts` VALUES ('Factors.php',5,'Defines supplier factor companies');
 INSERT INTO `scripts` VALUES ('FixedAssetCategories.php',11,'Defines the various categories of fixed assets');
@@ -7556,7 +7535,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-16 23:14:16
+-- Dump completed on 2020-04-21 11:36:32
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
