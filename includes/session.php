@@ -140,7 +140,8 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 		}
 	}
 
-	header('Location: index.php');
+	header('Location: index.php'); //go back to the main index/login
+	
 } elseif (isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 	if (!isset($_SESSION['DatabaseName'])){
 		$_SESSION['AllowedPageSecurityTokens'] = array();

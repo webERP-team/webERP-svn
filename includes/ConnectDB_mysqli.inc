@@ -10,6 +10,7 @@ global $db;	// Make sure it IS global, regardless of our context
 
 $db = mysqli_connect($host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $mysqlport);
 
+
 //this statement sets the charset to be used for sending data to and from the db server
 //if not set, both mysqli server and mysqli client/library may assume otherwise
 mysqli_set_charset($db, 'utf8');
@@ -35,7 +36,7 @@ if(isset($DatabaseName)) {
 		echo '<br /><a href="index.php">' . _('Back to login page') . '</a>';
 		unset ($DatabaseName);
 		exit;
-	}
+	} 
 } else {
 	if(!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
