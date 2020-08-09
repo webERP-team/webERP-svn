@@ -40,144 +40,80 @@ if(!extension_loaded('mbstring')){
 		if(!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])){//get users preferred language
 			$ClientLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,5);
 			switch($ClientLang){
-				case 'ar-EG':
-					$Language = 'ar_EG.utf8';
-					break;
-				case 'ar-SY':
-					$Language = 'ar_SY.utf8';
-					break;
+				case 'ar-EG': // Case fall-through intentional for any of
+				case 'ar-SY': // these matched languages.
 				case 'cs-CZ':
-					$Language = 'cs_CZ.utf8';
-					break;
 				case 'de-DE':
-					$Language = 'de_DE.utf8';
-					break;
 				case 'el-GR':
-					$Language = 'el_GR.utf8';
-					break;
 				case 'en-GB':
-					$Language = 'en_GB.utf8';
-					break;
 				case 'en-US':
-					$Language = 'en_US.utf8';
-					break;
 				case 'es-ES':
-					$Language = 'es_ES.utf8';
-					break;
 				case 'et-EE':
-					$Language = 'et_EE.utf8';
-					break;
 				case 'fa-IR':
-					$Language = 'fa_IR.utf8';
-					break;
 				case 'fr-CA':
-					$Language = 'fr_CA.utf8';
-					break;
 				case 'fr-FR':
-					$Language = 'fr_FR.utf8';
-					break;
 				case 'he-IL':
-					$Language = 'he_IL.utf8';
-					break;
 				case 'hi-IN':
-					$Language = 'hi_IN.utf8';
-					break;
 				case 'hr-HR':
-					$Language = 'hr_HR.utf8';
-					break;
 				case 'hu-HU':
-					$Language = 'hu_HU.utf8';
-					break;
 				case 'id-ID':
-					$Language = 'id_ID.utf8';
-					break;
 				case 'it-IT':
-					$Language = 'it_IT.utf8';
-					break;
 				case 'ja-JP':
-					$Language = 'ja_JP.utf8';
-					break;
 				case 'ko-KR':
-					$Language = 'ko_KR.utf8';
-					break;
 				case 'lv-LV':
-					$Language = 'lv_LV.utf8';
-					break;
 				case 'mr-IN':
-					$Language = 'mr_IN.utf8';
-					break;
 				case 'nl-NL':
-					$Language = 'nl_NL.utf8';
-					break;
 				case 'pl-PL':
-					$Language = 'pl_PL.utf8';
-					break;
 				case 'pt-BR':
-					$Language = 'pt_BR.utf8';
-					break;
 				case 'pt-PT':
-					$Language = 'pt_PT.utf8';
-					break;
 				case 'ro-RO':
-					$Language = 'ro_RO.utf8';
-					break;
 				case 'ru-RU':
-					$Language = 'ru_RU.utf8';
-					break;
 				case 'sq-AL':
-					$Language = 'sq_AL.utf8';
-					break;
 				case 'sv-SE':
-					$Language = 'sv_SE.utf8';
-					break;
 				case 'sw-KE':
-					$Language = 'sw_KE.utf8';
-					break;
 				case 'tr-TR':
-					$Language = 'tr_TR.utf8';
-					break;
 				case 'vi-VN':
-					$Language = 'vi_VN.utf8';
-					break;
 				case 'zh-CN':
-					$Language = 'zh_CN.utf8';
-					break;
 				case 'zh-HK':
-					$Language = 'zh_HK.utf8';
-					break;
 				case 'zh-TW':
-					$Language = 'zh_TW.utf8';
+					// Convert the hypen to underscore and append .utf8 to
+					// match our locale references.
+					$Language = str_replace('-', '_', $ClientLang) . '.utf8';
 					break;
+
 				default:
 					$Language = 'en_GB.utf8';
-
+					break;
 			}
+
 			$DefaultLanguage = $Language;
-			if(isset($_SESSION['Language'])){
-				unset($_SESSION['Language']);
-			}
+			unset($_SESSION['Language']);
 
-		}else{
+		} else {
 			$Language = 'en_US.utf8';
 			$DefaultLanguage = 'en_US.utf8';
 		}
+
 		//This is the first step - let us initialise some variables (esp. important if installer is rerun)
 		$DatabaseName = '';
 		$DefaultDatabase = '';
+	}
 
-	}else{
+	include('../includes/MiscFunctions.php');
 
+	if (isset($_POST['Language']) && checkLanguageChoice($_POST['Language'])) {
 		$Language = $_POST['Language'];
-		if(substr($Language,0,2)=='zh'){//To help set the default time zone
+
+		if(strpos($Language, 'zh') !== false) { // To help set the default time zone
 			date_default_timezone_set('Asia/Shanghai');
 		}
-		$DefaultLanguage = $_POST['Language'];
 
-		}
+		$DefaultLanguage = $Language;
+	}
 
 	$PathPrefix = '../';//To make the LanguageSetup.php script run properly
 	include('../includes/LanguageSetup.php');
-	include('../includes/MiscFunctions.php');
+
 	$DefaultTheme = 'xenos';
 
 	// Prevent the installation file from running again:
@@ -803,33 +739,32 @@ function Installation($DefaultLanguage)
             <ul>
             <?php include('../includes/LanguagesArray.php'); ?>
                 <li><label for="Language"><?php echo _('Language').':'; ?>&#160;</label>
-                <select id="Language" name="Language">
+                    <select id="Language" name="Language">
             <?php
-                if(substr($DefaultLanguage,0,2) !='en'){//ensure that the bilingual only display when the language is not english
-                    foreach($LanguagesArray as $Key => $Language1){//since we only use the first 2 characters to separate the language, there are some
-                                            //chance that different locale but use same first 2 letters.
-                        if(!isset($SelectedKey) and substr($DefaultLanguage,0,2) == substr($Key,0,2)){
-                            $SelectedKey = $Key;
-                            echo '<option value="'.$Key.'" selected="selected">' . $Language1['LanguageName'].' - '.$Language1['WindowsLocale'] . '</option>';
-                        }
-                        if(!isset($SelectedKey) or (isset($SelectedKey) and $Key != $SelectedKey)){
-                            echo '<option value="'.$Key.'" >' . $Language1['LanguageName'].' - '.$Language1['WindowsLocale'] . '</option>';
+                if (strpos($DefaultLanguage, 'en') === false) { //ensure that the bilingual only display when the language is not english
+                    foreach ($LanguagesArray as $Key => $Language1) {
+                        if($Key == $DefaultLanguage) {
+                            echo '<option value="' . $Key . '" selected="selected">'
+                                 . $Language1['LanguageName'] . ' - '
+                                 . $Language1['WindowsLocale'] . '</option>';
+                        } else {
+                            echo '<option value="' . $Key . '" >'
+                                 . $Language1['LanguageName'] . ' - '
+                                 . $Language1['WindowsLocale'] . '</option>';
                         }
                     }
-                }else{
-                    foreach($LanguagesArray as $Key => $Language1){
-                        if(!isset($SelectedKey) and substr($Key,0,2) == 'en'){
-                            $SelectedKey = $Key;
-                            echo '<option value="'.$Key.'" selected="selected">' . $Language1['LanguageName'] . '</option>';
-                        }
-                        if(!isset($SelectedKey) or (isset($SelectedKey) and $SelectedKey != $Key)){
-
-                            echo '<option value="'.$Key.'" >' . $Language1['LanguageName'] . '</option>';
+                } else {
+                    foreach ($LanguagesArray as $Key => $Language1) {
+                        if($Key == $DefaultLanguage){
+                            echo '<option value="'.$Key.'" selected="selected">'
+                                 . $Language1['LanguageName'] . '</option>';
+                        } else {
+                            echo '<option value="'.$Key.'" >'
+                                 . $Language1['LanguageName'] . '</option>';
                         }
                     }
                 }
-
-                ?>
+            ?>
                     </select>
                 </li>
             </ul>

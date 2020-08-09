@@ -21,7 +21,7 @@ button img {
 body {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
-	background:url(images/stripe.png) white;
+	background: repeating-linear-gradient(315deg,#6B6B6B,#6B6B6B 10px,#737373 10px,#737373 20px);
 	margin:0;
 	padding:5px;
 }

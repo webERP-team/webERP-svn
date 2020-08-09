@@ -9,7 +9,11 @@ $BookMark = 'UserMaintenance';
 
 if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
 	if($_POST['UserID'] == $_POST['ID']) {
-		$_POST['Language'] = $_POST['UserLanguage'];
+		if (isset($_POST['UserLanguage']) && !checkLanguageChoice($_POST['UserLanguage'])) {
+			$_POST['UserLanguage'] = $DefaultLanguage;
+		}
+	} else if (isset($_POST['UserLanguage']) && !checkLanguageChoice($_POST['UserLanguage'])) {
+		$_POST['UserLanguage'] = $DefaultLanguage;
 	}
 }
 
@@ -24,7 +28,7 @@ echo '<br />';// Extra line after page_title_text.
 if($AllowDemoMode) {
 	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
 	exit;
-} 
+}
 $ModuleList = array(
 	_('Sales'),
 	_('Receivables'),

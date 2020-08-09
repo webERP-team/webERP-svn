@@ -563,4 +563,11 @@ function fShowPageHelp($HelpText) {
 	return;
 }
 
-?>
+
+/*
+ * Improve language check to avoid potential LFI issue.
+ * Reported by: https://lyhinslab.org
+ */
+function checkLanguageChoice($language) {
+	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
+}

@@ -279,6 +279,9 @@ If (isset($_POST['PrintPDF'])) {
 	$CatTot_Val=0;
 
 	require_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
+	$pdf->SetFillColor(238, 238, 238);
+	$fill = false;
+
 	While ($PriceList = DB_fetch_array($PricesResult)) {
 
 		if ($CurrCode != $PriceList['currabrev']) {
@@ -306,15 +309,17 @@ If (isset($_POST['PrintPDF'])) {
 		}
 
 		$FontSize = 8;
-		$pdf->addText($Left_Margin, $YPos, $FontSize, $PriceList['stockid']);
-		$pdf->addText($Left_Margin+80, $YPos, $FontSize, $PriceList['description']);
-		$pdf->addText($Left_Margin+280, $YPos, $FontSize, ConvertSQLDate($PriceList['startdate']));
+		$pdf->addTextWrap($Left_Margin, $YPos-$FontSize, 80, $FontSize, $PriceList['stockid'], 'left', 0, $fill);
+		$pdf->addTextWrap($Left_Margin+80, $YPos-$FontSize, 200, $FontSize, $PriceList['description'], 'left', 0, $fill);
+		$pdf->addTextWrap($Left_Margin+280, $YPos-$FontSize, 60, $FontSize, ConvertSQLDate($PriceList['startdate']), 'left', 0, $fill);
+
 		if ($PriceList['enddate']!='0000-00-00') {
 			$DisplayEndDate = ConvertSQLDate($PriceList['enddate']);
 		} else {
 			$DisplayEndDate = _('No End Date');
 		}
-		$pdf->addText($Left_Margin+320, $YPos, $FontSize, $DisplayEndDate);
+
+		$pdf->addTextWrap($Left_Margin+320, $YPos-$FontSize, 80, $FontSize, $DisplayEndDate, 'left', 0, $fill);
 
 		// Shows gross profit percentage:
 		if ($_POST['ShowGPPercentages']=='Yes') {
@@ -323,18 +328,21 @@ If (isset($_POST['PrintPDF'])) {
 				$DisplayGPPercent = locale_number_format((($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price']), 2) . '%';
 			}
 			$pdf->addTextWrap($Page_Width-$Right_Margin-128, $YPos-$FontSize, 32, $FontSize,
-				$DisplayGPPercent, 'right');
+				$DisplayGPPercent, 'right', 0, $fill);
+		} else {
+			$pdf->addTextWrap($Page_Width-$Right_Margin-128, $YPos-$FontSize, 32, $FontSize, '', 'right', 0, $fill);
 		}
+
 		// Displays unit price:
-		$pdf->addTextWrap($Page_Width-$Right_Margin-96, $YPos-$FontSize, 96, $FontSize,
-			locale_number_format($PriceList['price'],$PriceList['decimalplaces']), 'right');
+		$pdf->addTextWrap($Page_Width-$Right_Margin-50, $YPos-$FontSize, 50, $FontSize,
+			locale_number_format($PriceList['price'],$PriceList['decimalplaces']), 'right', 0, $fill);
 
 		if ($_POST['CustomerSpecials']=='Customer Special Prices Only') {
 			/*Need to show to which branch the price relates */
 			if ($PriceList['branchcode']!='') {
-				$pdf->addText($Left_Margin+376, $YPos, $FontSize, $PriceList['brname']);
+				$pdf->addTextWrap($Left_Margin+425, $YPos-$FontSize, 50, $FontSize, $PriceList['brname'], 'left', 0, $fill);
 			} else {
-				$pdf->addText($Left_Margin+376, $YPos, $FontSize, _('All'));
+				$pdf->addTextWrap($Left_Margin+425, $YPos-$FontSize, 50, $FontSize, _('All'), 'left', 0, $fill);
 			}
 			$YPos -= $FontSize;// End-of-line line-feed.
 
@@ -364,7 +372,7 @@ If (isset($_POST['PrintPDF'])) {
 						PageHeader();
 						$YPosImage = $YPos;// Resets the image bottom $YPos.
 					}
-					$LeftOvers = $pdf->addTextWrap($XPos, $YPos-$FontSize2, $Width, $FontSize2, $LeftOvers);
+					$LeftOvers = $pdf->addTextWrap($XPos, $YPos-$FontSize2, $Width, $FontSize2, $LeftOvers, 'j', 0, $fill);
 					$YPos -= $FontSize2;
 				}
 			}
@@ -373,6 +381,7 @@ If (isset($_POST['PrintPDF'])) {
 			$YPos = min($YPosImage, $YPos);
 			$YPos -= $FontSize;// Jumps additional line after the image and the description.
 		} else {
+			$pdf->addTextWrap($Left_Margin+425, $YPos-$FontSize, 50, $FontSize, '', 'left', 0, $fill);
 			$YPos -= $FontSize;// End-of-line line-feed.
 
 		}/* Endif full descriptions*/
@@ -380,6 +389,7 @@ If (isset($_POST['PrintPDF'])) {
 		if ($YPos < $Bottom_Margin + $line_height) {
 			PageHeader();
 		}
+		$fill = !$fill;
 	} /*end inventory valn while loop */
 
 	// Warns if obsolete items are included:
