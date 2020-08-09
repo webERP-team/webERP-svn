@@ -42,6 +42,8 @@ Where "yourhost" is the host web-server. The install should start automatically.
 
 The install script checks for the appropriate permissions and will not even attempt to install unless the web-server has the necessary write access to the files.
 
+There is a youtube video explaining the installation https://www.youtube.com/watch?v=2zcxTYP__SQ
+
 
 Manual Installation
 
@@ -226,7 +228,7 @@ http://yourdomain/webERP/ in your browser,
 
 enter the web access password if you amended the .htaccess file as discussed above, accept all cookies, and complete the installation form.
 
-You will need to ensure that the directory where you have installed is writable by the system user that the web-server runs as - otherwise the installer will not be able to write the new config.php file.
+You will need to ensure that the directory where you have installed is writable by the web-server system user that the web-server runs as - otherwise the installer will not be able to write the new config.php file.
 
 In step 4 uncheck "Install Tables", because that was done above, and
 enter the MySQL password to access the system that you used above.
@@ -298,11 +300,6 @@ $MaximumExecutionTime =120;
 //$SessionSavePath = '/tmp';
 
 
-// which encryption function should be used
-//$CryptFunction = "md5"; // MD5 Hash
-$CryptFunction = "sha1"; // SHA1 Hash
-//$CryptFunction = ""; // Plain Text
-
 
 4. Logging In For the First Time
 
@@ -355,4 +352,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
 
 A copy of the GNU General Public License is included in the doc directory along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-Copyright weberp.org 2003-2013 - Contact: info@weberp.org
+Copyright weberp.org 2003-2020 - Contact: info@weberp.org

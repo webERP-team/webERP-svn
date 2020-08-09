@@ -41,7 +41,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 		include('includes/footer.php');
 		exit;
 	}
-    echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '">
+    echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table>
 			<tr>
@@ -479,7 +479,7 @@ if (isset($_SESSION['Statement'])) {
 	//print_r($_SESSION['Statement']);
 
 
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" >';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" >';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (!isset($_SESSION['Statement']->BankGLAccount)) {
 		$AllowImport = false;

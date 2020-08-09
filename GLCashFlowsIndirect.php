@@ -54,10 +54,10 @@ if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in anot
 }
 
 // Merges gets into posts:
-if(isset($_GET['PeriodFrom'])) {
+if(isset($_GET['PeriodFrom']) AND is_numeric($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];
 }
-if(isset($_GET['PeriodTo'])) {
+if(isset($_GET['PeriodTo']) AND is_numeric($_GET['PeriodTo'])) {
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
 if(isset($_GET['ShowBudget'])) {
@@ -91,12 +91,18 @@ if($_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 // Main code:
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
+		
 	echo '<div class="sheet">';// Division to identify the report block.
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		// Page title as IAS1 numerals 10 and 51:
 		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />'; // Page title, reporting entity.
+	if (!is_numeric($_POST['PeriodFrom']) OR !is_numeric($_POST['PeriodTo'])) {
+		prnMsg(_('The period to and period from must both be entered as numbers'),'error');
+		include('includes/footer.php');
+		exit;
+	} 
 	$Result = DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodFrom']);
 	$PeriodFromName = DB_fetch_array($Result);
 	$Result = DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodTo']);
@@ -168,7 +174,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				<td>&nbsp;</td>
 				<td class="text">', _('Net profit for the period'), '</td>';
 		// Net profit for the period:
-		$SelectNetProfit = "Sum(CASE WHEN (chartdetails.period >= '" . $_POST['PeriodFrom'] . "' AND chartdetails.period <= '" . $_POST['PeriodTo'] . "') THEN -chartdetails.budget ELSE 0 END) AS BudgetProfit,";// ShowBudget=ON vs. ShowBudget=OFF.*/
+		$SelectNetProfit = "Sum(CASE WHEN (chartdetails.period >= '" . $_POST['PeriodFrom'] . "' AND chartdetails.period <= '" . int($_POST['PeriodTo'] . "') THEN -chartdetails.budget ELSE 0 END) AS BudgetProfit,";// ShowBudget=ON vs. ShowBudget=OFF.*/
 		$Sql = "SELECT
 					Sum(CASE WHEN (chartdetails.period >= '" . $_POST['PeriodFrom'] . "' AND chartdetails.period <= '" . $_POST['PeriodTo'] . "') THEN -chartdetails.actual ELSE 0 END) AS ActualProfit," .
 					$SelectNetProfit .

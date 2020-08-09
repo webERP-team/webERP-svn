@@ -672,7 +672,7 @@ if(isset($_GET['Delete'])) {
 		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		DB_Txn_Commit();
 		prnMsg(_('The item in this work order has been cancelled'),'success');
-		header('Location: '. $_SERVER['PHP_SELF'] . '?WO=' . $_GET['WO']);
+		header('Location: '. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?WO=' . $_GET['WO']);
 	}
 }
 
