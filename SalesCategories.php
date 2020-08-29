@@ -147,21 +147,19 @@ if (isset($SearchResult)) {
 		$SQL = "SELECT salescatname FROM salescat WHERE salescatid='" . $SelectedCategory . "'";
 		$Result = DB_query($SQL);
 		$NameRow = DB_fetch_array($Result);
-		echo '<input type="hidden" name="SelectedCategory" value="', $SelectedCategory, '" />';
-
-		echo '<table cellpadding="2">';
-
-		echo '<thead>
-				<tr>
-					<th colspan="6">', _('Add items to sales category'), ' ', $NameRow['salescatname'], '(', $SelectedCategory, ')</th>
-				</tr>
-				<tr>
-					<th class="SortedColumn">', _('Code'), '</th>
-					<th class="SortedColumn">', _('Description'), '</th>
-					<th>', _('Units'), '</th>
-					<th colspan="2">', _('Add to Sales Category'), '</th>
-					<th>', _('Manuafacturer'), '</th>
-				</tr>
+		echo '<input type="hidden" name="SelectedCategory" value="', $SelectedCategory, '" />
+				<table cellpadding="2">
+				<thead>
+					<tr>
+						<th colspan="6">', _('Add items to sales category'), ' ', $NameRow['salescatname'], '(', $SelectedCategory, ')</th>
+					</tr>
+					<tr>
+						<th class="SortedColumn">', _('Code'), '</th>
+						<th class="SortedColumn">', _('Description'), '</th>
+						<th>', _('Units'), '</th>
+						<th colspan="2">', _('Add to Sales Category'), '</th>
+						<th>', _('Manuafacturer'), '</th>
+					</tr>
 			</thead>';
 
 		$SQL = "SELECT stockid FROM salescatprod WHERE salescatid='" . $SelectedCategory . "'";
@@ -359,6 +357,8 @@ if (!isset($_GET['Select'])) {
 		$_POST['SalesCatName'] = '';
 		if (isset($ParentCategory)) {
 			$_POST['ParentCategory'] = $ParentCategory;
+		} else {
+			$_POST['ParentCategory'] = 0;
 		}
 		echo '<table>
 				<tr>
@@ -375,8 +375,12 @@ if (!isset($_GET['Select'])) {
 
 	echo '<tr>
 			<td>', _('Parent Category'), '</td>
-			<td><select name="ParentCategory">
-				<option value="0">', _('No parent'), '</option>';
+			<td><select name="ParentCategory">';
+	if ($_POST['ParentCategory']==0){
+		echo '<option value="0" selected="selected">', _('No parent'), '</option>';
+	} else {
+		echo '<option value="0">', _('No parent'), '</option>';
+	}
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['salescatid'] == $_POST['ParentCategory']) {
 			echo '<option value="', $MyRow['salescatid'], '" selected="selected">', $MyRow['salescatname'], '</option>';
