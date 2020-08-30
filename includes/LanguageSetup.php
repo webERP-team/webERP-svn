@@ -12,15 +12,18 @@ normally the lower case two character language code underscore uppercase
 2 character country code does the trick  except for en !!*/
 
 
-If (isset($_POST['Language'])) {
+/*
+ * Improve language check to avoid potential LFI issue.
+ * Reported by: https://lyhinslab.org
+ */
+if (isset($_POST['Language']) && checkLanguageChoice($_POST['Language'])) {
 	$_SESSION['Language'] = $_POST['Language'];
-	$Language = $_POST['Language'];
-} elseif (!isset($_SESSION['Language'])) {
-	$_SESSION['Language'] = $DefaultLanguage;
-	$Language = $DefaultLanguage;
 } else {
-	$Language = $_SESSION['Language'];
+	$_SESSION['Language'] = $DefaultLanguage;
 }
+
+$Language = $_SESSION['Language'];
+
 //Check users' locale format via their language
 //Then pass this information to the js for number validation purpose
 

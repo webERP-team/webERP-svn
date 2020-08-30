@@ -75,7 +75,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('Receive'), '" /> ', // Icon title.
 	_('Receive Purchase Order'), ' : ', $_SESSION['PO'.$identifier]->OrderNo, ' ', _('from'), ' ', $_SESSION['PO'.$identifier]->SupplierName, '</p>';// Page title.
 
-echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?identifier=', $identifier, '" id="form1" method="post">',
+echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($identifier), '" id="form1" method="post">',
 	'<div>',
 	'<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

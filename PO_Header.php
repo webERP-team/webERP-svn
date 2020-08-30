@@ -114,7 +114,7 @@ if ((isset($_POST['UpdateStatus']) and $_POST['UpdateStatus'] != '')) {
 					prnMsg(_('You do not have permission to reject this purchase order') . '.<br />' . _('This order is for') . ' ' . $_SESSION['PO' . $identifier]->CurrCode . ' ' . $OrderTotal . '. ' . _('Your authorisation limit is set at') . ' ' . $_SESSION['PO' . $identifier]->CurrCode . ' ' . $AuthorityLevel . '.<br />' . _('If you think this is a mistake please contact the systems administrator'), 'warn');
 				}
 			} //$OKToUpdateStatus == 1
-			
+
 		} //$_POST['Status'] == 'Rejected' OR $_POST['Status'] == 'Cancelled'
 		if ($_POST['Status'] == 'Pending') {
 
@@ -130,7 +130,7 @@ if ((isset($_POST['UpdateStatus']) and $_POST['UpdateStatus'] != '')) {
 				$OKToUpdateStatus = 0;
 				prnMsg(_('You do not have permission to change the status of this purchase order') . '.<br />' . _('This order is for') . ' ' . $_SESSION['PO' . $identifier]->CurrCode . ' ' . $OrderTotal . '. ' . _('Your authorisation limit is set at') . ' ' . $_SESSION['PO' . $identifier]->CurrCode . ' ' . $AuthorityLevel . '.<br />' . _('If you think this is a mistake please contact the systems administrator'), 'warn');
 			} //$AuthorityLevel < $OrderTotal AND $_SESSION['UserID'] != $_SESSION['PO' . $identifier]->Initiator
-			
+
 		} //$_POST['Status'] == 'Pending'
 		if ($OKToUpdateStatus == 1) {
 			$_SESSION['PO' . $identifier]->Status = $_POST['Status'];
@@ -156,9 +156,9 @@ if ((isset($_POST['UpdateStatus']) and $_POST['UpdateStatus'] != '')) {
 				$UpdateResult = DB_query($SQL, $ErrMsg);
 			}
 		} //$OKToUpdateStatus == 1
-		
+
 	} //end if there is actually a status change the class Status != the POST['Status']
-	
+
 } //End if user hit Update Status
 if (isset($_GET['NewOrder']) and isset($_GET['StockID']) and isset($_GET['SelectedSupplier'])) {
 	/*
@@ -241,7 +241,7 @@ if (isset($_POST['EnterLines']) or isset($_POST['AllowRePrint'])) {
 		include ('includes/footer.php');
 		exit;
 	} // end if reprint not allowed
-	
+
 } //isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])
 /* end of if isset _POST'EnterLines' */
 
@@ -460,7 +460,7 @@ if (isset($_POST['Select'])) {
 	}
 
 	// end of added for suppliers lookup fields
-	
+
 } /* isset($_POST['Select'])  will only be true if page called from supplier selection form or item purchasing data order link
  * or set because only one supplier record returned from a search
 */
@@ -523,13 +523,13 @@ else {
 		$_SESSION['PO' . $identifier]->Port = $_POST['Port'];
 		$_SESSION['PO' . $Identifier]->DeliveryBy = $_POST['DeliveryBy'];
 		// end of added for suppliers lookup fields
-		
+
 	}
 } // NOT isset($_POST['Select']) - not called with supplier selection so update variables
 // part of step 1
 if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $identifier]->SupplierID) or $_SESSION['PO' . $identifier]->SupplierID == '') {
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />' . ' ' . _('Purchase Order: Select Supplier') . '</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post" id="choosesupplier">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post" id="choosesupplier">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -579,18 +579,18 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 				</tr>';
 
 			//end of page full new headings if
-			
+
 		} //end of while loop
 		echo '</tbody></table>';
 
 	}
 	//end if results to show
 	//end if RequireSupplierSelection
-	
+
 } else {
 	/* everything below here only do if a supplier is selected */
 
-	echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+	echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -961,9 +961,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 			$_SESSION['PO' . $identifier]->Tel = $_POST['Tel'];
 			$_SESSION['PO' . $identifier]->Contact = $_POST['Contact'];
 		} //There was a location record returned
-		
+
 	} //user clicked  Lookup Delivery Address
-	
+
 
 	echo '<tr>
 			<td>' . _('Delivery Contact') . ':</td>
@@ -1095,7 +1095,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		} else {
 			echo '<option value="' . $MyRow['termsindicator'] . '">' . $MyRow['terms'] . '</option>';
 		} //end while loop
-		
+
 	}
 	DB_data_seek($Result, 0);
 	echo '</select></td></tr>';

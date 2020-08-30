@@ -55,7 +55,7 @@ if (!isset($_POST['EntryType']) OR trim($_POST['EntryType']) == ''){
 $invalid_imports = 0;
 $valid = true;
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'?identifier='.$identifier.'" enctype="multipart/form-data" >';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .'?identifier=' . urlencode($identifier) . '" enctype="multipart/form-data" >';
 echo '<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="LineNo" value="' . $LineNo . '" />

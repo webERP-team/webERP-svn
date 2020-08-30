@@ -49,23 +49,21 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 					AND prices.debtorno=debtorsmaster.debtorno
 					AND prices.branchcode=''
 					AND prices.startdate <='" . Date('Y-m-d') . "'
-					AND prices.enddate >='" . Date('Y-m-d') . "'";
+					AND (prices.enddate >='" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00')";
 
 			$result = DB_query($sql,$ErrMsg);
 			if (DB_num_rows($result)==0){
-				//if no specific price between the dates maybe there is a default price with no end date specified
-				$sql = "SELECT prices.price,
-							   prices.startdate
+				//if no specific price between the dates maybe there is a default price not referring to the customer directly but in the sales type
+				$sql = "SELECT prices.price
 						FROM prices,
 							debtorsmaster
 						WHERE debtorsmaster.salestype=prices.typeabbrev
 						AND debtorsmaster.debtorno='" . $DebtorNo . "'
 						AND prices.stockid = '" . $StockID . "'
 						AND prices.currabrev = debtorsmaster.currcode
-						AND prices.debtorno=debtorsmaster.debtorno
 						AND prices.branchcode=''
 						AND prices.startdate <='" . Date('Y-m-d') . "'
-						AND prices.enddate >='0000-00-00'
+						AND prices.enddate >='" . Date('Y-m-d') . "'
 						ORDER BY prices.startdate DESC";
 
 				$result = DB_query($sql,$ErrMsg);

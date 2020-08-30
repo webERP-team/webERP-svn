@@ -182,7 +182,7 @@ if (!isset($_GET['InvoiceNumber']) and !$_SESSION['ProcessingCredit']) {
 		include ('includes/footer.php');
 		exit;
 	} //valid invoice record returned from the entered invoice number
-	
+
 }
 
 if (isset($_POST['Location'])) {
@@ -258,7 +258,7 @@ if ($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 or isset($_POST['Ne
  NB QtyDispatched in the LineItems array is used for the quantity to credit */
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/credit.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -679,7 +679,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 				}
 			} else {
 				$QtyOnHandPrior = 0; //because its a dummy/assembly/kitset part
-				
+
 			}
 
 			if ($_POST['CreditType'] == 'Return') {
@@ -763,7 +763,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 							}
 						} else {
 							$QtyOnHandPrior = 0; //because its a dummy/assembly/kitset part
-							
+
 						}
 
 						if ($Component_MBFlag == 'M' or $Component_MBFlag == 'B') {

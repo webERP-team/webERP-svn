@@ -69,7 +69,7 @@ if ($LineItem->Serialised==1){
 echo '</table></td><td valign="top">';
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'" id="Ga6uF5Wa" method="post">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" id="Ga6uF5Wa" method="post">
 		<div>
 		<input type="hidden" name="LineNo" value="' . $LineNo . '" />
 		<input type="hidden" name="StockID" value="' . $StockID . '" />

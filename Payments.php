@@ -400,7 +400,7 @@ if(isset($_POST['CommitBatch']) AND empty($Errors)) {
 			<a href="' . $RootPath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '&amp;identifier=' . $identifier . '">' . _('Print Cheque using pre-printed stationery') . '</a>
 			<br />
 			<br />
-			<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '">
+			<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($identifier), '">
 			<div>
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' ,
 			_('Has the cheque been printed') , '?
@@ -925,7 +925,7 @@ if(isset($_POST['BankAccount']) AND $_POST['BankAccount']!='') {
 	}
 }
 
-echo '<form action="' , htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) , '" method="post">
+echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($identifier), '" method="post">
 	<div>
 	<input type="hidden" name="FormID" value="' , $_SESSION['FormID'] , '" />
 	<br />

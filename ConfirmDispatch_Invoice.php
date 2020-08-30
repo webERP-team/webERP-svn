@@ -240,7 +240,7 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 		include ('includes/footer.php');
 		exit;
 	} //valid order returned from the entered order number
-	
+
 } else {
 
 	/* if processing, a dispatch page has been called and ${$StkItm->LineNumber} would have been set from the post
@@ -288,7 +288,7 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 			$i++;
 		}
 	} //end foreach lineitem
-	
+
 }
 
 /* Always display dispatch quantities and recalc freight for items being dispatched */
@@ -316,7 +316,7 @@ _('Confirm Dispatch and Invoice'), '</p>', // Page title.
 	</table>
 	<br />';
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -356,7 +356,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 	if ($LnItm->QOHatLoc < $LnItm->Quantity and ($LnItm->MBflag == 'B' or $LnItm->MBflag == 'M')) {
 		/*There is a stock deficiency in the stock location selected */
 		$RowStarter = '<tr style="background:#FF0000;color:#FFC0CB">'; //rows show red where stock deficiency
-		
+
 	} else {
 		$RowStarter = '<tr class="striped_row">';
 	}
@@ -420,7 +420,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 
 	$i = 1; // initialise the number of taxes iterated through
 	$TaxLineTotal = 0; //initialise tax total for the line
-	
+
 
 	foreach ($LnItm->Taxes AS $Tax) {
 		if (empty($TaxTotals[$Tax->TaxAuthID])) {
@@ -521,7 +521,7 @@ if ($_SESSION['DoFreightCalc'] == True) {
 		<td class="number">', locale_number_format($FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>';
 } else {
 	//	echo '<td colspan="1"></td>';// Should be?:	echo '<td colspan="3">&nbsp;</td>';
-	
+
 }
 if (!isset($_POST['ChargeFreightCost'])) {
 	$_POST['ChargeFreightCost'] = 0;
@@ -605,7 +605,7 @@ echo '<tbody></table><br />';
 if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 	/* SQL to process the postings for sales invoices...
-	
+
 	/*First check there are lines on the dipatch with quantities to invoice
 	invoices can have a zero amount but there must be a quantity to invoice */
 
@@ -666,11 +666,11 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 						prnMsg(_('Invoicing the selected order would result in negative stock for a component of an assembly item on the order. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'), 'error', $NegRow['component'] . ' ' . $NegRow['description'] . ' - ' . _('Negative Stock Prohibited'));
 						$NegativesFound = true;
 					} // end if negative would result
-					
+
 				} //loop around the components of an assembly item
-				
+
 			} //end if its an assembly item - check component stock
-			
+
 		} //end of loop around items on the order for negative check
 		if ($NegativesFound) {
 			echo '</div>';
@@ -682,7 +682,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 		}
 
 	} //end of testing for negative stocks
-	
+
 
 	/* Now Get the area where the sale is to from the branches table */
 
@@ -1557,7 +1557,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 					$DbgMsg = '<br />' . _('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 				} // End if the item being sold was an asset.
-				
+
 			} /*end of if sales integrated with debtors */
 
 			if ($IsAsset) {

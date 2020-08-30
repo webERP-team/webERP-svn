@@ -593,7 +593,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' .
 	' ' . _('Enter an Order or Quotation') . ' : ' . _('Search for the Customer Branch.') . '</p>';
 	echo '<div class="page_help_text">' . _('Orders/Quotations are placed against the Customer Branch. A Customer may have several Branches.') . '</div>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">
 		 <div>
 			 <input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />
 			 <table cellpadding="3" class="selection">
@@ -830,7 +830,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 #Always do the stuff below if not looking for a customerid
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" id="SelectParts" method="post" enctype="multipart/form-data">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" id="SelectParts" method="post" enctype="multipart/form-data">';
     echo '<div>';
 	echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />';
 
@@ -1865,7 +1865,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	 */
 
 		if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" name="deleteform">
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post" name="deleteform">
 			<div>
 			<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />
 				<br />

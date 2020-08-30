@@ -29,7 +29,11 @@ if(strpos($_SERVER['REQUEST_URI'],'/%22%3E%3C')) {
 include('ManualHeader.html');
 
 ?>
+<<<<<<< HEAD
 	<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+=======
+	<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'); ?>" method="post">
+>>>>>>> upstream/master
 <?php
 if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
      ((isset($_POST['Submit'])) AND (isset($_POST['SelectTableOfContents'])))) {

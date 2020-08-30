@@ -59,6 +59,10 @@ if(isset($_POST['Modify'])) {
 
 	if($InputError != 1) {
 		// no errors
+		if (isset($_POST['Language']) && !checkLanguageChoice($_POST['Language'])) {
+			$_POST['Language'] = $DefaultLanguage;
+		}
+
 		if($UpdatePassword != 'Y') {
 			$SQL = "UPDATE www_users
 					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
