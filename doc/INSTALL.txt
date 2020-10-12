@@ -10,7 +10,7 @@ Open up the webERP/index.php and the system will identify any database changes r
 
 If the database must be updated manually (as it must for versions prior to 3.05):
 
-The SQL scripts are included under webERP/sql/mysql/ to update an existing mysql webERP database to the current version. The upgrade script no longer assumes the weberp database is called webERP. If using the mysql command line client then each upgrade SQL script must be edited to enter the name of the database to upgrade by adding a line
+The SQL scripts are included in the webERP/sql/mysql/country_sql/ directory to update an existing mysql webERP database to the current version. The upgrade script no longer assumes the weberp database is called webERP. If using the mysql command line client then each upgrade SQL script must be edited to enter the name of the database to upgrade by adding a line
 
 USE mydatabase;
 

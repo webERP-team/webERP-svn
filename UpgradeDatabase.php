@@ -65,7 +65,7 @@ if (isset($_POST['DoUpgrade'])){
 		$SQLScripts = array();
 
 		if ($_POST['OldVersion']=='Manual') {
-			prnMsg(_('No datbase updates have been done as you selected to apply these manually - upgrade SQL scripts are under sql/mysql/ directory in the distribution'),'info');
+			prnMsg(_('No database updates have been done as you selected to apply these manually - upgrade SQL scripts are in the sql/mysql/country_sql/ directory in the distribution'),'info');
 		} else { //we are into automatically applying database upgrades
 
 			prnMsg(_('If there are any failures then please check with your system administrator. Please read all notes carefully to ensure they are expected'),'info');

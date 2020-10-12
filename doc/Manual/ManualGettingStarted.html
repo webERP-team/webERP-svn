@@ -150,7 +150,7 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
 
 <p>If you have an account set up already in MySQL and Innodb tables enabled, then all you need to do is to run one of the sql scripts.</p>
 
-<p>Two scripts are provided under the webERP/sql/mysql directory (folder):</p>
+<p>Two scripts are provided in the webERP/sql/mysql/country_sql/ directory (folder):</p>
 
 <ol>
     <li>weberp-demo.sql This has a minimal amount of demonstration data with a bogus company set up so that transactions can be tried to see how the system works.</li>
@@ -160,11 +160,11 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
 
 <p>The files weberp-demo.sql and web-erp-new.sql should be in the directory with all the PHP scripts. Change to the directory where the scripts are held or use the full path and enter:</p>
 
-<p>shell &gt; mysql --user=weberp --password='some_pass' &lt; path_to_web_server/webERP/sql/mysql/weberp-demo.sql</p>
+<p>shell &gt; mysql --user=weberp --password='some_pass' &lt; path_to_web_server/webERP/sql/mysql/country_sql/weberp-demo.sql</p>
 
 <p>or</p>
 
-<p>shell &gt; mysql --user=weberp --password='some_pass' &lt; path_to_web_server/webERP/sql/mysql/weberp-new.sql</p>
+<p>shell &gt; mysql --user=weberp --password='some_pass' &lt; path_to_web_server/webERP/sql/mysql/country_sql/weberp-new.sql</p>
 
 <p>as required. Modify the user entered here as 'weberp' to the user you created in MySQL for the purpose, and modify the password stated here as 'some_pass' to the password appropriate for the user. Also modify the path_to_the_sql_script to the appropriate path - perhaps something like /srv/www/htdocs/webERP/.</p>
 
