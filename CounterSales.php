@@ -1990,7 +1990,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 						'" . $BankAccountExRate . "',
 						'" . $DefaultDispatchDate . "',
 						'" . $_POST['PaymentMethod'] . "',
-						'" . filter_number_format($_POST['AmountPaid']) * $BankAccountExRate . "',
+						'" . filter_number_format($_POST['AmountPaid']) * $BankAccountExRate/$ExRate . "',
 						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
 
 			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
