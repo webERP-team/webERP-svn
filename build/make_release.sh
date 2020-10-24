@@ -22,6 +22,7 @@ msgmerge -U -N --backup=off --no-wrap locale/en_US.utf8/LC_MESSAGES/messages.po 
 msgmerge -U -N --backup=off --no-wrap locale/es_ES.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/et_EE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/fa_IR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -U -N --backup=off --no-wrap locale/fi_FI.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/fr_CA.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/fr_FR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/he_IL.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
@@ -60,6 +61,7 @@ msgfmt -o locale/en_US.utf8/LC_MESSAGES/messages.mo locale/en_US.utf8/LC_MESSAGE
 msgfmt -o locale/es_ES.utf8/LC_MESSAGES/messages.mo locale/es_ES.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/et_EE.utf8/LC_MESSAGES/messages.mo locale/et_EE.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/fa_IR.utf8/LC_MESSAGES/messages.mo locale/fa_IR.utf8/LC_MESSAGES/messages.po
+msgfmt -o locale/fi_FI.utf8/LC_MESSAGES/messages.mo locale/fi_FI.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/fr_CA.utf8/LC_MESSAGES/messages.mo locale/fr_CA.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/fr_FR.utf8/LC_MESSAGES/messages.mo locale/fr_FR.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/he_IL.utf8/LC_MESSAGES/messages.mo locale/he_IL.utf8/LC_MESSAGES/messages.po
