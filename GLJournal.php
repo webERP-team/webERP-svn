@@ -442,9 +442,9 @@ echo '<table>
         <tr>
         <td colspan="5"><table class="selection">
 						<tr>
-							<td>' . _('Date to Process Journal') . ' {}:</td>
+							<td>' . _('Date to Process Journal') . ':</td>
 							<td><input type="date" required="required" name="JournalProcessDate" maxlength="10" size="11" value="' . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . '" /></td>
-							<td>' . _('Type') . $_SESSION['JournalDetail']->JnlDate . ':</td>
+							<td>' . _('Type') . ':</td>
 							<td><select name="JournalType">';
 
 if ($_POST['JournalType'] == 'Reversing') {
