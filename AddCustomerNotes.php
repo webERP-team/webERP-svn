@@ -58,7 +58,7 @@ if ( isset($_POST['submit']) ) {
 				VALUES ('" . $DebtorNo. "',
 						'" . $_POST['Href'] . "',
 						'" . $_POST['Note'] . "',
-						'" . FormatDateForSQL($_POST['NoteDate']) . "',
+						'" . $_POST['NoteDate'] . "',
 						'" . $_POST['Priority'] . "')";
 		$msg = _('The contact notes record has been added');
 	}
