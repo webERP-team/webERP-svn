@@ -42,7 +42,7 @@ if ( isset($_POST['submit']) ) {
 	if (isset($Id) and $InputError !=1) {
 
 		$sql = "UPDATE custnotes SET note='" . $_POST['Note'] . "',
-									date='" . FormatDateForSQL($_POST['NoteDate']) . "',
+									date='" . $_POST['NoteDate'] . "',
 									href='" . $_POST['Href'] . "',
 									priority='" . $_POST['Priority'] . "'
 				WHERE debtorno ='".$DebtorNo."'
@@ -58,7 +58,7 @@ if ( isset($_POST['submit']) ) {
 				VALUES ('" . $DebtorNo. "',
 						'" . $_POST['Href'] . "',
 						'" . $_POST['Note'] . "',
-						'" . FormatDateForSQL($_POST['NoteDate']) . "',
+						'" . $_POST['NoteDate'] . "',
 						'" . $_POST['Priority'] . "')";
 		$msg = _('The contact notes record has been added');
 	}
@@ -211,12 +211,12 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 	}
 	echo '<tr>
-			<td>' . _('Date')  . '</td>';
+			<td>' . _('Date') . '</td>';
 	if (isset($_POST['NoteDate'])) {
-		echo '<td><input type="text" required name="NoteDate" class="date" value="'.ConvertSQLDate($_POST['NoteDate']).'" size="11" maxlength="10" /></td>
+		echo '<td><input type="date" required name="NoteDate"  value="' . $_POST['NoteDate'] . '" size="11" maxlength="10" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" required name="NoteDate" class="date" size="11" maxlength="10" /></td>
+		echo '<td><input type="date" required name="NoteDate" size="11" maxlength="10" /></td>
 			</tr>';
 	}
 	echo '<tr>

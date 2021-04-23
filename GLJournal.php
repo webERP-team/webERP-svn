@@ -68,6 +68,7 @@ if (isset($_POST['JournalProcessDate'])) {
 		$_POST['CommitBatch'] = 'Do not do it the date is wrong';
 	}
 }
+
 if (isset($_POST['JournalType'])) {
 	$_SESSION['JournalDetail']->JournalType = $_POST['JournalType'];
 }
@@ -251,7 +252,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 	 A GL entry is created for each GL entry
 	*/
 
-	$PeriodNo = GetPeriod($_SESSION['JournalDetail']->JnlDate);
+	$PeriodNo = GetPeriod(ConvertSQLDate($_SESSION['JournalDetail']->JnlDate));
 
 	/*Start a transaction to do the whole lot inside */
 	$Result = DB_Txn_Begin();
@@ -442,7 +443,7 @@ echo '<table>
         <td colspan="5"><table class="selection">
 						<tr>
 							<td>' . _('Date to Process Journal') . ':</td>
-							<td><input type="text" required="required" class="date" name="JournalProcessDate" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
+							<td><input type="date" required="required" name="JournalProcessDate" maxlength="10" size="11" value="' . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . '" /></td>
 							<td>' . _('Type') . ':</td>
 							<td><select name="JournalType">';
 
